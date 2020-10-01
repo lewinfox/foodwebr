@@ -1,0 +1,133 @@
+#' Create a function caller/callee matrix
+#'
+#' Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
+#' that if the function on the x-axis calls the function on th y-axis, the element is 1, otherwise
+#' 0.
+#'
+#' @param env `<chr>`\cr Environment in which to search for functions. Can either be an environment
+#'   or a character string denoting an environment (e.g. `"package:emissions"`). Environment must
+#'   be on the search path.
+#'
+#' @return An n x n matrix where _n_ is the number of functions in `env`.
+function_matrix <- function(env = .GlobalEnv) {
+  if (!is.environment(env)) {
+    env <- as.environment(env)
+  }
+  funs <- lsf.str(envir = env)
+  n <- length(funs)
+  if (n == 0) {
+    stop("No functions found in `", deparse(substitute(env)), "`")
+  }
+  funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
+  # CALLER.of is a list of indices into `funs`, such that if CALLER.of[1] = [2 3 4] it means that
+  # funs[1] calls funs[2], funs[3] and funs[4].
+  CALLER.of <- lapply(funs, functions_called_by, funs_to_match = funs, where = env)
+
+  # For each function, how many functions does it call?
+  n.CALLER <- unlist(lapply(CALLER.of, length))
+
+  if (sum(n.CALLER) == 0) {
+    stop("Function does not call any matched functions")  # TODO: Can we capture base or other package fns?
+  }
+
+  # Construct the function caller/callee matrix
+  setup <- c(rep(1:length(funs), n.CALLER), unlist(CALLER.of))
+  dim(setup) <- c(sum(n.CALLER), 2)
+  funmat[setup] <- 1
+  diag(funmat) <- 0 # to drop self-references
+
+  return(funmat)
+}
+
+#' Which functions does a function call?
+#'
+#' Given an input function `fn_name` and a list of candidate functions `funs_to_match`, return a
+#' list of all the functions in `funs_to_match` that appear in the definition of `fn_name`.
+#'
+#' @param fn_name `<chr>`\cr The name of the function of interest
+#' @param funs_to_match `<chr>`\cr Only these functions will be considered as parents
+#' @param where `<env>`\cr An environment, or text specifying an environment
+#'
+#' @return A character vector listing the functions in `funs_to_match` that call `fname`.
+functions_called_by <- function(fn_name, funs_to_match, where) {
+  # List of environments where we want to look for functions
+  if (is.environment(where)) {
+    where <- list(where)
+  } else {
+    where <- as.list(where)
+  }
+
+  # Which of our environments does `fn_name` exist in?
+  which <- unlist(lapply(where, exists, x = fn_name), use.names = FALSE)
+
+  # Grab the function definition so we can analyse it
+  if (!any(which)) {
+    # The function can't be found in the specified environments, so check for it elsewhere.
+    f <- if (exists(fn_name)) get(fn_name) else list()
+  } else {
+
+    idx <- seq_along(which)[which]  # No idea why this is necessary!
+
+    # Get it from the environment in which we found it
+    f <- get(fn_name, pos = where[[idx[1]]])
+  }
+
+  # Tokenise the function body so we can scan it for other functions. The output `tokens` is a
+  # character vector of the deparsed function body
+  tokens <- tokenise_function(f)
+  browser()
+  if (!length(tokens)) {
+    return(numeric(0))
+  }
+
+  # We now want to ask "which of these tokens matches a name in `funs_to_match`?".
+  #
+  # TODO: What if we want to capture functions that exist in other environments? I.e. return the
+  #       entire dependency tree? That could be useful, if a bit overwhelming. Would need to go
+  #       back to filtering out generics etc.
+  matched_tokens <- match(tokens, funs_to_match, nomatch = 0)
+
+  # `matched_tokens` is now a vector such that the i'th element is zero if that element does not
+  # match anything in `funs_to_match`. If a match _was_ found, then the i'th element contains the
+  # numeric index of the token in `funs_to_match`:
+  #
+  # funs_to_match <- c("foo", "bar")
+  # tokens <- c("{", "x", "foo", "2", "}")
+  # matched_tokens <- match(tokens, funs_to_match, nomatch = 0)
+  #
+  # matched_tokens
+  # ## [0 0 1 0 0]    (No match, no match, matched index 1 (foo), no match, no match)
+  #
+  res <- matched_tokens[matched_tokens > 0]
+
+  return(res)
+}
+
+#' Convert a function (a language object) to text tokenstype
+tokenise_function <- function(x) {
+  # Given a function as input, break it down into tokens and return them as text for analysis
+
+  # We need to break the input down into atomic language units
+  listable <- is.list(x)
+  if (!listable) {
+    # Is an S4 object, extract the `.Data` component (if there is one)
+    if (isS4(x) && ('.Data' %in% names(getSlots(class(x))))) {
+      x <- x@.Data
+    }
+
+    # Can we break it down further?
+    listable <- !is.atomic(x) && !is.symbol(x)
+    if (listable) {
+      x <- as.list(x)
+    }
+  }
+
+  if (listable) {
+    # Recurse into the language object
+    return(unlist(lapply(x, tokenise_function), use.names = FALSE))
+  }
+
+  # If we get this far we know we've reached the bottom of the AST and we can convert the language
+  # objects to text and send them back up
+  paste(deparse(x), collapse = "\n")
+}
