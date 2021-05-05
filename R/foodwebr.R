@@ -15,7 +15,7 @@ function_matrix <- function(env = .GlobalEnv) {
   if (!is.environment(env)) {
     env <- as.environment(env)
   }
-  funs <- lsf.str(envir = env)
+  funs <- utils::lsf.str(envir = env)
   n <- length(funs)
   if (n == 0) {
     rlang::abort("No functions found in {env}")
@@ -108,7 +108,9 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
   return(res)
 }
 
-#' Convert a function (a language object) to text tokenstype
+#' Convert a function (a language object) to text
+#'
+#' @param x A function
 tokenise_function <- function(x) {
   # Given a function as input, break it down into tokens and return them as text for analysis
 
@@ -116,7 +118,7 @@ tokenise_function <- function(x) {
   listable <- is.list(x)
   if (!listable) {
     # Is an S4 object, extract the `.Data` component (if there is one)
-    if (isS4(x) && ('.Data' %in% names(getSlots(class(x))))) {
+    if (isS4(x) && ('.Data' %in% names(methods::getSlots(class(x))))) {
       x <- x@.Data
     }
 
