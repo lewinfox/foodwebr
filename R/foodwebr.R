@@ -16,7 +16,7 @@ function_matrix <- function(env = .GlobalEnv) {
   funs <- lsf.str(envir = env)
   n <- length(funs)
   if (n == 0) {
-    stop("No functions found in `", deparse(substitute(env)), "`")
+    rlang::abort("No functions found in `{deparse(substitute(env))}`")
   }
   funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
   # CALLER.of is a list of indices into `funs`, such that if CALLER.of[1] = [2 3 4] it means that
@@ -27,7 +27,7 @@ function_matrix <- function(env = .GlobalEnv) {
   n.CALLER <- unlist(lapply(CALLER.of, length))
 
   if (sum(n.CALLER) == 0) {
-    stop("Function does not call any matched functions")  # TODO: Can we capture base or other package fns?
+    rlang::abort("Function does not call any matched functions")  # TODO: Can we capture base or other package fns?
   }
 
   # Construct the function caller/callee matrix
@@ -75,7 +75,6 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
   # Tokenise the function body so we can scan it for other functions. The output `tokens` is a
   # character vector of the deparsed function body
   tokens <- tokenise_function(f)
-  browser()
   if (!length(tokens)) {
     return(numeric(0))
   }
