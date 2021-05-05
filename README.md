@@ -30,7 +30,8 @@ j = function() j()
 ```
 
 We compute the "function matrix". The matrix is 1 if the function on the y-axis calls the function
-on the x-axis, and 0 otherwise.
+on the x-axis, and 0 otherwise. `function_matrix()` looks at functions in the global environment by
+default, but you can specify another environment using the `env` argument.
 
 Note that self-calls are ignored (`funmat["j", "j"]` is zero even though `j()` calls itself).
 
