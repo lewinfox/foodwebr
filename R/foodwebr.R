@@ -9,6 +9,8 @@
 #'   be on the search path.
 #'
 #' @return An n x n matrix where _n_ is the number of functions in `env`.
+#'
+#' @export
 function_matrix <- function(env = .GlobalEnv) {
   if (!is.environment(env)) {
     env <- as.environment(env)
@@ -16,7 +18,7 @@ function_matrix <- function(env = .GlobalEnv) {
   funs <- lsf.str(envir = env)
   n <- length(funs)
   if (n == 0) {
-    rlang::abort("No functions found in `{deparse(substitute(env))}`")
+    rlang::abort("No functions found in {env}")
   }
   funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
   # CALLER.of is a list of indices into `funs`, such that if CALLER.of[1] = [2 3 4] it means that
