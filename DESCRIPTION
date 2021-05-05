@@ -1,20 +1,22 @@
 Type: Package
 Package: foodwebr
-Title: What the Package Does (Title Case)
-Version: 0.1.0.9000
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Title: Visualise Function Dependencies
+Version: 0.1.0.9001
+Authors@R: 
+    person(given = "Lewin",
+           family = "Appleton-Fox",
+           role = c("aut", "cre"),
+           email = "lewin.a.f@gmail.com")
+Description: Easily create graphs of the inter-relationships between functions in an environment.
 License: MIT + file LICENSE
+Imports: 
+    DiagrammeR,
+    glue,
+    methods,
+    rlang
 Suggests: 
     testthat
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports: 
-    glue,
-    DiagrammeR,
-    rlang,
-    methods
