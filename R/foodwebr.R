@@ -36,6 +36,10 @@ function_matrix <- function(env = .GlobalEnv) {
   funmat[setup] <- 1
   diag(funmat) <- 0 # to drop self-references
 
+  # Convert dimnames to string
+  rownames(funmat) <- as.character(rownames(funmat))
+  colnames(funmat) <- as.character(colnames(funmat))
+
   return(funmat)
 }
 
