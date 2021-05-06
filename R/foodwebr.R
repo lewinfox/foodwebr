@@ -29,7 +29,8 @@ function_matrix <- function(env = .GlobalEnv) {
   n.CALLER <- unlist(lapply(CALLER.of, length))
 
   if (sum(n.CALLER) == 0) {
-    rlang::abort("Function does not call any matched functions")  # TODO: Can we capture base or other package fns?
+    # TODO: Can we capture base or other package fns?
+    rlang::abort("Function does not call any matched functions")
   }
 
   # Construct the function caller/callee matrix
@@ -151,6 +152,7 @@ tokenise_function <- function(x) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' foodweb()
 #'
 #' foodweb(as.text = TRUE)
@@ -159,6 +161,7 @@ tokenise_function <- function(x) {
 #' # at your peril.
 #' if (requireNamespace("cowsay", quietly = TRUE)) {
 #'   foodweb(FUN = cowsay::say)
+#' }
 #' }
 foodweb <- function(FUN = NULL, env = .GlobalEnv, as.text = FALSE) {
   if (!is.null(FUN)) {

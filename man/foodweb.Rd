@@ -22,6 +22,7 @@ function only renders the graph.
 Create a foodweb
 }
 \examples{
+\dontrun{
 foodweb()
 
 foodweb(as.text = TRUE)
@@ -30,5 +31,6 @@ foodweb(as.text = TRUE)
 # at your peril.
 if (requireNamespace("cowsay", quietly = TRUE)) {
   foodweb(FUN = cowsay::say)
+}
 }
 }
