@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">foodwebr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9002</span>
       </span>
     </div>
 
@@ -72,21 +72,50 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"lewinfox/foodwebr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="basic-usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>We have a bunch of functions in the global environment, some of which call each other:</p>
+<a href="#basic-usage" class="anchor"></a>Basic usage</h2>
+<p>Say we have a bunch of functions in the global environment, some of which call each other:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">foodwebr</span><span class="op">)</span>
 
-<span class="va">f</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span>
-<span class="va">g</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>
-<span class="va">h</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>
-<span class="va">i</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span>; <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>
-<span class="va">j</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">j</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>We compute the “function matrix”. The matrix is 1 if the function on the y-axis calls the function on the x-axis, and 0 otherwise. <code><a href="reference/function_matrix.html">function_matrix()</a></code> looks at functions in the global environment by default, but you can specify another environment using the <code>env</code> argument.</p>
-<p>Note that self-calls are ignored (<code>funmat["j", "j"]</code> is zero even though <code>j()</code> calls itself).</p>
+<span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span>
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>
+<span class="va">h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>
+<span class="va">i</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span>; <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>
+<span class="va">j</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">j</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>A call to <code><a href="reference/foodweb.html">foodweb()</a></code> will calculate and display a graph of the dependencies, i.e. who calls who.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/graph.png" alt="Foodweb of the global environment"></p>
+<p>Note that function <code>j()</code> is not shown because it doesn’t interact with any of the other functions.</p>
+<p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at the global environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
+<p>You can use this to map all the functions in a package. I’m using <code>cowsay</code> here as it’s small enough that the output is readable.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p><img src="reference/figures/cowsay-foodweb.png" alt="Foodweb of cowsay package"></p>
+<p>In case you want to do something with the graphvix output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphvis specification as a character vector.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="co">#&gt; digraph g {</span>
+<span class="co">#&gt; "g()" -&gt; { "f()" }</span>
+<span class="co">#&gt; "h()" -&gt; { "f()", "g()" }</span>
+<span class="co">#&gt; "i()" -&gt; { "f()", "g()", "h()" }</span>
+<span class="co">#&gt; }</span></code></pre></div>
+</div>
+<div id="digging-deeper" class="section level2">
+<h2 class="hasAnchor">
+<a href="#digging-deeper" class="anchor"></a>Digging deeper</h2>
+<p>foodwebr also exposes the workhorse functions in case you want to play around with them.</p>
+<div id="function_matrix" class="section level3">
+<h3 class="hasAnchor">
+<a href="#function_matrix" class="anchor"></a><code>function_matrix()</code>
+</h3>
+<p>The starting point is to compute the function matrix. This idea, and much of the implementation, was taken from <code>mvbutils::foodweb()</code>. The function matrix is 1 if the function on the y-axis calls the function on the x-axis, and 0 otherwise. <code><a href="reference/function_matrix.html">function_matrix()</a></code> looks at functions in the global environment by default, but you can specify another environment using the <code>env</code> argument.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">funmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/function_matrix.html">function_matrix</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">funmat</span>
@@ -97,20 +126,29 @@
 <span class="co">#&gt;      h 1 1 0 0 0</span>
 <span class="co">#&gt;      i 1 1 1 0 0</span>
 <span class="co">#&gt;      j 0 0 0 0 0</span></code></pre></div>
-<p>The <code><a href="reference/graph_spec_from_matrix.html">graph_spec_from_matrix()</a></code> function translates the function matrix into a <a href="https://graphviz.org/">graphviz</a> specification:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">graphvis_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graph_spec_from_matrix.html">graph_spec_from_matrix</a></span><span class="op">(</span><span class="va">funmat</span><span class="op">)</span>
-
-<span class="va">graphvis_spec</span>
-<span class="co">#&gt; digraph g {</span>
-<span class="co">#&gt; g -&gt; { f }</span>
-<span class="co">#&gt; h -&gt; { f, g }</span>
-<span class="co">#&gt; i -&gt; { f, g, h }</span>
-<span class="co">#&gt; }</span></code></pre></div>
-<p>We can visualise the graph using <code>Diagrammer::grViz()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>Note that self-calls are ignored (<code>funmat["j", "j"]</code> is zero even though <code>j()</code> calls itself).</p>
+</div>
+<div id="graph_spec_from_matrix" class="section level3">
+<h3 class="hasAnchor">
+<a href="#graph_spec_from_matrix" class="anchor"></a><code>graph_spec_from_matrix()</code>
+</h3>
+<p>The <code><a href="reference/graph_spec_from_matrix.html">graph_spec_from_matrix()</a></code> function translates the function matrix into a character string containing a <a href="https://graphviz.org/">graphviz</a> specification:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>graphvis_spec &lt;-<span class="st"> </span><span class="kw">graph_spec_from_matrix</span>(funmat)</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>graphvis_spec</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; digraph g {</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; "g()" -&gt; { "f()" }</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; "h()" -&gt; { "f()", "g()" }</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; "i()" -&gt; { "f()", "g()", "h()" }</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="er">}</span></span></code></pre></div>
+</div>
+<div id="visualisation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#visualisation" class="anchor"></a>Visualisation</h3>
+<p>We can visualise the graph specification using <code>Diagrammer::grViz()</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">DiagrammeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DiagrammeR/man/grViz.html">grViz</a></span><span class="op">(</span><span class="va">graphvis_spec</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/graph.png" alt="Function dependency graph"></p>
+</div>
 </div>
 </div>
   </div>
