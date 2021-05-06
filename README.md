@@ -57,10 +57,10 @@ graphvis_spec <- graph_spec_from_matrix(funmat)
 
 graphvis_spec
 #> digraph g {
-#> g -> { f }
-#> h -> { f, g }
-#> i -> { f, g, h }
-#> }
+#> "g()" -> { "f()" }
+#> "h()" -> { "f()", "g()" }
+#> "i()" -> { "f()", "g()", "h()" }
+}
 ```
 
 We can visualise the graph using `Diagrammer::grViz()`.
