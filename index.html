@@ -96,10 +96,9 @@
   <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p><img src="reference/figures/cowsay-foodweb.png" alt="Foodweb of cowsay package"></p>
-<p>In case you want to do something with the graphvix output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphvis specification as a character vector.</p>
+<p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
 <span class="co">#&gt; digraph g {</span>
 <span class="co">#&gt; "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt; "h()" -&gt; { "f()", "g()" }</span>
@@ -109,7 +108,7 @@
 <div id="digging-deeper" class="section level2">
 <h2 class="hasAnchor">
 <a href="#digging-deeper" class="anchor"></a>Digging deeper</h2>
-<p>foodwebr also exposes the workhorse functions in case you want to play around with them.</p>
+<p><code>foodwebr</code> also exposes the workhorse functions in case you want to play around with them.</p>
 <div id="function_matrix" class="section level3">
 <h3 class="hasAnchor">
 <a href="#function_matrix" class="anchor"></a><code>function_matrix()</code>
