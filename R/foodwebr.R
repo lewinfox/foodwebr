@@ -138,3 +138,37 @@ tokenise_function <- function(x) {
   # objects to text and send them back up
   paste(deparse(x), collapse = "\n")
 }
+
+#' Create a foodweb
+#'
+#' @param FUN A function
+#' @param env An environment, `.GlobalEnv` by default. Ignored if `FUN` is not `NULL`
+#' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
+#'   specification is returned.
+#'
+#' @return If `as.text` is `TRUE`, a character vector. Otherwise nothing is returned and the
+#'   function only renders the graph.
+#' @export
+#'
+#' @examples
+#' foodweb()
+#'
+#' foodweb(as.text = TRUE)
+#'
+#' # "cowsay" is a small enough package that this output is readable. Try this with larger packages
+#' # at your peril.
+#' if (requireNamespace("cowsay", quietly = TRUE)) {
+#'   foodweb(FUN = cowsay::say)
+#' }
+foodweb <- function(FUN = NULL, env = .GlobalEnv, as.text = FALSE) {
+  if (!is.null(FUN)) {
+    FUN <- match.fun(FUN)
+    env <- environment(FUN)
+  }
+  fm <- function_matrix(env)
+  gr_sp <- graph_spec_from_matrix(fm)
+  if (as.text) {
+    return(gr_sp)
+  }
+  DiagrammeR::grViz(gr_sp)
+}
