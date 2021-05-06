@@ -99,6 +99,7 @@
 <p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
 <span class="co">#&gt; digraph g {</span>
 <span class="co">#&gt; "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt; "h()" -&gt; { "f()", "g()" }</span>
