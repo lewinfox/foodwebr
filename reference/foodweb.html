@@ -40,7 +40,10 @@
 
 
 <meta property="og:title" content="Create a foodweb — foodweb" />
-<meta property="og:description" content="Create a foodweb" />
+<meta property="og:description" content="foodweb() looks at the global environment by default. If you want to look at another
+environment you can either pass a function to the FUN argument of foodweb() or pass an
+environment to the env argument. If FUN is provided then the value of env is ignored, and
+the environment of FUN will be used." />
 
 
 
@@ -109,7 +112,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Create a foodweb</p>
+    <p><code>foodweb()</code> looks at the global environment by default. If you want to look at another
+environment you can either pass a function to the <code>FUN</code> argument of <code>foodweb()</code> or pass an
+environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and
+the environment of <code>FUN</code> will be used.</p>
     </div>
 
     <pre class="usage"><span class='fu'>foodweb</span><span class='op'>(</span>FUN <span class='op'>=</span> <span class='cn'>NULL</span>, env <span class='op'>=</span> <span class='va'>.GlobalEnv</span>, as.text <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -161,7 +167,7 @@ function only renders the graph.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Lewin Appleton-Fox.</p>
+  <p>Developed by <a href='https://github.com/lewinfox'>Lewin Appleton-Fox</a>.</p>
 </div>
 
 <div class="pkgdown">
