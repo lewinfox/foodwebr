@@ -55,7 +55,9 @@ function_matrix <- function(env = .GlobalEnv) {
 #' @param funs_to_match `<chr>`\cr Only these functions will be considered as parents
 #' @param where `<env>`\cr An environment, or text specifying an environment
 #'
-#' @return A character vector listing the functions in `funs_to_match` that call `fname`.
+#' @return A character vector listing the functions in `funs_to_match` that call `fn_name`.
+#'
+#' @keywords internal
 functions_called_by <- function(fn_name, funs_to_match, where) {
   # List of environments where we want to look for functions
   if (is.environment(where)) {
@@ -109,9 +111,13 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
   return(res)
 }
 
-#' Convert a function (a language object) to text
+#' Convert a function body to text
 #'
 #' @param x A function
+#'
+#' @return A character string containing the tokenised function body
+#'
+#' @keywords internal
 tokenise_function <- function(x) {
   # Given a function as input, break it down into tokens and return them as text for analysis
 
@@ -142,8 +148,13 @@ tokenise_function <- function(x) {
 
 #' Create a foodweb
 #'
-#' @param FUN A function
-#' @param env An environment, `.GlobalEnv` by default. Ignored if `FUN` is not `NULL`
+#' `foodweb()` looks at the global environment by default. If you want to look at another
+#' environment you can either pass a function to the `FUN` argument of `foodweb()` or pass an
+#' environment to the `env` argument. If `FUN` is provided then the value of `env` is ignored, and
+#' the environment of `FUN` will be used.
+#'
+#' @param FUN A function.
+#' @param env An environment, `.GlobalEnv` by default. Ignored if `FUN` is not `NULL`.
 #' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
 #'   specification is returned.
 #'

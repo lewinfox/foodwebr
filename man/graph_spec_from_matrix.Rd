@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph.R
 \name{graph_spec_from_matrix}
 \alias{graph_spec_from_matrix}
-\title{Create a `grViz`` specification from a function matrix}
+\title{Create a \code{grViz} specification from a function matrix}
 \usage{
 graph_spec_from_matrix(funmat)
 }

@@ -1,4 +1,4 @@
-#' Create a `grViz`` specification from a function matrix
+#' Create a `grViz` specification from a function matrix
 #'
 #' Given a function matrix created by [function_matrix()], convert it into a text specification
 #' that can be passed to [DiagrammeR::grViz()].

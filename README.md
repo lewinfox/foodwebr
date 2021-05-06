@@ -3,9 +3,9 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-foodwebr makes it easy to visualise the dependency graph of a set of functions (i.e. who calls who).
-This can be useful for exploring an unfamiliar codebase,or reminding yourself what you wrote ten
-minutes ago
+`foodwebr` makes it easy to visualise the dependency graph of a set of functions (i.e. who calls
+who). This can be useful for exploring an unfamiliar codebase,or reminding yourself what you wrote
+ten minutes ago
 
 ## Installation
 

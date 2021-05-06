@@ -19,7 +19,10 @@ If \code{as.text} is \code{TRUE}, a character vector. Otherwise nothing is retur
 function only renders the graph.
 }
 \description{
-Create a foodweb
+\code{foodweb()} looks at the global environment by default. If you want to look at another
+environment you can either pass a function to the \code{FUN} argument of \code{foodweb()} or pass an
+environment to the \code{env} argument. If \code{FUN} is provided then the value of \code{env} is ignored, and
+the environment of \code{FUN} will be used.
 }
 \examples{
 \dontrun{

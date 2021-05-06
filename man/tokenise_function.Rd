@@ -2,13 +2,17 @@
 % Please edit documentation in R/foodwebr.R
 \name{tokenise_function}
 \alias{tokenise_function}
-\title{Convert a function (a language object) to text}
+\title{Convert a function body to text}
 \usage{
 tokenise_function(x)
 }
 \arguments{
 \item{x}{A function}
 }
-\description{
-Convert a function (a language object) to text
+\value{
+A character string containing the tokenised function body
 }
+\description{
+Convert a function body to text
+}
+\keyword{internal}

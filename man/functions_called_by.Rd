@@ -14,9 +14,10 @@ functions_called_by(fn_name, funs_to_match, where)
 \item{where}{\verb{<env>}\cr An environment, or text specifying an environment}
 }
 \value{
-A character vector listing the functions in \code{funs_to_match} that call \code{fname}.
+A character vector listing the functions in \code{funs_to_match} that call \code{fn_name}.
 }
 \description{
 Given an input function \code{fn_name} and a list of candidate functions \code{funs_to_match}, return a
 list of all the functions in \code{funs_to_match} that appear in the definition of \code{fn_name}.
 }
+\keyword{internal}

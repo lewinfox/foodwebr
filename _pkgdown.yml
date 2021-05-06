@@ -1,0 +1,26 @@
+url:
+
+home:
+  title: Visualise function dependencies
+  links:
+  - text: View the source code
+    href: https://github.com/lewinfox/foodwebr
+  - text: File a bug
+    href: https://github.com/lewinfox/foodwebr/issues
+
+authors:
+  Lewin Appleton-Fox:
+    href: https://github.com/lewinfox
+
+reference:
+- title: Make a foodweb
+  desc: >
+    If you only want to learn about one function, this is the one.
+  contents:
+  - foodweb
+- title: Utilities
+  desc: >
+    `foodwebr` exposes its guts in case you want to tinker.
+  contents:
+  - function_matrix
+  - graph_spec_from_matrix
