@@ -22,11 +22,11 @@ We have a bunch of functions in the global environment, some of which call each 
 ``` r
 library(foodwebr)
 
-f = function() 1
-g = function() f()
-h = function() { f(); g() }
-i = function() { f(); g(); h() }
-j = function() j()
+f <- function() 1
+g <- function() f()
+h <- function() { f(); g() }
+i <- function() { f(); g(); h() }
+j <- function() j()
 ```
 
 We compute the "function matrix". The matrix is 1 if the function on the y-axis calls the function
