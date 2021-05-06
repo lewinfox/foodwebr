@@ -55,12 +55,12 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 
 ![Foodweb of `cowsay` package](man/figures/cowsay-foodweb.png)
 
-In case you want to do something with the graphvix output (make it prettier, for example), use
-`as.text = TRUE`. This returns the graphvis specification as a character vector.
+In case you want to do something with the [graphviz](https://graphviz.org/) output (make it
+prettier, for example), use `as.text = TRUE`. This returns the graphviz specification as a character
+vector.
 
 ``` r
 foodweb(as.text = TRUE)
-
 #> digraph g {
 #> "g()" -> { "f()" }
 #> "h()" -> { "f()", "g()" }
@@ -70,7 +70,7 @@ foodweb(as.text = TRUE)
 
 ## Digging deeper
 
-foodwebr also exposes the workhorse functions in case you want to play around with them.
+`foodwebr` also exposes the workhorse functions in case you want to play around with them.
 
 ### `function_matrix()`
 
