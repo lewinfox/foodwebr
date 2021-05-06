@@ -14,6 +14,7 @@ graph_spec_from_matrix <- function(funmat) {
   for (caller_name in rownames(funmat)) {
     called_fns <- colnames(funmat)[funmat[caller_name, ] > 0]
     called_fns <- glue::glue("\"{called_fns}()\"")
+    # TODO: Do we want an option to include orphan functions in the output?
     if (length(called_fns) > 0) {
       spec <- glue::glue("\"{caller_name}()\" -> {{ {paste(called_fns, collapse = ', ')} }}")
       graph_data <- paste(graph_data, spec, sep = "\n")
