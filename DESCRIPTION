@@ -10,6 +10,7 @@ Authors@R:
 Description: Easily create graphs of the inter-relationships between functions in an environment.
 License: MIT + file LICENSE
 Imports: 
+    cli,
     DiagrammeR,
     glue,
     methods,
