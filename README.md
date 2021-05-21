@@ -75,9 +75,10 @@ foodweb(as.text = TRUE)
 ### `function_matrix()`
 
 The starting point is to compute the function matrix. This idea, and much of the implementation,
-was taken from `mvbutils::foodweb()`. The function matrix is 1 if the function on the y-axis calls
-the function on the x-axis, and 0 otherwise. `function_matrix()` looks at functions in the global
-environment by default, but you can specify another environment using the `env` argument.
+was taken from [`mvbutils::foodweb()`](https://rdrr.io/cran/mvbutils/man/foodweb.html). The function
+matrix is 1 if the function on the y-axis calls the function on the x-axis, and 0  otherwise.
+`function_matrix()` looks at functions in the global environment by default, but you can specify
+another environment using the `env` argument.
 
 ``` r
 funmat <- function_matrix()
