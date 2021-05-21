@@ -216,12 +216,12 @@ filter_matrix <- function(fn_name, fn_mat) {
   fns_to_keep <- fn_name
 
   queue <- fn_name
-  seen <- character()
+  seen <- character(nrow(fn_mat))
   i <- 1
 
   # Look up the tree
   while (i <= length(queue)) {
-    seen <- c(seen, queue[[i]])
+    seen[[i]] <- queue[[i]]
     new_funs <-  rownames(fn_mat)[fn_mat[, queue[[i]]] > 0]
     fns_to_keep <- union(fns_to_keep, new_funs)
     new_funs <- setdiff(new_funs, seen)
@@ -235,7 +235,7 @@ filter_matrix <- function(fn_name, fn_mat) {
 
   # Look down the tree
   while (i <= length(queue)) {
-    seen <- c(seen, queue[[i]])
+    seen[[i]] <- queue[[i]]
     new_funs <- colnames(fn_mat)[fn_mat[queue[[i]], ] > 0]
     fns_to_keep <- union(fns_to_keep, new_funs)
     new_funs <- setdiff(new_funs, seen)
