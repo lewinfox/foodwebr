@@ -4,12 +4,15 @@
 \alias{foodweb}
 \title{Create a foodweb}
 \usage{
-foodweb(FUN = NULL, env = .GlobalEnv, as.text = FALSE)
+foodweb(FUN = NULL, env = .GlobalEnv, filter = !is.null(FUN), as.text = FALSE)
 }
 \arguments{
-\item{FUN}{A function}
+\item{FUN}{A function.}
 
-\item{env}{An environment, \code{.GlobalEnv} by default. Ignored if \code{FUN} is not \code{NULL}}
+\item{env}{An environment, \code{.GlobalEnv} by default. Ignored if \code{FUN} is not \code{NULL}.}
+
+\item{filter}{Boolean. If \code{TRUE}, only functions that are direct descndants or antecedants of
+\code{FUN} will be shown.}
 
 \item{as.text}{Boolean. If \code{TRUE}, rather than rendering the graph the intermediate graphviz
 specification is returned.}

@@ -15,7 +15,7 @@ function_matrix <- function(env = .GlobalEnv) {
   if (!is.environment(env)) {
     env <- as.environment(env)
   }
-  funs <- utils::lsf.str(envir = env)
+  funs <- as.character(utils::lsf.str(envir = env))
   n <- length(funs)
   if (n == 0) {
     rlang::abort("No functions found in {env}")
@@ -155,6 +155,8 @@ tokenise_function <- function(x) {
 #'
 #' @param FUN A function.
 #' @param env An environment, `.GlobalEnv` by default. Ignored if `FUN` is not `NULL`.
+#' @param filter Boolean. If `TRUE`, only functions that are direct descndants or antecedants of
+#'   `FUN` will be shown.
 #' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
 #'   specification is returned.
 #'
@@ -174,15 +176,72 @@ tokenise_function <- function(x) {
 #'   foodweb(FUN = cowsay::say)
 #' }
 #' }
-foodweb <- function(FUN = NULL, env = .GlobalEnv, as.text = FALSE) {
+foodweb <- function(FUN = NULL, env = .GlobalEnv, filter = !is.null(FUN), as.text = FALSE) {
+  fn_name <- as.character(substitute(FUN))
+  if (is.null(FUN) && filter) {
+    cli::cli_alert_warning("`FUN` is NULL so `filter = TRUE` has no effect")
+    filter <- FALSE
+  }
   if (!is.null(FUN)) {
     FUN <- match.fun(FUN)
     env <- environment(FUN)
   }
   fm <- function_matrix(env)
+  if (filter) {
+    fn_name <- fn_name[length(fn_name)]
+    fm <- filter_matrix(fn_name, fm)
+    if (!is.matrix(fm)) {
+      cli::cli_alert_info("{.fn {fn_name}} does not call, and is not called by, any other functions")
+      return(invisible(NULL))
+    }
+  }
   gr_sp <- graph_spec_from_matrix(fm)
   if (as.text) {
     return(gr_sp)
   }
   DiagrammeR::grViz(gr_sp)
+}
+
+#' Filter a function matrix
+#'
+#' @param fn_name String giving the name of the function we're interested in
+#' @param fn_mat Matrix prpduced by [function_matrix()]
+#'
+#' @return A filtered function matrix containing only functions that are direct descendants or
+#'   antecedants of `fn_name`.
+#'
+#' @keywords internal
+filter_matrix <- function(fn_name, fn_mat) {
+  # We need to construct a list of column and row indexes checked / to keep
+  fns_to_keep <- fn_name
+
+  queue <- fn_name
+  seen <- character(nrow(fn_mat))
+  i <- 1
+
+  # Look up the tree
+  while (i <= length(queue)) {
+    seen[[i]] <- queue[[i]]
+    new_funs <-  rownames(fn_mat)[fn_mat[, queue[[i]]] > 0]
+    fns_to_keep <- union(fns_to_keep, new_funs)
+    new_funs <- setdiff(new_funs, seen)
+    queue <- c(queue, setdiff(new_funs, queue))
+    i <- i + 1
+  }
+
+  queue <- fn_name
+  seen <- character()
+  i <- 1
+
+  # Look down the tree
+  while (i <= length(queue)) {
+    seen[[i]] <- queue[[i]]
+    new_funs <- colnames(fn_mat)[fn_mat[queue[[i]], ] > 0]
+    fns_to_keep <- union(fns_to_keep, new_funs)
+    new_funs <- setdiff(new_funs, seen)
+    queue <- c(queue, setdiff(new_funs, queue))
+    i <- i + 1
+  }
+
+  fn_mat[fns_to_keep, fns_to_keep]
 }
