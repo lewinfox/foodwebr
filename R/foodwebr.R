@@ -11,14 +11,17 @@
 #' @return An n x n matrix where _n_ is the number of functions in `env`.
 #'
 #' @export
-function_matrix <- function(env = .GlobalEnv) {
+function_matrix <- function(env = parent.frame()) {
   if (!is.environment(env)) {
     env <- as.environment(env)
   }
   funs <- as.character(utils::lsf.str(envir = env))
   n <- length(funs)
   if (n == 0) {
-    rlang::abort("No functions found in {env}")
+    env_label <- glue::glue("<env: {rlang::env_label(env)}>")
+    msg <- glue::glue("No functions found in {{.var {env_label}}}")
+    cli::cli_alert_danger(msg)
+    rlang::abort("No functions found", "foodwebr_no_functions")
   }
   funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
   # CALLER.of is a list of indices into `funs`, such that if CALLER.of[1] = [2 3 4] it means that
@@ -30,7 +33,7 @@ function_matrix <- function(env = .GlobalEnv) {
 
   if (sum(n.CALLER) == 0) {
     # TODO: Can we capture base or other package fns?
-    rlang::abort("Function does not call any matched functions")
+    rlang::abort("Function does not call any matched functions", "foodwebr_no_web")
   }
 
   # Construct the function caller/callee matrix
@@ -176,7 +179,7 @@ tokenise_function <- function(x) {
 #'   foodweb(FUN = cowsay::say)
 #' }
 #' }
-foodweb <- function(FUN = NULL, env = .GlobalEnv, filter = !is.null(FUN), as.text = FALSE) {
+foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as.text = FALSE) {
   fn_name <- as.character(substitute(FUN))
   if (is.null(FUN) && filter) {
     cli::cli_alert_warning("`FUN` is NULL so `filter = TRUE` has no effect")
