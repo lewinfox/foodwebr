@@ -35,7 +35,7 @@ devtools::install_github("lewinfox/foodwebr")
 
 Say we have a bunch of functions in the global environment, some of which call each other:
 
-```{r}
+```{r setup}
 library(foodwebr)
 
 f <- function() 1
@@ -47,19 +47,19 @@ j <- function() j()
 
 A call to `foodweb()` will calculate a graph of the dependencies, i.e. who calls who.
 
-```{r}
+```{r, foodweb-basic}
 fw <- foodweb()
 ```
 
 Printing the object will show the graphvis representation:
 
-```{r}
+```{r, foodweb-print}
 fw
 ```
 
 Plotting will draw the graph.
 
-```{r, message=FALSE}
+```{r foodweb-plot, message=FALSE}
 plot(fw)
 ```
 
@@ -74,7 +74,7 @@ you can either pass a function to the `FUN` argument of `foodweb()` or pass an e
 You can use this to map all the functions in a package. I'm using `cowsay` here as it's small
 enough that the output is readable.
 
-```{r}
+```{r, foodweb-plot-package}
 if (requireNamespace("cowsay", quietly = TRUE)) {
   plot(foodweb(cowsay::say))
 }
@@ -84,7 +84,7 @@ In case you want to do something with the [graphviz](https://graphviz.org/) outp
 prettier, for example), use `as.text = TRUE`. This returns the graphviz specification as a character
 vector.
 
-```{r}
+```{r foodweb-as-text}
 foodweb(as.text = TRUE)
 ```
 
@@ -100,7 +100,7 @@ matrix is 1 if the function on the y-axis calls the function on the x-axis, and 
 `function_matrix()` looks at functions in the global environment by default, but you can specify
 another environment using the `env` argument.
 
-```{r}
+```{r, foodweb-funmat}
 funmat <- function_matrix()
 
 funmat
@@ -113,7 +113,7 @@ Note that self-calls are ignored (`funmat["j", "j"]` is zero even though `j()` c
 The `graph_spec_from_matrix()` function translates the function matrix into a character string
 containing a [graphviz](https://graphviz.org/) specification:
 
-```{r}
+```{r, foodweb-graph-spec}
 graphvis_spec <- graph_spec_from_matrix(funmat)
 
 graphvis_spec
@@ -123,6 +123,6 @@ graphvis_spec
 
 We can visualise the graph specification using `Diagrammer::grViz()`.
 
-```{r}
+```{r foodweb-plot-graph-spec}
 DiagrammeR::grViz(graphvis_spec)
 ```

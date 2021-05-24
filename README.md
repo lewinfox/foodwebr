@@ -48,7 +48,7 @@ Printing the object will show the graphvis representation:
 fw
 #> `foodweb` with 5 nodes and 6 edges:
 #> 
-#> digraph g {
+#> digraph "<env: 0x43f5be0>" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -61,7 +61,7 @@ Plotting will draw the graph.
 plot(fw)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-foodweb-plot-1.png" width="100%" />
 
 Note that function `j()` is not shown because it doesn’t interact with
 any of the other functions.
@@ -81,7 +81,7 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-foodweb-plot-package-1.png" width="100%" />
 
 In case you want to do something with the
 [graphviz](https://graphviz.org/) output (make it prettier, for
@@ -90,7 +90,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph g {
+#> digraph "<env: 0x43f5be0>" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -138,7 +138,7 @@ specification:
 graphvis_spec <- graph_spec_from_matrix(funmat)
 
 graphvis_spec
-#> digraph g {
+#> digraph "foodweb" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -147,10 +147,11 @@ graphvis_spec
 
 ### Visualisation
 
-We can visualise the graph specification using `Diagrammer::grViz()`.
+We can visualise the graph specification using
+`Diagrammer::grViz()`.
 
 ``` r
 DiagrammeR::grViz(graphvis_spec)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-foodweb-plot-graph-spec-1.png" width="100%" />
