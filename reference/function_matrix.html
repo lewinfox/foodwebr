@@ -116,14 +116,14 @@ that if the function on the x-axis calls the function on th y-axis, the element 
 0.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>function_matrix</span><span class='op'>(</span>env <span class='op'>=</span> <span class='va'>.GlobalEnv</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>function_matrix</span><span class='op'>(</span>env <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>env</th>
-      <td><p><code>&lt;chr&gt;</code><br /> Environment in which to search for functions. Can either be an environment
+      <td><p>Environment in which to search for functions. Can either be an environment
 or a character string denoting an environment (e.g. <code>"package:emissions"</code>). Environment must
 be on the search path.</p></td>
     </tr>

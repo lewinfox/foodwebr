@@ -118,7 +118,12 @@ environment to the <code>env</code> argument. If <code>FUN</code> is provided th
 the environment of <code>FUN</code> will be used.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>foodweb</span><span class='op'>(</span>FUN <span class='op'>=</span> <span class='cn'>NULL</span>, env <span class='op'>=</span> <span class='va'>.GlobalEnv</span>, filter <span class='op'>=</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>FUN</span><span class='op'>)</span>, as.text <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>foodweb</span><span class='op'>(</span>
+  FUN <span class='op'>=</span> <span class='cn'>NULL</span>,
+  env <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span>,
+  filter <span class='op'>=</span> <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NULL.html'>is.null</a></span><span class='op'>(</span><span class='va'>FUN</span><span class='op'>)</span>,
+  as.text <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -129,7 +134,7 @@ the environment of <code>FUN</code> will be used.</p>
     </tr>
     <tr>
       <th>env</th>
-      <td><p>An environment, <code>.GlobalEnv</code> by default. Ignored if <code>FUN</code> is not <code>NULL</code>.</p></td>
+      <td><p>An environment, <code><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame()</a></code> by default. Ignored if <code>FUN</code> is not <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>filter</th>
