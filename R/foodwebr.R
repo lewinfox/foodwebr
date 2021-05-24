@@ -185,9 +185,16 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     cli::cli_alert_warning("`FUN` is NULL so `filter = TRUE` has no effect")
     filter <- FALSE
   }
+  title <- paste0("<env: ", rlang::env_label(env), ">", collapse = "")
   if (!is.null(FUN)) {
     FUN <- match.fun(FUN)
     env <- environment(FUN)
+    if (length(fn_name) > 1) {
+      title <- paste0(paste(fn_name[c(2, 1, 3)], collapse = ""), "()", collapse = "")
+    } else {
+      title <- paste(fn_name, "()", collapse = "")
+    }
+
   }
   fm <- function_matrix(env)
   if (filter) {
@@ -198,7 +205,7 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
       return(invisible(NULL))
     }
   }
-  gr_sp <- graph_spec_from_matrix(fm)
+  gr_sp <- graph_spec_from_matrix(fm, title)
   fw <- structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
   if (as.text) (
     return(gr_sp)
