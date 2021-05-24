@@ -1,3 +1,5 @@
+# ---- Function analysis ----
+
 #' Create a function caller/callee matrix
 #'
 #' Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
@@ -149,70 +151,6 @@ tokenise_function <- function(x) {
   paste(deparse(x), collapse = "\n")
 }
 
-#' Create a foodweb
-#'
-#' `foodweb()` looks at the global environment by default. If you want to look at another
-#' environment you can either pass a function to the `FUN` argument of `foodweb()` or pass an
-#' environment to the `env` argument. If `FUN` is provided then the value of `env` is ignored, and
-#' the environment of `FUN` will be used.
-#'
-#' @param FUN A function.
-#' @param env An environment, `parent.frame()` by default. Ignored if `FUN` is not `NULL`.
-#' @param filter Boolean. If `TRUE`, only functions that are direct descndants or antecedants of
-#'   `FUN` will be shown.
-#' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
-#'   specification is returned.
-#'
-#' @return If `as.text` is `TRUE`, a character vector. Otherwise nothing is returned and the
-#'   function only renders the graph.
-#' @export
-#'
-#' @examples
-#' \donttest{
-#' foodweb()
-#'
-#' foodweb(as.text = TRUE)
-#'
-#' # "cowsay" is a small enough package that this output is readable. Try this with larger packages
-#' # at your peril.
-#' if (requireNamespace("cowsay", quietly = TRUE)) {
-#'   foodweb(FUN = cowsay::say)
-#' }
-#' }
-foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as.text = FALSE) {
-  fn_name <- as.character(substitute(FUN))
-  if (is.null(FUN) && filter) {
-    cli::cli_alert_warning("`FUN` is NULL so `filter = TRUE` has no effect")
-    filter <- FALSE
-  }
-  title <- paste0("<env: ", rlang::env_label(env), ">", collapse = "")
-  if (!is.null(FUN)) {
-    FUN <- match.fun(FUN)
-    env <- environment(FUN)
-    if (length(fn_name) > 1) {
-      title <- paste0(paste(fn_name[c(2, 1, 3)], collapse = ""), "()", collapse = "")
-    } else {
-      title <- paste(fn_name, "()", collapse = "")
-    }
-
-  }
-  fm <- function_matrix(env)
-  if (filter) {
-    fn_name <- fn_name[length(fn_name)]
-    fm <- filter_matrix(fn_name, fm)
-    if (!is.matrix(fm)) {
-      cli::cli_alert_info("{.fn {fn_name}} does not call, and is not called by, any other functions")
-      return(invisible(NULL))
-    }
-  }
-  gr_sp <- graph_spec_from_matrix(fm, title)
-  fw <- structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
-  if (as.text) (
-    return(gr_sp)
-  )
-  fw
-}
-
 #' Filter a function matrix
 #'
 #' @param fn_name String giving the name of the function we're interested in
@@ -256,6 +194,104 @@ filter_matrix <- function(fn_name, fn_mat) {
 
   fn_mat[fns_to_keep, fns_to_keep]
 }
+
+# ---- Build a foodweb ----
+
+
+#' Create a foodweb
+#'
+#' `foodweb()` looks at the global environment by default. If you want to look at another
+#' environment you can either pass a function to the `FUN` argument of `foodweb()` or pass an
+#' environment to the `env` argument. If `FUN` is provided then the value of `env` is ignored, and
+#' the environment of `FUN` will be used.
+#'
+#' @param FUN A function.
+#' @param env An environment, `parent.frame()` by default. Ignored if `FUN` is not `NULL`.
+#' @param filter Boolean. If `TRUE`, only functions that are direct descndants or antecedants of
+#'   `FUN` will be shown.
+#' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
+#'   specification is returned.
+#'
+#' @return If `as.text` is `TRUE`, a character vector. Otherwise nothing is returned and the
+#'   function only renders the graph.
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' foodweb()
+#'
+#' foodweb(as.text = TRUE)
+#'
+#' # "cowsay" is a small enough package that this output is readable. Try this with larger packages
+#' # at your peril.
+#' if (requireNamespace("cowsay", quietly = TRUE)) {
+#'   foodweb(FUN = cowsay::say)
+#' }
+#' }
+foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as.text = FALSE) {
+  fn_name <- as.character(substitute(FUN))
+  if (is.null(FUN) && filter) {
+    cli::cli_alert_warning("{.var FUN} is {.val NULL} so {.code filter = TRUE} has no effect")
+    filter <- FALSE
+  }
+  title <- paste0("<env: ", rlang::env_label(env), ">", collapse = "")
+  if (!is.null(FUN)) {
+    FUN <- match.fun(FUN)
+    env <- environment(FUN)
+    if (length(fn_name) > 1) {
+      title <- paste0(paste(fn_name[c(2, 1, 3)], collapse = ""), "()", collapse = "")
+    } else {
+      title <- paste(fn_name, "()", collapse = "")
+    }
+
+  }
+  fm <- function_matrix(env)
+  if (filter) {
+    fn_name <- fn_name[length(fn_name)]
+    fm <- filter_matrix(fn_name, fm)
+    if (!is.matrix(fm)) {
+      cli::cli_alert_info("{.fn {fn_name}} does not call, and is not called by, any other functions")
+      return(invisible(NULL))
+    }
+  }
+  gr_sp <- graph_spec_from_matrix(fm, title)
+  fw <- structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
+  if (as.text) (
+    return(gr_sp)
+  )
+  fw
+}
+
+# ---- Creating graphviz spec ----
+
+#' Create a `grViz` specification from a function matrix
+#'
+#' Given a function matrix created by [function_matrix()], convert it into a text specification
+#' that can be passed to [DiagrammeR::grViz()].
+#'
+#' @param funmat A function matrix generated by [function_matrix()].
+#' @param title The name of the graph. Will be displayed as mouseover text.
+#'
+#' @return A text string.
+#'
+#' @export
+graph_spec_from_matrix <- function(funmat, title = "foodweb") {
+  template <- "digraph \"{title}\" {{{graph_data}\n}}"
+  graph_data <- character()
+  for (caller_name in rownames(funmat)) {
+    called_fns <- colnames(funmat)[funmat[caller_name, ] > 0]
+    called_fns <- glue::glue("\"{called_fns}()\"")
+    # TODO: Do we want an option to include orphan functions in the output?
+    if (length(called_fns) > 0) {
+      spec <- glue::glue("  \"{caller_name}()\" -> {{ {paste(called_fns, collapse = ', ')} }}")
+      graph_data <- paste(graph_data, spec, sep = "\n")
+    }
+  }
+  glue::glue(template)
+}
+
+
+#---- S3 methods ----
 
 #' Print a `foodweb` object
 #'
