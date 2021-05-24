@@ -35,14 +35,33 @@ i <- function() { f(); g(); h() }
 j <- function() j()
 ```
 
-A call to `foodweb()` will calculate and display a graph of the
-dependencies, i.e. who calls who.
+A call to `foodweb()` will calculate a graph of the dependencies,
+i.e. who calls who.
 
 ``` r
-foodweb()
+fw <- foodweb()
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+Printing the object will show the graphvis representation:
+
+``` r
+fw
+#> `foodweb` with 5 nodes and 6 edges:
+#> 
+#> digraph g {
+#>   "g()" -> { "f()" }
+#>   "h()" -> { "f()", "g()" }
+#>   "i()" -> { "f()", "g()", "h()" }
+#> }
+```
+
+Plotting will draw the graph.
+
+``` r
+plot(fw)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 Note that function `j()` is not shown because it doesn’t interact with
 any of the other functions.
@@ -58,11 +77,11 @@ You can use this to map all the functions in a package. I’m using
 
 ``` r
 if (requireNamespace("cowsay", quietly = TRUE)) {
-  foodweb(cowsay::say)
+  plot(foodweb(cowsay::say))
 }
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 In case you want to do something with the
 [graphviz](https://graphviz.org/) output (make it prettier, for
@@ -72,9 +91,9 @@ as a character vector.
 ``` r
 foodweb(as.text = TRUE)
 #> digraph g {
-#> "g()" -> { "f()" }
-#> "h()" -> { "f()", "g()" }
-#> "i()" -> { "f()", "g()", "h()" }
+#>   "g()" -> { "f()" }
+#>   "h()" -> { "f()", "g()" }
+#>   "i()" -> { "f()", "g()", "h()" }
 #> }
 ```
 
@@ -120,9 +139,9 @@ graphvis_spec <- graph_spec_from_matrix(funmat)
 
 graphvis_spec
 #> digraph g {
-#> "g()" -> { "f()" }
-#> "h()" -> { "f()", "g()" }
-#> "i()" -> { "f()", "g()", "h()" }
+#>   "g()" -> { "f()" }
+#>   "h()" -> { "f()", "g()" }
+#>   "i()" -> { "f()", "g()", "h()" }
 #> }
 ```
 
@@ -134,4 +153,4 @@ We can visualise the graph specification using `Diagrammer::grViz()`.
 DiagrammeR::grViz(graphvis_spec)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />

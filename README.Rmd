@@ -45,10 +45,22 @@ i <- function() { f(); g(); h() }
 j <- function() j()
 ```
 
-A call to `foodweb()` will calculate and display a graph of the dependencies, i.e. who calls who.
+A call to `foodweb()` will calculate a graph of the dependencies, i.e. who calls who.
 
 ```{r}
-foodweb()
+fw <- foodweb()
+```
+
+Printing the object will show the graphvis representation:
+
+```{r}
+fw
+```
+
+Plotting will draw the graph.
+
+```{r, message=FALSE}
+plot(fw)
 ```
 
 
@@ -64,7 +76,7 @@ enough that the output is readable.
 
 ```{r}
 if (requireNamespace("cowsay", quietly = TRUE)) {
-  foodweb(cowsay::say)
+  plot(foodweb(cowsay::say))
 }
 ```
 
