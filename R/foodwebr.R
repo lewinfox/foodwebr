@@ -199,10 +199,7 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     }
   }
   gr_sp <- graph_spec_from_matrix(fm)
-  if (as.text) {
-    return(gr_sp)
-  }
-  DiagrammeR::grViz(gr_sp)
+  structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
 }
 
 #' Filter a function matrix
@@ -247,4 +244,28 @@ filter_matrix <- function(fn_name, fn_mat) {
   }
 
   fn_mat[fns_to_keep, fns_to_keep]
+}
+
+#' Print a `foodweb` object
+#'
+#' Prints the `grvis_spec` member of a `foodweb` object.
+#'
+#' @param x A `foodweb` object.
+#'
+#' @export
+print.foodweb <- function(x) {
+  cat("`foodweb` with", nrow(x$funmat), "nodes and", sum(x$funmat), "edges:\n\n")
+  cat(x$graphviz_spec)
+}
+
+
+#' Plot a `foodweb` object
+#'
+#' Calls [DiagrammeR::grViz()] on the `graphvis_spec` element of the `foodweb`.
+#'
+#' @param x A `foodweb` object.
+#'
+#' @export
+plot.foodweb <- function(x) {
+  DiagrammeR::grViz(x$graphviz_spec)
 }
