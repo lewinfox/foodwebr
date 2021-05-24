@@ -199,7 +199,11 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     }
   }
   gr_sp <- graph_spec_from_matrix(fm)
-  structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
+  fw <- structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
+  if (as.text) (
+    return(gr_sp)
+  )
+  fw
 }
 
 #' Filter a function matrix
