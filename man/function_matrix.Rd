@@ -4,10 +4,10 @@
 \alias{function_matrix}
 \title{Create a function caller/callee matrix}
 \usage{
-function_matrix(env = .GlobalEnv)
+function_matrix(env = parent.frame())
 }
 \arguments{
-\item{env}{\verb{<chr>}\cr Environment in which to search for functions. Can either be an environment
+\item{env}{Environment in which to search for functions. Can either be an environment
 or a character string denoting an environment (e.g. \code{"package:emissions"}). Environment must
 be on the search path.}
 }

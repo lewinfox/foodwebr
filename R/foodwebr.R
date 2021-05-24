@@ -4,7 +4,7 @@
 #' that if the function on the x-axis calls the function on th y-axis, the element is 1, otherwise
 #' 0.
 #'
-#' @param env `<chr>`\cr Environment in which to search for functions. Can either be an environment
+#' @param env Environment in which to search for functions. Can either be an environment
 #'   or a character string denoting an environment (e.g. `"package:emissions"`). Environment must
 #'   be on the search path.
 #'
@@ -157,7 +157,7 @@ tokenise_function <- function(x) {
 #' the environment of `FUN` will be used.
 #'
 #' @param FUN A function.
-#' @param env An environment, `.GlobalEnv` by default. Ignored if `FUN` is not `NULL`.
+#' @param env An environment, `parent.frame()` by default. Ignored if `FUN` is not `NULL`.
 #' @param filter Boolean. If `TRUE`, only functions that are direct descndants or antecedants of
 #'   `FUN` will be shown.
 #' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
