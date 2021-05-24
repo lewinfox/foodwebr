@@ -258,7 +258,6 @@ print.foodweb <- function(x) {
   cat(x$graphviz_spec)
 }
 
-
 #' Plot a `foodweb` object
 #'
 #' Calls [DiagrammeR::grViz()] on the `graphvis_spec` element of the `foodweb`.
@@ -268,4 +267,14 @@ print.foodweb <- function(x) {
 #' @export
 plot.foodweb <- function(x) {
   DiagrammeR::grViz(x$graphviz_spec)
+}
+
+#' @export
+str.foodweb <- function(x) {
+  cat("`foodweb` with", nrow(x$funmat), "nodes and", sum(x$funmat), "edges")
+}
+
+#' @export
+summary.foodweb <- function(x) {
+  str.foodweb(x)
 }
