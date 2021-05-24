@@ -168,7 +168,7 @@ tokenise_function <- function(x) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' foodweb()
 #'
 #' foodweb(as.text = TRUE)

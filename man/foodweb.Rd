@@ -33,7 +33,7 @@ environment to the \code{env} argument. If \code{FUN} is provided then the value
 the environment of \code{FUN} will be used.
 }
 \examples{
-\dontrun{
+\donttest{
 foodweb()
 
 foodweb(as.text = TRUE)
