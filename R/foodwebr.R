@@ -255,12 +255,23 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
       return(invisible(NULL))
     }
   }
-  gr_sp <- graphviz_spec_from_matrix(fm, title)
-  fw <- structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
+  fw <- new_foodweb(funmat = fm, title = title)
   if (as.text) (
-    return(gr_sp)
+    return(as.character(fw))
   )
   fw
+}
+
+#' Create a new `foodweb` object
+#'
+#' @param funmat A function matrix created by [function_matrix()]
+#' @param title Title to appear on the default graph visualisation
+#'
+#' @return A `foodweb`.
+new_foodweb <- function(funmat, title) {
+  # TODO: Input validation?
+  gr_sp <- graphviz_spec_from_matrix(funmat, title)
+  structure(list(funmat = funmat, graphviz_spec = gr_sp), class = "foodweb")
 }
 
 #' Is an object a `foodweb`?
