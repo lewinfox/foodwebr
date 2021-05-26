@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot a foodweb object — plot.foodweb • foodwebr</title>
+<title>Create a new foodweb object — new_foodweb • foodwebr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Plot a foodweb object — plot.foodweb" />
-<meta property="og:description" content="Calls DiagrammeR::grViz() on the graphvis_spec element of the foodweb." />
+<meta property="og:title" content="Create a new foodweb object — new_foodweb" />
+<meta property="og:description" content="A foodweb object describes the relationship of functions in an environment. It has two
+components: a funmat (function matrix) which encodes the caller/callee relationships (i.e.
+which functions call which) and a grviz_spec which is a text representation of the graph and
+is used for the default plotting behaviour." />
 
 
 
@@ -103,31 +106,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot a <code>foodweb</code> object</h1>
+    <h1>Create a new <code>foodweb</code> object</h1>
     
-    <div class="hidden name"><code>plot.foodweb.Rd</code></div>
+    <div class="hidden name"><code>new_foodweb.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calls <code><a href='https://rdrr.io/pkg/DiagrammeR/man/grViz.html'>DiagrammeR::grViz()</a></code> on the <code>graphvis_spec</code> element of the <code>foodweb</code>.</p>
+    <p>A <code>foodweb</code> object describes the relationship of functions in an environment. It has two
+components: a <code>funmat</code> (function matrix) which encodes the caller/callee relationships (i.e.
+which functions call which) and a <code>grviz_spec</code> which is a text representation of the graph and
+is used for the default plotting behaviour.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for foodweb</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>new_foodweb</span><span class='op'>(</span><span class='va'>funmat</span>, <span class='va'>title</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A <code>foodweb</code> object.</p></td>
+      <th>funmat</th>
+      <td><p>A function matrix created by <code><a href='function_matrix.html'>function_matrix()</a></code></p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Unused, only included for consistency with S3 generic.</p></td>
+      <th>title</th>
+      <td><p>Title to appear on the default graph visualisation</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A <code>foodweb</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This function should not be called directly, use <code><a href='foodweb.html'>foodweb()</a></code> instead.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>foodweb</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
