@@ -201,6 +201,11 @@ filter_matrix <- function(fn_name, fn_mat) {
 
 #' Create a foodweb
 #'
+#' A `foodweb` object describes the relationship of functions in an environment. It has two
+#' components: `funmat` (function matrix) which encodes the caller/callee relationships (i.e. which
+#' functions call which) and `graphviz_spec` which is a text representation of the graph and is used
+#' for the default plotting behaviour.
+#'
 #' `foodweb()` looks at the global environment by default. If you want to look at another
 #' environment you can either pass a function to the `FUN` argument of `foodweb()` or pass an
 #' environment to the `env` argument. If `FUN` is provided then the value of `env` is ignored, and
@@ -213,8 +218,8 @@ filter_matrix <- function(fn_name, fn_mat) {
 #' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
 #'   specification is returned.
 #'
-#' @return If `as.text` is `TRUE`, a character vector. Otherwise nothing is returned and the
-#'   function only renders the graph.
+#' @return If `as.text` is `TRUE`, a character vector. Otherwise, a `foodweb` object as described
+#'   above.
 #' @export
 #'
 #' @examples
@@ -225,7 +230,12 @@ filter_matrix <- function(fn_name, fn_mat) {
 #' i <- function() { f(); g(); h() }
 #' j <- function() j()
 #'
-#' foodweb()
+#' x <- foodweb()
+#' x
+#'
+#' # You can access the components directly or via getter functions
+#' x$funmat
+#' get_graphviz_spec(x)
 #'
 #' # Calculate the foodweb of a function in another package
 #' foodweb(glue::glue)
@@ -264,8 +274,17 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
 
 #' Create a new `foodweb` object
 #'
+#' A `foodweb` object describes the relationship of functions in an environment. It has two
+#' components: a `funmat` (function matrix) which encodes the caller/callee relationships (i.e.
+#' which functions call which) and a `grviz_spec` which is a text representation of the graph and
+#' is used for the default plotting behaviour.
+#'
+#' This function should not be called directly, use [foodweb()] instead.
+#'
 #' @param funmat A function matrix created by [function_matrix()]
 #' @param title Title to appear on the default graph visualisation
+#'
+#' @seealso foodweb
 #'
 #' @return A `foodweb`.
 new_foodweb <- function(funmat, title) {
@@ -295,6 +314,20 @@ get_funmat <- function(x) {
     stop(deparse(substitute(x)), " must be a `foodweb` object")
   }
   x$funmat
+}
+
+#' Extract the GraphViz specification from a `foodweb` object.
+#'
+#' @param x A `foodweb`
+#'
+#' @return `x$graphviz_spec` - a character scalar.
+#'
+#' @export
+get_graphviz_spec <- function(x) {
+  if (!is.foodweb(x)) {
+    stop(deparse(substitute(x)), " must be a `foodweb` object")
+  }
+  x$graphviz_spec
 }
 
 # ---- Creating graphviz spec ----

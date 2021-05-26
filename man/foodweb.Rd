@@ -23,10 +23,16 @@ foodweb(
 specification is returned.}
 }
 \value{
-If \code{as.text} is \code{TRUE}, a character vector. Otherwise nothing is returned and the
-function only renders the graph.
+If \code{as.text} is \code{TRUE}, a character vector. Otherwise, a \code{foodweb} object as described
+above.
 }
 \description{
+A \code{foodweb} object describes the relationship of functions in an environment. It has two
+components: \code{funmat} (function matrix) which encodes the caller/callee relationships (i.e. which
+functions call which) and \code{graphviz_spec} which is a text representation of the graph and is used
+for the default plotting behaviour.
+}
+\details{
 \code{foodweb()} looks at the global environment by default. If you want to look at another
 environment you can either pass a function to the \code{FUN} argument of \code{foodweb()} or pass an
 environment to the \code{env} argument. If \code{FUN} is provided then the value of \code{env} is ignored, and
@@ -40,7 +46,12 @@ h <- function() { f(); g() }
 i <- function() { f(); g(); h() }
 j <- function() j()
 
-foodweb()
+x <- foodweb()
+x
+
+# You can access the components directly or via getter functions
+x$funmat
+get_graphviz_spec(x)
 
 # Calculate the foodweb of a function in another package
 foodweb(glue::glue)

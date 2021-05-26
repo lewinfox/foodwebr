@@ -15,5 +15,14 @@ new_foodweb(funmat, title)
 A \code{foodweb}.
 }
 \description{
-Create a new \code{foodweb} object
+A \code{foodweb} object describes the relationship of functions in an environment. It has two
+components: a \code{funmat} (function matrix) which encodes the caller/callee relationships (i.e.
+which functions call which) and a \code{grviz_spec} which is a text representation of the graph and
+is used for the default plotting behaviour.
+}
+\details{
+This function should not be called directly, use \code{\link[=foodweb]{foodweb()}} instead.
+}
+\seealso{
+foodweb
 }
