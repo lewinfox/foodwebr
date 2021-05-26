@@ -93,7 +93,7 @@
 <code class="sourceCode R"><span class="va">fw</span>
 <span class="co">#&gt; `foodweb` with 5 nodes and 6 edges:</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; digraph "&lt;env: 0x43f5be0&gt;" {</span>
+<span class="co">#&gt; digraph "&lt;env: 0x3d96be0&gt;" {</span>
 <span class="co">#&gt;   "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt;   "h()" -&gt; { "f()", "g()" }</span>
 <span class="co">#&gt;   "i()" -&gt; { "f()", "g()", "h()" }</span>
@@ -113,7 +113,7 @@
 <p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; digraph "&lt;env: 0x43f5be0&gt;" {</span>
+<span class="co">#&gt; digraph "&lt;env: 0x3d96be0&gt;" {</span>
 <span class="co">#&gt;   "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt;   "h()" -&gt; { "f()", "g()" }</span>
 <span class="co">#&gt;   "i()" -&gt; { "f()", "g()", "h()" }</span>
@@ -141,13 +141,13 @@
 <span class="co">#&gt;      j 0 0 0 0 0</span></code></pre></div>
 <p>Note that self-calls are ignored (<code>funmat["j", "j"]</code> is zero even though <code>j()</code> calls itself).</p>
 </div>
-<div id="graph_spec_from_matrix" class="section level3">
+<div id="graphviz_spec_from_matrix" class="section level3">
 <h3 class="hasAnchor">
-<a href="#graph_spec_from_matrix" class="anchor"></a><code>graph_spec_from_matrix()</code>
+<a href="#graphviz_spec_from_matrix" class="anchor"></a><code>graphviz_spec_from_matrix()</code>
 </h3>
-<p>The <code>graph_spec_from_matrix()</code> function translates the function matrix into a character string containing a <a href="https://graphviz.org/">graphviz</a> specification:</p>
+<p><code><a href="reference/graphviz_spec_from_matrix.html">graphviz_spec_from_matrix()</a></code> translates the function matrix into a character string containing a <a href="https://graphviz.org/">graphviz</a> specification:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">graphvis_spec</span> <span class="op">&lt;-</span> <span class="fu">graph_spec_from_matrix</span><span class="op">(</span><span class="va">funmat</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">graphvis_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graphviz_spec_from_matrix.html">graphviz_spec_from_matrix</a></span><span class="op">(</span><span class="va">funmat</span><span class="op">)</span>
 
 <span class="va">graphvis_spec</span>
 <span class="co">#&gt; digraph "foodweb" {</span>
@@ -164,6 +164,43 @@
 <code class="sourceCode R"><span class="fu">DiagrammeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DiagrammeR/man/grViz.html">grViz</a></span><span class="op">(</span><span class="va">graphvis_spec</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-graph-spec-1.png" width="100%"></p>
 </div>
+</div>
+<div id="using-tidygraph" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-tidygraph" class="anchor"></a>Using <code>tidygraph</code>
+</h2>
+<p>A <code>foodweb</code> object can also be converted into a <code>tbl_graph</code> object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">tidygraph::as_tbl_graph()</a></code> to enable more sophisticated analysis.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  
+  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">tg</span><span class="op">)</span>
+  
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tg</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'</span>
+<span class="co">#&gt; when loading 'dplyr'</span>
+<span class="co">#&gt; # A tbl_graph: 5 nodes and 6 edges</span>
+<span class="co">#&gt; #</span>
+<span class="co">#&gt; # A directed acyclic simple graph with 2 components</span>
+<span class="co">#&gt; #</span>
+<span class="co">#&gt; # Node Data: 5 x 1 (active)</span>
+<span class="co">#&gt;   name </span>
+<span class="co">#&gt;   &lt;chr&gt;</span>
+<span class="co">#&gt; 1 f    </span>
+<span class="co">#&gt; 2 g    </span>
+<span class="co">#&gt; 3 h    </span>
+<span class="co">#&gt; 4 i    </span>
+<span class="co">#&gt; 5 j    </span>
+<span class="co">#&gt; #</span>
+<span class="co">#&gt; # Edge Data: 6 x 2</span>
+<span class="co">#&gt;    from    to</span>
+<span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1     2     1</span>
+<span class="co">#&gt; 2     3     1</span>
+<span class="co">#&gt; 3     3     2</span>
+<span class="co">#&gt; # … with 3 more rows</span></code></pre></div>
+<p><img src="reference/figures/README-foodweb-tidygraph-1.png" width="100%"></p>
 </div>
 </div>
   </div>
