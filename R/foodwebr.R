@@ -220,13 +220,8 @@ filter_matrix <- function(fn_name, fn_mat) {
 #' \donttest{
 #' foodweb()
 #'
-#' foodweb(as.text = TRUE)
-#'
-#' # "cowsay" is a small enough package that this output is readable. Try this with larger packages
-#' # at your peril.
-#' if (requireNamespace("cowsay", quietly = TRUE)) {
-#'   foodweb(FUN = cowsay::say)
-#' }
+#' # Calculate the foodweb of a function in another package
+#' foodweb(glue::glue)
 #' }
 foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as.text = FALSE) {
   fn_name <- as.character(substitute(FUN))

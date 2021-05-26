@@ -36,12 +36,7 @@ the environment of \code{FUN} will be used.
 \donttest{
 foodweb()
 
-foodweb(as.text = TRUE)
-
-# "cowsay" is a small enough package that this output is readable. Try this with larger packages
-# at your peril.
-if (requireNamespace("cowsay", quietly = TRUE)) {
-  foodweb(FUN = cowsay::say)
-}
+# Calculate the foodweb of a function in another package
+foodweb(glue::glue)
 }
 }
