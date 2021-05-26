@@ -328,3 +328,7 @@ str.foodweb <- function(object, ...) {
 summary.foodweb <- function(object, ...) {
   str.foodweb(object)
 }
+
+#' @export
+as.character.foodweb <- function(x, ...) {
+  x$graphviz_spec
