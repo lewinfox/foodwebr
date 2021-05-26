@@ -263,6 +263,29 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
   fw
 }
 
+#' Is an object a `foodweb`?
+#'
+#' @param x The object to test
+#'
+#' @return Boolean
+is.foodweb <- function(x) {
+  inherits(x, "foodweb")
+}
+
+#' Extract the function matrix from a `foodweb` object.
+#'
+#' @param x A `foodweb`
+#'
+#' @return `x$funmat` - a numeric matrix.
+#'
+#' @export
+get_funmat <- function(x) {
+  if (!is.foodweb(x)) {
+    stop(deparse(substitute(x)), " must be a `foodweb` object")
+  }
+  x$funmat
+}
+
 # ---- Creating graphviz spec ----
 
 #' Create a `grViz` specification from a function matrix
