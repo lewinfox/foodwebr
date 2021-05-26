@@ -126,3 +126,19 @@ We can visualise the graph specification using `Diagrammer::grViz()`.
 ```{r foodweb-plot-graph-spec}
 DiagrammeR::grViz(graphvis_spec)
 ```
+
+
+## Using `tidygraph`
+
+A `foodweb` object can also be converted into a `tbl_graph` object using `tidygraph::as_tbl_graph()`
+to enable more sophisticated analysis.
+
+```{r foodweb-tidygraph}
+if (requireNamespace("tidygraph", quietly = TRUE)) {
+  tg <- tidygraph::as_tbl_graph(foodweb())
+  
+  print(tg)
+  
+  plot(tg)
+}
+```

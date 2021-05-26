@@ -48,7 +48,7 @@ Printing the object will show the graphvis representation:
 fw
 #> `foodweb` with 5 nodes and 6 edges:
 #> 
-#> digraph "<env: 0x2909be0>" {
+#> digraph "<env: 0x3d96be0>" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -90,7 +90,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph "<env: 0x2909be0>" {
+#> digraph "<env: 0x3d96be0>" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -155,3 +155,42 @@ DiagrammeR::grViz(graphvis_spec)
 ```
 
 <img src="man/figures/README-foodweb-plot-graph-spec-1.png" width="100%" />
+
+## Using `tidygraph`
+
+A `foodweb` object can also be converted into a `tbl_graph` object using
+`tidygraph::as_tbl_graph()` to enable more sophisticated analysis.
+
+``` r
+if (requireNamespace("tidygraph", quietly = TRUE)) {
+  tg <- tidygraph::as_tbl_graph(foodweb())
+  
+  print(tg)
+  
+  plot(tg)
+}
+#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+#> when loading 'dplyr'
+#> # A tbl_graph: 5 nodes and 6 edges
+#> #
+#> # A directed acyclic simple graph with 2 components
+#> #
+#> # Node Data: 5 x 1 (active)
+#>   name 
+#>   <chr>
+#> 1 f    
+#> 2 g    
+#> 3 h    
+#> 4 i    
+#> 5 j    
+#> #
+#> # Edge Data: 6 x 2
+#>    from    to
+#>   <int> <int>
+#> 1     2     1
+#> 2     3     1
+#> 3     3     2
+#> # … with 3 more rows
+```
+
+<img src="man/figures/README-foodweb-tidygraph-1.png" width="100%" />
