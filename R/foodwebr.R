@@ -250,7 +250,7 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
       return(invisible(NULL))
     }
   }
-  gr_sp <- graph_spec_from_matrix(fm, title)
+  gr_sp <- graphviz_spec_from_matrix(fm, title)
   fw <- structure(list(funmat = fm, graphviz_spec = gr_sp), class = "foodweb")
   if (as.text) (
     return(gr_sp)
@@ -271,7 +271,7 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
 #' @return A text string.
 #'
 #' @export
-graph_spec_from_matrix <- function(funmat, title = "foodweb") {
+graphviz_spec_from_matrix <- function(funmat, title = "foodweb") {
   template <- "digraph \"{title}\" {{{graph_data}\n}}"
   graph_data <- character()
   for (caller_name in rownames(funmat)) {
