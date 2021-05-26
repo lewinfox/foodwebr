@@ -293,9 +293,10 @@ graph_spec_from_matrix <- function(funmat, title = "foodweb") {
 #' Prints the `grvis_spec` member of a `foodweb` object.
 #'
 #' @param x A `foodweb` object.
+#' @param ... Unused, only included for consistency with S3 generic.
 #'
 #' @export
-print.foodweb <- function(x) {
+print.foodweb <- function(x, ...) {
   cat("`foodweb` with", nrow(x$funmat), "nodes and", sum(x$funmat), "edges:\n\n")
   cat(x$graphviz_spec)
 }
@@ -305,18 +306,19 @@ print.foodweb <- function(x) {
 #' Calls [DiagrammeR::grViz()] on the `graphvis_spec` element of the `foodweb`.
 #'
 #' @param x A `foodweb` object.
+#' @param ... Unused, only included for consistency with S3 generic.
 #'
 #' @export
-plot.foodweb <- function(x) {
+plot.foodweb <- function(x, ...) {
   DiagrammeR::grViz(x$graphviz_spec)
 }
 
 #' @export
-str.foodweb <- function(x) {
-  cat("`foodweb` with", nrow(x$funmat), "nodes and", sum(x$funmat), "edges")
+str.foodweb <- function(object, ...) {
+  cat("`foodweb` with", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
 }
 
 #' @export
-summary.foodweb <- function(x) {
-  str.foodweb(x)
+summary.foodweb <- function(object, ...) {
+  str.foodweb(object)
 }

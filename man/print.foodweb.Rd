@@ -4,10 +4,12 @@
 \alias{print.foodweb}
 \title{Print a \code{foodweb} object}
 \usage{
-\method{print}{foodweb}(x)
+\method{print}{foodweb}(x, ...)
 }
 \arguments{
 \item{x}{A \code{foodweb} object.}
+
+\item{...}{Unused, only included for consistency with S3 generic.}
 }
 \description{
 Prints the \code{grvis_spec} member of a \code{foodweb} object.

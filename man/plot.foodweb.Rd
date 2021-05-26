@@ -4,10 +4,12 @@
 \alias{plot.foodweb}
 \title{Plot a \code{foodweb} object}
 \usage{
-\method{plot}{foodweb}(x)
+\method{plot}{foodweb}(x, ...)
 }
 \arguments{
 \item{x}{A \code{foodweb} object.}
+
+\item{...}{Unused, only included for consistency with S3 generic.}
 }
 \description{
 Calls \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz()}} on the \code{graphvis_spec} element of the \code{foodweb}.
