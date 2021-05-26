@@ -48,7 +48,7 @@ Printing the object will show the graphvis representation:
 fw
 #> `foodweb` with 5 nodes and 6 edges:
 #> 
-#> digraph "<env: 0x43f5be0>" {
+#> digraph "<env: 0x2909be0>" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -90,7 +90,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph "<env: 0x43f5be0>" {
+#> digraph "<env: 0x2909be0>" {
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
@@ -128,14 +128,14 @@ funmat
 Note that self-calls are ignored (`funmat["j", "j"]` is zero even though
 `j()` calls itself).
 
-### `graph_spec_from_matrix()`
+### `graphviz_spec_from_matrix()`
 
-The `graph_spec_from_matrix()` function translates the function matrix
-into a character string containing a [graphviz](https://graphviz.org/)
+`graphviz_spec_from_matrix()` translates the function matrix into a
+character string containing a [graphviz](https://graphviz.org/)
 specification:
 
 ``` r
-graphvis_spec <- graph_spec_from_matrix(funmat)
+graphvis_spec <- graphviz_spec_from_matrix(funmat)
 
 graphvis_spec
 #> digraph "foodweb" {

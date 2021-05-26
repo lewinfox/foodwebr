@@ -108,13 +108,13 @@ funmat
 
 Note that self-calls are ignored (`funmat["j", "j"]` is zero even though `j()` calls itself).
 
-### `graph_spec_from_matrix()`
+### `graphviz_spec_from_matrix()`
 
-The `graph_spec_from_matrix()` function translates the function matrix into a character string
-containing a [graphviz](https://graphviz.org/) specification:
+`graphviz_spec_from_matrix()` translates the function matrix into a character string containing a
+[graphviz](https://graphviz.org/) specification:
 
 ```{r, foodweb-graph-spec}
-graphvis_spec <- graph_spec_from_matrix(funmat)
+graphvis_spec <- graphviz_spec_from_matrix(funmat)
 
 graphvis_spec
 ```
