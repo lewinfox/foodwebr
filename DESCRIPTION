@@ -18,6 +18,7 @@ Imports:
     rlang
 Suggests: 
     testthat,
+    tidygraph,
     webshot
 Encoding: UTF-8
 LazyData: true
