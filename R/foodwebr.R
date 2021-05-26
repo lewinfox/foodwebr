@@ -15,7 +15,8 @@
 #' @export
 function_matrix <- function(env = parent.frame()) {
   if (!is.environment(env)) {
-    env <- as.environment(env)
+    cli::cli_alert_danger("{.var {env}} must be an environment, not {typeof(env)}")
+    rlang::abort("Unable to create function matrix", "foodwebr_bad_environment")
   }
   funs <- as.character(utils::lsf.str(envir = env))
   n <- length(funs)
