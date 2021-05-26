@@ -26,3 +26,4 @@ This function should not be called directly, use \code{\link[=foodweb]{foodweb()
 \seealso{
 foodweb
 }
+\keyword{internal}

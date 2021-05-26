@@ -15,3 +15,4 @@ A new \code{tbl_graph} object.
 \description{
 This is an S3 method for the generic \code{\link[tidygraph:tbl_graph]{tidygraph::as_tbl_graph()}}.
 }
+\keyword{internal}

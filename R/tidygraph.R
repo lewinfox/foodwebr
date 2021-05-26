@@ -7,6 +7,8 @@
 #' @return A new `tbl_graph` object.
 #'
 #' @export
+#'
+#' @keywords internal
 as_tbl_graph.foodweb <- function(x) {
   if (!requireNamespace("tidygraph", quietly = TRUE)) {
     stop("Package `tidygraph` is required but not installed")

@@ -14,3 +14,4 @@
 \description{
 Prints the \code{grvis_spec} member of a \code{foodweb} object.
 }
+\keyword{internal}

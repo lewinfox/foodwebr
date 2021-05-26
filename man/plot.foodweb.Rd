@@ -14,3 +14,4 @@
 \description{
 Calls \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz()}} on the \code{graphvis_spec} element of the \code{foodweb}.
 }
+\keyword{internal}

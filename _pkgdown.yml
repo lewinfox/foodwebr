@@ -22,5 +22,15 @@ reference:
   desc: >
     `foodwebr` exposes its guts in case you want to tinker.
   contents:
+  - is.foodweb
+  - get_funmat
+  - get_graphviz_spec
   - function_matrix
-  - graph_spec_from_matrix
+  - graphviz_spec_from_matrix
+- title: S3 methods
+  desc: >
+    Methods are provided for a few S3 generics.
+  contents:
+  - plot.foodweb
+  - print.foodweb
+  - as_tbl_graph.foodweb

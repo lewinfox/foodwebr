@@ -287,6 +287,8 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
 #' @seealso foodweb
 #'
 #' @return A `foodweb`.
+#'
+#' @keywords internal
 new_foodweb <- function(funmat, title) {
   # TODO: Input validation?
   gr_sp <- graphviz_spec_from_matrix(funmat, title)
@@ -369,6 +371,8 @@ graphviz_spec_from_matrix <- function(funmat, title = "foodweb") {
 #' @param ... Unused, only included for consistency with S3 generic.
 #'
 #' @export
+#'
+#' @keywords internal
 print.foodweb <- function(x, ...) {
   cat("`foodweb` with", nrow(x$funmat), "nodes and", sum(x$funmat), "edges:\n\n")
   cat(x$graphviz_spec)
@@ -382,21 +386,29 @@ print.foodweb <- function(x, ...) {
 #' @param ... Unused, only included for consistency with S3 generic.
 #'
 #' @export
+#'
+#' @keywords internal
 plot.foodweb <- function(x, ...) {
   DiagrammeR::grViz(x$graphviz_spec)
 }
 
 #' @export
+#'
+#' @keywords internal
 str.foodweb <- function(object, ...) {
   cat("`foodweb` with", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
 }
 
 #' @export
+#'
+#' @keywords internal
 summary.foodweb <- function(object, ...) {
   str.foodweb(object)
 }
 
 #' @export
+#'
+#' @keywords internal
 as.character.foodweb <- function(x, ...) {
   x$graphviz_spec
 }
