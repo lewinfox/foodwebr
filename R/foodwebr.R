@@ -218,12 +218,17 @@ filter_matrix <- function(fn_name, fn_mat) {
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' # Create some functions to look at
+#' f <- function() 1
+#' g <- function() f()
+#' h <- function() { f(); g() }
+#' i <- function() { f(); g(); h() }
+#' j <- function() j()
+#'
 #' foodweb()
 #'
 #' # Calculate the foodweb of a function in another package
 #' foodweb(glue::glue)
-#' }
 foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as.text = FALSE) {
   fn_name <- as.character(substitute(FUN))
   if (is.null(FUN) && filter) {

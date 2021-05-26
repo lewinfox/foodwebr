@@ -33,10 +33,15 @@ environment to the \code{env} argument. If \code{FUN} is provided then the value
 the environment of \code{FUN} will be used.
 }
 \examples{
-\donttest{
+# Create some functions to look at
+f <- function() 1
+g <- function() f()
+h <- function() { f(); g() }
+i <- function() { f(); g(); h() }
+j <- function() j()
+
 foodweb()
 
 # Calculate the foodweb of a function in another package
 foodweb(glue::glue)
-}
 }
