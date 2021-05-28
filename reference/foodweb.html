@@ -138,7 +138,7 @@ for the default plotting behaviour.</p>
     </tr>
     <tr>
       <th>filter</th>
-      <td><p>Boolean. If <code>TRUE</code>, only functions that are direct descndants or antecedants of
+      <td><p>Boolean. If <code>TRUE</code>, only functions that are direct descendants or antecedents of
 <code>FUN</code> will be shown.</p></td>
     </tr>
     <tr>
@@ -169,12 +169,13 @@ the environment of <code>FUN</code> will be used.</p>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>foodweb</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>x</span>
-</div><div class='output co'>#&gt; `foodweb` with 5 nodes and 6 edges:
-#&gt; 
-#&gt; digraph "&lt;env: 0x7feaf8456bb0&gt;" {
-#&gt;   "g()" -&gt; { "f()" }
-#&gt;   "h()" -&gt; { "f()", "g()" }
-#&gt;   "i()" -&gt; { "f()", "g()", "h()" }
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 nodes and 6 edges
+#&gt; </span>digraph 'foodweb of &lt;env: 0x7fb496f48330&gt;' {
+#&gt;   f()
+#&gt;   g() -&gt; { f() }
+#&gt;   h() -&gt; { f(), g() }
+#&gt;   i() -&gt; { f(), g(), h() }
+#&gt;   j()
 #&gt; }</div><div class='input'>
 <span class='co'># You can access the components directly or via getter functions</span>
 <span class='va'>x</span><span class='op'>$</span><span class='va'>funmat</span>
@@ -184,29 +185,39 @@ the environment of <code>FUN</code> will be used.</p>
 #&gt;      g 1 0 0 0 0
 #&gt;      h 1 1 0 0 0
 #&gt;      i 1 1 1 0 0
-#&gt;      j 0 0 0 0 0</div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; digraph "&lt;env: 0x7feaf8456bb0&gt;" {
+#&gt;      j 0 0 0 0 0
+#&gt; attr(,"class")
+#&gt; [1] "foodweb_funmat" "matrix"         "array"         </div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7fb496f48330&gt;' {
+#&gt;   "f()"
 #&gt;   "g()" -&gt; { "f()" }
 #&gt;   "h()" -&gt; { "f()", "g()" }
 #&gt;   "i()" -&gt; { "f()", "g()", "h()" }
+#&gt;   "j()"
 #&gt; }</div><div class='input'>
 <span class='co'># Calculate the foodweb of a function in another package</span>
 <span class='fu'>foodweb</span><span class='op'>(</span><span class='fu'>glue</span><span class='fu'>::</span><span class='va'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; `foodweb` with 19 nodes and 22 edges:
-#&gt; 
-#&gt; digraph "glue::glue()" {
-#&gt;   "glue()" -&gt; { "glue_data()", "identity_transformer()" }
-#&gt;   "+.glue()" -&gt; { "glue()" }
-#&gt;   "color_transformer()" -&gt; { "glue()" }
-#&gt;   "eng_glue()" -&gt; { "glue()" }
-#&gt;   "glue_col()" -&gt; { "glue()", "color_transformer()" }
-#&gt;   "glue_safe()" -&gt; { "glue()" }
-#&gt;   "glue_sql()" -&gt; { "glue()" }
-#&gt;   "glue_data_col()" -&gt; { "color_transformer()", "glue_data()" }
-#&gt;   "eng_glue_sql()" -&gt; { "glue_sql()" }
-#&gt;   "glue_data()" -&gt; { "identity_transformer()", "as_glue()", "bind_args()", "has_names()", "lengths()", "na_rows()", "recycle_columns()", "trim()" }
-#&gt;   "bind_args()" -&gt; { "delayed_assign()" }
-#&gt;   "recycle_columns()" -&gt; { "lengths()" }
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 19 nodes and 22 edges
+#&gt; </span>digraph 'foodweb of glue::glue()' {
+#&gt;   glue() -&gt; { glue_data(), identity_transformer() }
+#&gt;   +.glue() -&gt; { glue() }
+#&gt;   color_transformer() -&gt; { glue() }
+#&gt;   eng_glue() -&gt; { glue() }
+#&gt;   glue_col() -&gt; { glue(), color_transformer() }
+#&gt;   glue_safe() -&gt; { glue() }
+#&gt;   glue_sql() -&gt; { glue() }
+#&gt;   glue_data_col() -&gt; { color_transformer(), glue_data() }
+#&gt;   eng_glue_sql() -&gt; { glue_sql() }
+#&gt;   glue_data() -&gt; { identity_transformer(), as_glue(), bind_args(), has_names(), lengths(), na_rows(), recycle_columns(), trim() }
+#&gt;   identity_transformer()
+#&gt;   as_glue()
+#&gt;   bind_args() -&gt; { delayed_assign() }
+#&gt;   has_names()
+#&gt;   lengths()
+#&gt;   na_rows()
+#&gt;   recycle_columns() -&gt; { lengths() }
+#&gt;   trim()
+#&gt;   delayed_assign()
 #&gt; }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
