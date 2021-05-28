@@ -51,7 +51,7 @@ A call to `foodweb()` will calculate a graph of the dependencies, i.e. who calls
 fw <- foodweb()
 ```
 
-Printing the object will show the graphvis representation:
+Printing the object will show the graphviz representation:
 
 ```{r, foodweb-print}
 fw
@@ -114,9 +114,9 @@ Note that self-calls are ignored (`funmat["j", "j"]` is zero even though `j()` c
 [graphviz](https://graphviz.org/) specification:
 
 ```{r, foodweb-graph-spec}
-graphvis_spec <- graphviz_spec_from_matrix(funmat)
+graphviz_spec <- graphviz_spec_from_matrix(funmat)
 
-graphvis_spec
+graphviz_spec
 ```
 
 ### Visualisation
@@ -124,21 +124,19 @@ graphvis_spec
 We can visualise the graph specification using `Diagrammer::grViz()`.
 
 ```{r foodweb-plot-graph-spec}
-DiagrammeR::grViz(graphvis_spec)
+DiagrammeR::grViz(graphviz_spec)
 ```
 
 
 ## Using `tidygraph`
 
-A `foodweb` object can also be converted into a `tbl_graph` object using `tidygraph::as_tbl_graph()`
-to enable more sophisticated analysis.
+The [`tidygraph`](https://tidygraph.data-imaginist.com/) package provides tools for graph analysis.
+A `foodweb` object can be converted into a tidy graph object using `tidygraph::as_tbl_graph()` to
+allow more sophisticated analysis and visualisation.
 
 ```{r foodweb-tidygraph}
 if (requireNamespace("tidygraph", quietly = TRUE)) {
   tg <- tidygraph::as_tbl_graph(foodweb())
-  
-  print(tg)
-  
-  plot(tg)
+  tg
 }
 ```

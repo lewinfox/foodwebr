@@ -16,7 +16,7 @@ foodweb(
 
 \item{env}{An environment, \code{parent.frame()} by default. Ignored if \code{FUN} is not \code{NULL}.}
 
-\item{filter}{Boolean. If \code{TRUE}, only functions that are direct descndants or antecedants of
+\item{filter}{Boolean. If \code{TRUE}, only functions that are direct descendants or antecedents of
 \code{FUN} will be shown.}
 
 \item{as.text}{Boolean. If \code{TRUE}, rather than rendering the graph the intermediate graphviz

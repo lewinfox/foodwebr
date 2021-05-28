@@ -4,7 +4,6 @@
 # foodwebr
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 `foodwebr` makes it easy to visualise the dependency graph of a set of
@@ -42,16 +41,17 @@ i.e. who calls who.
 fw <- foodweb()
 ```
 
-Printing the object will show the graphvis representation:
+Printing the object will show the graphviz representation:
 
 ``` r
 fw
-#> `foodweb` with 5 nodes and 6 edges:
-#> 
-#> digraph "<env: 0x3d96be0>" {
-#>   "g()" -> { "f()" }
-#>   "h()" -> { "f()", "g()" }
-#>   "i()" -> { "f()", "g()", "h()" }
+#> # A `foodweb`: 5 nodes and 6 edges
+#> digraph 'foodweb of <env: 0x557c89940640>' {
+#>   f()
+#>   g() -> { f() }
+#>   h() -> { f(), g() }
+#>   i() -> { f(), g(), h() }
+#>   j()
 #> }
 ```
 
@@ -90,10 +90,12 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph "<env: 0x3d96be0>" {
+#> digraph 'foodweb of <env: 0x557c89940640>' {
+#>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
+#>   "j()"
 #> }
 ```
 
@@ -123,6 +125,8 @@ funmat
 #>      h 1 1 0 0 0
 #>      i 1 1 1 0 0
 #>      j 0 0 0 0 0
+#> attr(,"class")
+#> [1] "foodweb_funmat" "matrix"         "array"
 ```
 
 Note that self-calls are ignored (`funmat["j", "j"]` is zero even though
@@ -135,42 +139,40 @@ character string containing a [graphviz](https://graphviz.org/)
 specification:
 
 ``` r
-graphvis_spec <- graphviz_spec_from_matrix(funmat)
+graphviz_spec <- graphviz_spec_from_matrix(funmat)
 
-graphvis_spec
-#> digraph "foodweb" {
+graphviz_spec
+#> digraph 'foodweb of foodweb' {
+#>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
+#>   "j()"
 #> }
 ```
 
 ### Visualisation
 
-We can visualise the graph specification using
-`Diagrammer::grViz()`.
+We can visualise the graph specification using `Diagrammer::grViz()`.
 
 ``` r
-DiagrammeR::grViz(graphvis_spec)
+DiagrammeR::grViz(graphviz_spec)
 ```
 
 <img src="man/figures/README-foodweb-plot-graph-spec-1.png" width="100%" />
 
 ## Using `tidygraph`
 
-A `foodweb` object can also be converted into a `tbl_graph` object using
-`tidygraph::as_tbl_graph()` to enable more sophisticated analysis.
+The [`tidygraph`](https://tidygraph.data-imaginist.com/) package
+provides tools for graph analysis. A `foodweb` object can be converted
+into a tidy graph object using `tidygraph::as_tbl_graph()` to allow more
+sophisticated analysis and visualisation.
 
 ``` r
 if (requireNamespace("tidygraph", quietly = TRUE)) {
   tg <- tidygraph::as_tbl_graph(foodweb())
-  
-  print(tg)
-  
-  plot(tg)
+  tg
 }
-#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-#> when loading 'dplyr'
 #> # A tbl_graph: 5 nodes and 6 edges
 #> #
 #> # A directed acyclic simple graph with 2 components
@@ -192,5 +194,3 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> 3     3     2
 #> # … with 3 more rows
 ```
-
-<img src="man/figures/README-foodweb-tidygraph-1.png" width="100%" />

@@ -157,10 +157,10 @@ tokenise_function <- function(x) {
 #' Filter a function matrix
 #'
 #' @param fn_name String giving the name of the function we're interested in
-#' @param fn_mat Matrix prpduced by [function_matrix()]
+#' @param fn_mat Matrix produced by [function_matrix()]
 #'
 #' @return A filtered function matrix containing only functions that are direct descendants or
-#'   antecedants of `fn_name`.
+#'   antecedents of `fn_name`.
 #'
 #' @keywords internal
 filter_matrix <- function(fn_name, fn_mat) {
@@ -215,7 +215,7 @@ filter_matrix <- function(fn_name, fn_mat) {
 #'
 #' @param FUN A function.
 #' @param env An environment, `parent.frame()` by default. Ignored if `FUN` is not `NULL`.
-#' @param filter Boolean. If `TRUE`, only functions that are direct descndants or antecedants of
+#' @param filter Boolean. If `TRUE`, only functions that are direct descendants or antecedents of
 #'   `FUN` will be shown.
 #' @param as.text Boolean. If `TRUE`, rather than rendering the graph the intermediate graphviz
 #'   specification is returned.
@@ -400,6 +400,9 @@ print.foodweb <- function(x, ...) {
 #'
 #' @keywords internal
 plot.foodweb <- function(x, ...) {
+  if (!requireNamespace("DiagrammeR", quietly = TRUE)) {
+    stop("Package 'DiagrammeR' is required but not installed")
+  }
   DiagrammeR::grViz(x$graphviz_spec)
 }
 

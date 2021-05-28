@@ -9,11 +9,11 @@ filter_matrix(fn_name, fn_mat)
 \arguments{
 \item{fn_name}{String giving the name of the function we're interested in}
 
-\item{fn_mat}{Matrix prpduced by \code{\link[=function_matrix]{function_matrix()}}}
+\item{fn_mat}{Matrix produced by \code{\link[=function_matrix]{function_matrix()}}}
 }
 \value{
 A filtered function matrix containing only functions that are direct descendants or
-antecedants of \code{fn_name}.
+antecedents of \code{fn_name}.
 }
 \description{
 Filter a function matrix

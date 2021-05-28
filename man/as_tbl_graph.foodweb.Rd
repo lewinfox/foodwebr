@@ -4,7 +4,7 @@
 \alias{as_tbl_graph.foodweb}
 \title{Convert a foodweb to a \code{tidygraph}}
 \usage{
-as_tbl_graph.foodweb(x)
+\method{as_tbl_graph}{foodweb}(x, ...)
 }
 \arguments{
 \item{x}{A \code{foodweb} object created by \code{\link[=foodweb]{foodweb()}}.}
