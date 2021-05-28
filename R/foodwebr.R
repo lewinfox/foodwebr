@@ -354,16 +354,17 @@ get_graphviz_spec <- function(x) {
 #' colnames(fm) <- rownames(fm) <- c("foo", "bar", "baz")
 #' graphviz_spec_from_matrix(fm)
 graphviz_spec_from_matrix <- function(funmat, title = "foodweb") {
-  template <- "digraph \"{title}\" {{{graph_data}\n}}"
+  template <- "digraph \'foodweb of {title}\' {{{graph_data}\n}}"
   graph_data <- character()
   for (caller_name in rownames(funmat)) {
     called_fns <- colnames(funmat)[funmat[caller_name, ] > 0]
     called_fns <- glue::glue("\"{called_fns}()\"")
-    # TODO: Do we want an option to include orphan functions in the output?
     if (length(called_fns) > 0) {
       spec <- glue::glue("  \"{caller_name}()\" -> {{ {paste(called_fns, collapse = ', ')} }}")
-      graph_data <- paste(graph_data, spec, sep = "\n")
+    } else {
+      spec <- glue::glue("  \"{caller_name}()\"")
     }
+      graph_data <- paste(graph_data, spec, sep = "\n")
   }
   glue::glue(template)
 }
@@ -382,8 +383,8 @@ graphviz_spec_from_matrix <- function(funmat, title = "foodweb") {
 #'
 #' @keywords internal
 print.foodweb <- function(x, ...) {
-  cat("`foodweb` with", nrow(x$funmat), "nodes and", sum(x$funmat), "edges:\n\n")
-  cat(x$graphviz_spec)
+  cat(crayon::silver("# A `foodweb`:", nrow(x$funmat), "nodes and", sum(x$funmat), "edges\n"))
+  cat(stringr::str_remove_all(x$graphviz_spec, "\""))
 }
 
 #' Plot a `foodweb` object

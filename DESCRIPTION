@@ -12,6 +12,7 @@ Description: Easily create graphs of the inter-relationships between
 License: MIT + file LICENSE
 Imports: 
     cli,
+    crayon,
     DiagrammeR,
     glue,
     methods,
