@@ -92,7 +92,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span>
 <span class="co">#&gt; # A `foodweb`: 5 nodes and 6 edges</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x557c89940640&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x55d88853f640&gt;' {</span>
 <span class="co">#&gt;   f()</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
 <span class="co">#&gt;   h() -&gt; { f(), g() }</span>
@@ -103,7 +103,6 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fw</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-1.png" width="100%"></p>
-<p>Note that function <code>j()</code> is not shown because it doesn’t interact with any of the other functions.</p>
 <p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at the global environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
 <p>You can use this to map all the functions in a package. I’m using <code>cowsay</code> here as it’s small enough that the output is readable.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -114,7 +113,7 @@
 <p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x557c89940640&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x55d88853f640&gt;' {</span>
 <span class="co">#&gt;   "f()"</span>
 <span class="co">#&gt;   "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt;   "h()" -&gt; { "f()", "g()" }</span>
