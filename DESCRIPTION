@@ -16,10 +16,10 @@ Imports:
     DiagrammeR,
     glue,
     methods,
-    rlang
+    rlang,
+    tidygraph
 Suggests: 
     testthat,
-    tidygraph,
     webshot
 Encoding: UTF-8
 Language: en-GB
