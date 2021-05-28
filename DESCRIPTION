@@ -17,6 +17,7 @@ Imports:
     glue,
     methods,
     rlang,
+    stringr,
     tidygraph
 Suggests: 
     testthat,
