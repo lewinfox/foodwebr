@@ -49,6 +49,8 @@ function_matrix <- function(env = parent.frame()) {
   rownames(funmat) <- as.character(rownames(funmat))
   colnames(funmat) <- as.character(colnames(funmat))
 
+  class(funmat) <- c("foodweb_funmat", class(funmat))
+
   return(funmat)
 }
 
