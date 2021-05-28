@@ -207,6 +207,7 @@ as_tbl_graph.foodweb <- function(x, ...) {
   if (!requireNamespace("tidygraph", quietly = TRUE)) {
     stop("Package `tidygraph` is required but not installed")
   }
+  # TODO: Input validation
   nodes_df <- data.frame(name = rownames(x$funmat), stringsAsFactors = FALSE)
   n_edges <- sum(x$funmat)
   edges_df <- data.frame(from = integer(n_edges), to = integer(n_edges))
