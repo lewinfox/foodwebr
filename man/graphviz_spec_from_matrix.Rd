@@ -2,7 +2,7 @@
 % Please edit documentation in R/foodwebr.R
 \name{graphviz_spec_from_matrix}
 \alias{graphviz_spec_from_matrix}
-\title{Create a \code{grViz} specification from a function matrix}
+\title{Create a \code{graphviz} specification from a function matrix}
 \usage{
 graphviz_spec_from_matrix(funmat, title = "foodweb")
 }
@@ -17,4 +17,13 @@ A text string.
 \description{
 Given a function matrix created by \code{\link[=function_matrix]{function_matrix()}}, convert it into a text specification
 that can be passed to \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz()}}.
+}
+\examples{
+
+fm <- matrix(c(0, 1, 1, 1, 0, 1, 0, 1, 0), nrow = 3)
+colnames(fm) <- rownames(fm) <- c("foo", "bar", "baz")
+graphviz_spec_from_matrix(fm)
+}
+\seealso{
+\href{https://graphviz.org/}{graphviz.org/}
 }

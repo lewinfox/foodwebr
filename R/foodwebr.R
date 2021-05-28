@@ -334,7 +334,7 @@ get_graphviz_spec <- function(x) {
 
 # ---- Creating graphviz spec ----
 
-#' Create a `grViz` specification from a function matrix
+#' Create a `graphviz` specification from a function matrix
 #'
 #' Given a function matrix created by [function_matrix()], convert it into a text specification
 #' that can be passed to [DiagrammeR::grViz()].
@@ -344,7 +344,15 @@ get_graphviz_spec <- function(x) {
 #'
 #' @return A text string.
 #'
+#' @seealso [graphviz.org/](https://graphviz.org/)
+#'
 #' @export
+#'
+#' @examples
+#'
+#' fm <- matrix(c(0, 1, 1, 1, 0, 1, 0, 1, 0), nrow = 3)
+#' colnames(fm) <- rownames(fm) <- c("foo", "bar", "baz")
+#' graphviz_spec_from_matrix(fm)
 graphviz_spec_from_matrix <- function(funmat, title = "foodweb") {
   template <- "digraph \"{title}\" {{{graph_data}\n}}"
   graph_data <- character()
