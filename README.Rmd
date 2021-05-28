@@ -63,9 +63,6 @@ Plotting will draw the graph.
 plot(fw)
 ```
 
-
-Note that function `j()` is not shown because it doesn't interact with any of the other functions.
-
 `foodweb()` looks at the global environment by default. If you want to look at another environment
 you can either pass a function to the `FUN` argument of `foodweb()` or pass an environment to the
 `env` argument. If `FUN` is provided then the value of `env` is ignored, and the environment of

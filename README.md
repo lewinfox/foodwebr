@@ -46,7 +46,7 @@ Printing the object will show the graphviz representation:
 ``` r
 fw
 #> # A `foodweb`: 5 nodes and 6 edges
-#> digraph 'foodweb of <env: 0x557c89940640>' {
+#> digraph 'foodweb of <env: 0x55d88853f640>' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -62,9 +62,6 @@ plot(fw)
 ```
 
 <img src="man/figures/README-foodweb-plot-1.png" width="100%" />
-
-Note that function `j()` is not shown because it doesn’t interact with
-any of the other functions.
 
 `foodweb()` looks at the global environment by default. If you want to
 look at another environment you can either pass a function to the `FUN`
@@ -90,7 +87,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x557c89940640>' {
+#> digraph 'foodweb of <env: 0x55d88853f640>' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
