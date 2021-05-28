@@ -140,7 +140,7 @@ get_graphviz_spec <- function(x) {
 
 #' Print a `foodweb` object
 #'
-#' Prints the `grvis_spec` member of a `foodweb` object.
+#' Prints the `graphvis_spec` member of a `foodweb` object.
 #'
 #' @param x A `foodweb` object.
 #' @param ... Unused, only included for consistency with S3 generic.
@@ -150,6 +150,9 @@ get_graphviz_spec <- function(x) {
 #' @keywords internal
 print.foodweb <- function(x, ...) {
   cat(crayon::silver("# A `foodweb`:", nrow(x$funmat), "nodes and", sum(x$funmat), "edges\n"))
+  # TODO: This is a bit of a hack - we are relying on the fact that the graphviz string contains
+  #       single quotes around the title (which we wish to retain) but double quotes around the
+  #       vertex (function) names, which we wish to remove.
   cat(stringr::str_remove_all(x$graphviz_spec, "\""))
 }
 
@@ -174,7 +177,7 @@ plot.foodweb <- function(x, ...) {
 #'
 #' @keywords internal
 str.foodweb <- function(object, ...) {
-  cat("`foodweb` with", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
+  cat("A `foodweb`: ", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
 }
 
 #' @export
@@ -191,13 +194,13 @@ as.character.foodweb <- function(x, ...) {
   x$graphviz_spec
 }
 
-#' Convert a foodweb to a `tidygraph`
+#' Convert a `foodweb` to a `tidygraph`
 #'
 #' This is an S3 method for the generic [tidygraph::as_tbl_graph()].
 #'
 #' @param x A `foodweb` object created by [foodweb()].
 #'
-#' @return A new `tbl_graph` object.
+#' @return A new [tidygraph::tbl_graph] object.
 #'
 #' @importFrom tidygraph as_tbl_graph
 #' @export
