@@ -3,7 +3,7 @@
 #' Create a function caller/callee matrix
 #'
 #' Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
-#' that if the function on the x-axis calls the function on th y-axis, the element is 1, otherwise
+#' that if the function on the x-axis calls the function on the y-axis, the element is 1, otherwise
 #' 0.
 #'
 #' @param env Environment in which to search for functions. Can either be an environment
