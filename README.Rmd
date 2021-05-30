@@ -103,7 +103,6 @@ funmat <- foodweb_matrix()
 funmat
 ```
 
-Note that self-calls are ignored (`funmat["j", "j"]` is zero even though `j()` calls itself).
 
 ### `graphviz_spec_from_matrix()`
 

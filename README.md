@@ -48,13 +48,13 @@ Printing the object will show the graphviz representation:
 
 ``` r
 fw
-#> # A `foodweb`: 5 nodes and 6 edges
-#> digraph 'foodweb of <env: 0x3a4cbc0>' {
+#> # A `foodweb`: 5 nodes and 7 edges
+#> digraph 'foodweb of <env: 0x2da1be0>' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
 #>   i() -> { f(), g(), h() }
-#>   j()
+#>   j() -> { j() }
 #> }
 ```
 
@@ -90,12 +90,12 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x3a4cbc0>' {
+#> digraph 'foodweb of <env: 0x2da1be0>' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
-#>   "j()"
+#>   "j()" -> { "j()" }
 #> }
 ```
 
@@ -118,18 +118,15 @@ another environment using the `env` argument.
 funmat <- foodweb_matrix()
 
 funmat
-#> # A foodweb matrix: 5 functions and 6 links
+#> # A foodweb matrix: 5 functions and 7 links
 #>       CALLEE
 #> CALLER f g h i j
 #>      f 0 0 0 0 0
 #>      g 1 0 0 0 0
 #>      h 1 1 0 0 0
 #>      i 1 1 1 0 0
-#>      j 0 0 0 0 0
+#>      j 0 0 0 0 1
 ```
-
-Note that self-calls are ignored (`funmat["j", "j"]` is zero even though
-`j()` calls itself).
 
 ### `graphviz_spec_from_matrix()`
 
@@ -146,7 +143,7 @@ graphviz_spec
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
 #>   "i()" -> { "f()", "g()", "h()" }
-#>   "j()"
+#>   "j()" -> { "j()" }
 #> }
 ```
 
@@ -173,9 +170,9 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
   tg <- tidygraph::as_tbl_graph(foodweb())
   tg
 }
-#> # A tbl_graph: 5 nodes and 6 edges
+#> # A tbl_graph: 5 nodes and 7 edges
 #> #
-#> # A directed acyclic simple graph with 2 components
+#> # A directed multigraph with 2 components
 #> #
 #> # Node Data: 5 x 1 (active)
 #>   name 
@@ -186,11 +183,11 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> 4 i    
 #> 5 j    
 #> #
-#> # Edge Data: 6 x 2
+#> # Edge Data: 7 x 2
 #>    from    to
 #>   <int> <int>
 #> 1     2     1
 #> 2     3     1
 #> 3     3     2
-#> # … with 3 more rows
+#> # … with 4 more rows
 ```

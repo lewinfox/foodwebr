@@ -43,7 +43,6 @@ foodweb_matrix <- function(env = parent.frame()) {
   setup <- c(rep(1:length(funs), n.CALLER), unlist(CALLER.of))
   dim(setup) <- c(sum(n.CALLER), 2)
   funmat[setup] <- 1
-  diag(funmat) <- 0 # to drop self-references
 
   # Convert dimnames to string
   rownames(funmat) <- as.character(rownames(funmat))

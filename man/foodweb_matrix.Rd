@@ -16,6 +16,6 @@ An n x n matrix where \emph{n} is the number of functions in \code{env}.
 }
 \description{
 Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
-that if the function on the x-axis calls the function on th y-axis, the element is 1, otherwise
+that if the function on the x-axis calls the function on the y-axis, the element is 1, otherwise
 0.
 }

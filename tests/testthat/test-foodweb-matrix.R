@@ -18,8 +18,8 @@ test_that("`foodweb_matrix()` finds functions in default arguments", {
   expect_equal(funmat["func_arg", "foo"], 1)
 })
 
-test_that("`foodweb_matrix()` ignores recursive calls", {
-  expect_equal(funmat["recurse", "recurse"], 0)
+test_that("`foodweb_matrix()` identifies recursive calls", {
+  expect_equal(funmat["recurse", "recurse"], 1)
 })
 
 test_that("`foodweb_matrix()` ignores variables with the same name as functions", {
