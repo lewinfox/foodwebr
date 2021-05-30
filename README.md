@@ -49,7 +49,7 @@ Printing the object will show the graphviz representation:
 ``` r
 fw
 #> # A `foodweb`: 5 nodes and 7 edges
-#> digraph 'foodweb of <env: 0x2da1be0>' {
+#> digraph 'foodweb of <env: 0x3253be0>' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -72,7 +72,34 @@ argument of `foodweb()` or pass an environment to the `env` argument. If
 `FUN` is provided then the value of `env` is ignored, and the
 environment of `FUN` will be used.
 
-You can use this to map all the functions in a package. I’m using
+If a specific function is passed to `FUN`, the default behaviour is to
+remove functions that are not descendants or antecedents of that
+function.
+
+``` r
+# `j()` will not be included
+foodweb(FUN = g)
+#> # A `foodweb`: 4 nodes and 6 edges
+#> digraph 'foodweb of g ()' {
+#>   g() -> { f() }
+#>   h() -> { g(), f() }
+#>   i() -> { g(), h(), f() }
+#>   f()
+#> }
+
+# Force inclusion of unconnected functions by using `filter = FALSE`
+foodweb(FUN = g, filter = FALSE)
+#> # A `foodweb`: 5 nodes and 7 edges
+#> digraph 'foodweb of g ()' {
+#>   f()
+#>   g() -> { f() }
+#>   h() -> { f(), g() }
+#>   i() -> { f(), g(), h() }
+#>   j() -> { j() }
+#> }
+```
+
+You can use `foodweb()` to map all the functions in a package. I’m using
 `cowsay` here as it’s small enough that the output is readable.
 
 ``` r
@@ -90,7 +117,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x2da1be0>' {
+#> digraph 'foodweb of <env: 0x3253be0>' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }

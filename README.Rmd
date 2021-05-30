@@ -68,7 +68,18 @@ you can either pass a function to the `FUN` argument of `foodweb()` or pass an e
 `env` argument. If `FUN` is provided then the value of `env` is ignored, and the environment of
 `FUN` will be used.
 
-You can use this to map all the functions in a package. I'm using `cowsay` here as it's small
+If a specific function is passed to `FUN`, the default behaviour is to remove functions that are not
+descendants or antecedents of that function.
+
+```{r foodweb-filter}
+# `j()` will not be included
+foodweb(FUN = g)
+
+# Force inclusion of unconnected functions by using `filter = FALSE`
+foodweb(FUN = g, filter = FALSE)
+```
+
+You can use `foodweb()` to map all the functions in a package. I'm using `cowsay` here as it's small
 enough that the output is readable.
 
 ```{r, foodweb-plot-package}
