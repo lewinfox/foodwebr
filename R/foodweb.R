@@ -1,3 +1,5 @@
+# ---- Foodweb ----
+
 #' Create a foodweb
 #'
 #' A `foodweb` object describes the relationship of functions in an environment. It has two
@@ -31,8 +33,6 @@
 #'
 #' x <- foodweb()
 #' x
-# ---- Foodweb ----
-
 #'
 #' # You can access the components directly or via getter functions
 #' x$funmat
