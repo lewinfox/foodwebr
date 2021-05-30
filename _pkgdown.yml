@@ -1,12 +1,7 @@
 url: https://www.lewinfox.github.io/foodwebr
 
 home:
-  title: Visualise function dependencies
-  links:
-  - text: View the source code
-    href: https://github.com/lewinfox/foodwebr
-  - text: File a bug
-    href: https://github.com/lewinfox/foodwebr/issues
+  title: foodwebr: Visualise function dependencies
 
 authors:
   Lewin Appleton-Fox:

@@ -10,6 +10,8 @@ Authors@R:
 Description: Easily create graphs of the inter-relationships between
     functions in an environment.
 License: MIT + file LICENSE
+URL: https://github.com/lewinfox/foodwebr
+BugReports: https://github.com/lewinfox/foodwebr/issues
 Imports: 
     cli,
     crayon,
