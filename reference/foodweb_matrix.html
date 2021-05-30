@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a new foodweb object — new_foodweb • foodwebr</title>
+<title>Create a function caller/callee matrix — foodweb_matrix • foodwebr</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,10 @@
 
 
 
-<meta property="og:title" content="Create a new foodweb object — new_foodweb" />
-<meta property="og:description" content="A foodweb object describes the relationship of functions in an environment. It has two
-components: a funmat (function matrix) which encodes the caller/callee relationships (i.e.
-which functions call which) and a grviz_spec which is a text representation of the graph and
-is used for the default plotting behaviour." />
+<meta property="og:title" content="Create a function caller/callee matrix — foodweb_matrix" />
+<meta property="og:description" content="Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
+that if the function on the x-axis calls the function on th y-axis, the element is 1, otherwise
+0." />
 
 
 
@@ -106,42 +105,33 @@ is used for the default plotting behaviour." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a new <code>foodweb</code> object</h1>
+    <h1>Create a function caller/callee matrix</h1>
     
-    <div class="hidden name"><code>new_foodweb.Rd</code></div>
+    <div class="hidden name"><code>foodweb_matrix.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A <code>foodweb</code> object describes the relationship of functions in an environment. It has two
-components: a <code>funmat</code> (function matrix) which encodes the caller/callee relationships (i.e.
-which functions call which) and a <code>grviz_spec</code> which is a text representation of the graph and
-is used for the default plotting behaviour.</p>
+    <p>Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
+that if the function on the x-axis calls the function on th y-axis, the element is 1, otherwise
+0.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>new_foodweb</span><span class='op'>(</span><span class='va'>funmat</span>, <span class='va'>title</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>foodweb_matrix</span><span class='op'>(</span>env <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sys.parent.html'>parent.frame</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>funmat</th>
-      <td><p>A function matrix created by <code><a href='foodweb_matrix.html'>foodweb_matrix()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>title</th>
-      <td><p>Title to appear on the default graph visualisation</p></td>
+      <th>env</th>
+      <td><p>Environment in which to search for functions. Can either be an environment
+or a character string denoting an environment (e.g. <code>"package:emissions"</code>). Environment must
+be on the search path.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>foodweb</code>.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function should not be called directly, use <code><a href='foodweb.html'>foodweb()</a></code> instead.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p>foodweb</p></div>
+    <p>An n x n matrix where <em>n</em> is the number of functions in <code>env</code>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -170,7 +170,7 @@ the environment of <code>FUN</code> will be used.</p>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>foodweb</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>x</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 nodes and 6 edges
-#&gt; </span>digraph 'foodweb of &lt;env: 0x7f96255f9c10&gt;' {
+#&gt; </span>digraph 'foodweb of &lt;env: 0x7ffc659fa1f8&gt;' {
 #&gt;   f()
 #&gt;   g() -&gt; { f() }
 #&gt;   h() -&gt; { f(), g() }
@@ -187,8 +187,8 @@ the environment of <code>FUN</code> will be used.</p>
 #&gt;      i 1 1 1 0 0
 #&gt;      j 0 0 0 0 0
 #&gt; attr(,"class")
-#&gt; [1] "foodweb_funmat" "matrix"         "array"         </div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7f96255f9c10&gt;' {
+#&gt; [1] "foodweb_matrix" "matrix"         "array"         </div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7ffc659fa1f8&gt;' {
 #&gt;   "f()"
 #&gt;   "g()" -&gt; { "f()" }
 #&gt;   "h()" -&gt; { "f()", "g()" }

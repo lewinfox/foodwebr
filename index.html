@@ -79,6 +79,8 @@
 <p>Say we have a bunch of functions in the global environment, some of which call each other:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">foodwebr</span><span class="op">)</span>
+<span class="co">#&gt; Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'</span>
+<span class="co">#&gt; when loading 'dplyr'</span>
 
 <span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span>
 <span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>
@@ -92,7 +94,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span>
 <span class="co">#&gt; # A `foodweb`: 5 nodes and 6 edges</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x55d88853f640&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x3d9cbe0&gt;' {</span>
 <span class="co">#&gt;   f()</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
 <span class="co">#&gt;   h() -&gt; { f(), g() }</span>
@@ -113,7 +115,7 @@
 <p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x55d88853f640&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x3d9cbe0&gt;' {</span>
 <span class="co">#&gt;   "f()"</span>
 <span class="co">#&gt;   "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt;   "h()" -&gt; { "f()", "g()" }</span>
@@ -125,13 +127,13 @@
 <h2 class="hasAnchor">
 <a href="#digging-deeper" class="anchor"></a>Digging deeper</h2>
 <p><code>foodwebr</code> also exposes the workhorse functions in case you want to play around with them.</p>
-<div id="function_matrix" class="section level3">
+<div id="foodweb_matrix" class="section level3">
 <h3 class="hasAnchor">
-<a href="#function_matrix" class="anchor"></a><code>function_matrix()</code>
+<a href="#foodweb_matrix" class="anchor"></a><code>foodweb_matrix()</code>
 </h3>
-<p>The starting point is to compute the function matrix. This idea, and much of the implementation, was taken from <a href="https://rdrr.io/cran/mvbutils/man/foodweb.html"><code>mvbutils::foodweb()</code></a>. The function matrix is 1 if the function on the y-axis calls the function on the x-axis, and 0 otherwise. <code><a href="reference/function_matrix.html">function_matrix()</a></code> looks at functions in the global environment by default, but you can specify another environment using the <code>env</code> argument.</p>
+<p>The starting point is to compute the function matrix. This idea, and much of the implementation, was taken from <a href="https://rdrr.io/cran/mvbutils/man/foodweb.html"><code>mvbutils::foodweb()</code></a>. The function matrix is 1 if the function on the y-axis calls the function on the x-axis, and 0 otherwise. <code><a href="reference/foodweb_matrix.html">foodweb_matrix()</a></code> looks at functions in the global environment by default, but you can specify another environment using the <code>env</code> argument.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">funmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/function_matrix.html">function_matrix</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">funmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/foodweb_matrix.html">foodweb_matrix</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">funmat</span>
 <span class="co">#&gt;       CALLEE</span>
@@ -142,7 +144,7 @@
 <span class="co">#&gt;      i 1 1 1 0 0</span>
 <span class="co">#&gt;      j 0 0 0 0 0</span>
 <span class="co">#&gt; attr(,"class")</span>
-<span class="co">#&gt; [1] "foodweb_funmat" "matrix"         "array"</span></code></pre></div>
+<span class="co">#&gt; [1] "foodweb_matrix" "matrix"</span></code></pre></div>
 <p>Note that self-calls are ignored (<code>funmat["j", "j"]</code> is zero even though <code>j()</code> calls itself).</p>
 </div>
 <div id="graphviz_spec_from_matrix" class="section level3">
