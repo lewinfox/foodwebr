@@ -94,7 +94,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span>
 <span class="co">#&gt; # A `foodweb`: 5 nodes and 6 edges</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x3d9cbe0&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x3a4cbc0&gt;' {</span>
 <span class="co">#&gt;   f()</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
 <span class="co">#&gt;   h() -&gt; { f(), g() }</span>
@@ -115,7 +115,7 @@
 <p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x3d9cbe0&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x3a4cbc0&gt;' {</span>
 <span class="co">#&gt;   "f()"</span>
 <span class="co">#&gt;   "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt;   "h()" -&gt; { "f()", "g()" }</span>
@@ -136,15 +136,14 @@
 <code class="sourceCode R"><span class="va">funmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/foodweb_matrix.html">foodweb_matrix</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">funmat</span>
+<span class="co">#&gt; # A foodweb matrix: 5 functions and 6 links</span>
 <span class="co">#&gt;       CALLEE</span>
 <span class="co">#&gt; CALLER f g h i j</span>
 <span class="co">#&gt;      f 0 0 0 0 0</span>
 <span class="co">#&gt;      g 1 0 0 0 0</span>
 <span class="co">#&gt;      h 1 1 0 0 0</span>
 <span class="co">#&gt;      i 1 1 1 0 0</span>
-<span class="co">#&gt;      j 0 0 0 0 0</span>
-<span class="co">#&gt; attr(,"class")</span>
-<span class="co">#&gt; [1] "foodweb_matrix" "matrix"</span></code></pre></div>
+<span class="co">#&gt;      j 0 0 0 0 0</span></code></pre></div>
 <p>Note that self-calls are ignored (<code>funmat["j", "j"]</code> is zero even though <code>j()</code> calls itself).</p>
 </div>
 <div id="graphviz_spec_from_matrix" class="section level3">
