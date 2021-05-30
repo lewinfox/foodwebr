@@ -184,14 +184,31 @@ str.foodweb <- function(object, ...) {
 #'
 #' @keywords internal
 summary.foodweb <- function(object, ...) {
-  str.foodweb(object)
+  cat("A `foodweb`: ", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
 }
 
 #' @export
 #'
 #' @keywords internal
 as.character.foodweb <- function(x, ...) {
-  x$graphviz_spec
+  get_graphviz_spec(x)
+}
+
+#' Convert a `foodweb` to a matrix
+#'
+#' This is equivalent to calling [get_funmat()] on `x`.
+#'
+#' @param x A `foodweb`
+#' @param rownames.force,... Ignored, only included for compatibility with S3 generic
+#'
+#' @export
+#'
+#' @keywords internal
+as.matrix.foodweb <- function(x, rownames.force = NA, ...) {
+  if (!is.na(rownames.force)) {
+    cli::cli_alert_info("{.var rownames_force} has no effect")
+  }
+  get_funmat(x)
 }
 
 #' Convert a `foodweb` to a `tidygraph`
