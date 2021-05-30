@@ -57,7 +57,7 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     }
 
   }
-  fm <- function_matrix(env)
+  fm <- foodweb_matrix(env)
   if (filter) {
     fn_name <- fn_name[length(fn_name)]
     fm <- filter_matrix(fn_name, fm)
@@ -82,7 +82,7 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
 #'
 #' This function should not be called directly, use [foodweb()] instead.
 #'
-#' @param funmat A function matrix created by [function_matrix()]
+#' @param funmat A function matrix created by [foodweb_matrix()]
 #' @param title Title to appear on the default graph visualisation
 #'
 #' @seealso foodweb

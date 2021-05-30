@@ -7,7 +7,7 @@
 new_foodweb(funmat, title)
 }
 \arguments{
-\item{funmat}{A function matrix created by \code{\link[=function_matrix]{function_matrix()}}}
+\item{funmat}{A function matrix created by \code{\link[=foodweb_matrix]{foodweb_matrix()}}}
 
 \item{title}{Title to appear on the default graph visualisation}
 }

@@ -1,3 +1,5 @@
+# ---- Foodweb matrix ----
+
 #' Create a function caller/callee matrix
 #'
 #' Returns a matrix of 0s and 1s with a row and column for each function in an environment, such
@@ -11,10 +13,10 @@
 #' @return An n x n matrix where _n_ is the number of functions in `env`.
 #'
 #' @export
-function_matrix <- function(env = parent.frame()) {
+foodweb_matrix <- function(env = parent.frame()) {
   if (!is.environment(env)) {
     cli::cli_alert_danger("{.var {env}} must be an environment, not {typeof(env)}")
-    rlang::abort("Unable to create function matrix", "foodwebr_bad_environment")
+    rlang::abort("Unable to create foodweb matrix", "foodwebr_bad_environment")
   }
   funs <- as.character(utils::lsf.str(envir = env))
   n <- length(funs)
@@ -47,7 +49,7 @@ function_matrix <- function(env = parent.frame()) {
   rownames(funmat) <- as.character(rownames(funmat))
   colnames(funmat) <- as.character(colnames(funmat))
 
-  class(funmat) <- c("foodweb_funmat", class(funmat))
+  class(funmat) <- c("foodweb_matrix", class(funmat))
 
   return(funmat)
 }
@@ -155,7 +157,7 @@ tokenise_function <- function(x) {
 #' Filter a function matrix
 #'
 #' @param fn_name String giving the name of the function we're interested in
-#' @param fn_mat Matrix produced by [function_matrix()]
+#' @param fn_mat Matrix produced by [foodweb_matrix()]
 #'
 #' @return A filtered function matrix containing only functions that are direct descendants or
 #'   antecedents of `fn_name`.
@@ -194,4 +196,11 @@ filter_matrix <- function(fn_name, fn_mat) {
   }
 
   fn_mat[fns_to_keep, fns_to_keep]
+}
+
+# ---- S3 methods ----
+print.foodweb_matrix <- function(x, ...) {
+  cat(crayon::silver("# A foodweb matrix:", nrow(x), "functions and", sum(x), "links\n"))
+  print(unclass(x))
+  invisible(x)
 }

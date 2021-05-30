@@ -4,6 +4,7 @@
 # foodwebr
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 `foodwebr` makes it easy to visualise the dependency graph of a set of
@@ -26,6 +27,8 @@ which call each other:
 
 ``` r
 library(foodwebr)
+#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
+#> when loading 'dplyr'
 
 f <- function() 1
 g <- function() f()
@@ -46,7 +49,7 @@ Printing the object will show the graphviz representation:
 ``` r
 fw
 #> # A `foodweb`: 5 nodes and 6 edges
-#> digraph 'foodweb of <env: 0x55d88853f640>' {
+#> digraph 'foodweb of <env: 0x3d9cbe0>' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -87,7 +90,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x55d88853f640>' {
+#> digraph 'foodweb of <env: 0x3d9cbe0>' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
@@ -101,18 +104,18 @@ foodweb(as.text = TRUE)
 `foodwebr` also exposes the workhorse functions in case you want to play
 around with them.
 
-### `function_matrix()`
+### `foodweb_matrix()`
 
 The starting point is to compute the function matrix. This idea, and
 much of the implementation, was taken from
 [`mvbutils::foodweb()`](https://rdrr.io/cran/mvbutils/man/foodweb.html).
 The function matrix is 1 if the function on the y-axis calls the
-function on the x-axis, and 0 otherwise. `function_matrix()` looks at
+function on the x-axis, and 0 otherwise. `foodweb_matrix()` looks at
 functions in the global environment by default, but you can specify
 another environment using the `env` argument.
 
 ``` r
-funmat <- function_matrix()
+funmat <- foodweb_matrix()
 
 funmat
 #>       CALLEE
@@ -123,7 +126,7 @@ funmat
 #>      i 1 1 1 0 0
 #>      j 0 0 0 0 0
 #> attr(,"class")
-#> [1] "foodweb_funmat" "matrix"         "array"
+#> [1] "foodweb_matrix" "matrix"
 ```
 
 Note that self-calls are ignored (`funmat["j", "j"]` is zero even though
@@ -150,7 +153,8 @@ graphviz_spec
 
 ### Visualisation
 
-We can visualise the graph specification using `Diagrammer::grViz()`.
+We can visualise the graph specification using
+`Diagrammer::grViz()`.
 
 ``` r
 DiagrammeR::grViz(graphviz_spec)
