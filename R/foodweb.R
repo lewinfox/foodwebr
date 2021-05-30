@@ -167,9 +167,6 @@ print.foodweb <- function(x, ...) {
 #'
 #' @keywords internal
 plot.foodweb <- function(x, ...) {
-  if (!requireNamespace("DiagrammeR", quietly = TRUE)) {
-    stop("Package 'DiagrammeR' is required but not installed")
-  }
   DiagrammeR::grViz(x$graphviz_spec)
 }
 
@@ -191,7 +188,7 @@ summary.foodweb <- function(object, ...) {
 #'
 #' @keywords internal
 as.character.foodweb <- function(x, ...) {
-  get_graphviz_spec(x)
+  x$graphviz_spec
 }
 
 #' Convert a `foodweb` to a matrix
@@ -208,7 +205,10 @@ as.matrix.foodweb <- function(x, rownames.force = NA, ...) {
   if (!is.na(rownames.force)) {
     cli::cli_alert_info("{.var rownames_force} has no effect")
   }
-  get_funmat(x)
+  fm <- get_funmat(x)
+  # Remove the `foodweb_matrix` class
+  class(fm) <- setdiff(class(fm), "foodweb_matrix")
+  fm
 }
 
 #' Convert a `foodweb` to a `tidygraph`
@@ -224,9 +224,6 @@ as.matrix.foodweb <- function(x, rownames.force = NA, ...) {
 #'
 #' @keywords internal
 as_tbl_graph.foodweb <- function(x, ...) {
-  if (!requireNamespace("tidygraph", quietly = TRUE)) {
-    stop("Package `tidygraph` is required but not installed")
-  }
   # TODO: Input validation
   nodes_df <- data.frame(name = rownames(x$funmat), stringsAsFactors = FALSE)
   n_edges <- sum(x$funmat)
