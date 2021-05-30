@@ -169,38 +169,38 @@ the environment of <code>FUN</code> will be used.</p>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>foodweb</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>x</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 nodes and 6 edges
-#&gt; </span>digraph 'foodweb of &lt;env: 0x7faffd0a9e78&gt;' {
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 nodes and 7 edges
+#&gt; </span>digraph 'foodweb of &lt;env: 0x7f812a3aad28&gt;' {
 #&gt;   f()
 #&gt;   g() -&gt; { f() }
 #&gt;   h() -&gt; { f(), g() }
 #&gt;   i() -&gt; { f(), g(), h() }
-#&gt;   j()
+#&gt;   j() -&gt; { j() }
 #&gt; }</div><div class='input'>
 <span class='co'># You can access the components directly or via getter functions</span>
 <span class='va'>x</span><span class='op'>$</span><span class='va'>funmat</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A foodweb matrix: 5 functions and 6 links
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A foodweb matrix: 5 functions and 7 links
 #&gt; </span>      CALLEE
 #&gt; CALLER f g h i j
 #&gt;      f 0 0 0 0 0
 #&gt;      g 1 0 0 0 0
 #&gt;      h 1 1 0 0 0
 #&gt;      i 1 1 1 0 0
-#&gt;      j 0 0 0 0 0</div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7faffd0a9e78&gt;' {
+#&gt;      j 0 0 0 0 1</div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7f812a3aad28&gt;' {
 #&gt;   "f()"
 #&gt;   "g()" -&gt; { "f()" }
 #&gt;   "h()" -&gt; { "f()", "g()" }
 #&gt;   "i()" -&gt; { "f()", "g()", "h()" }
-#&gt;   "j()"
+#&gt;   "j()" -&gt; { "j()" }
 #&gt; }</div><div class='input'>
 <span class='co'># Calculate the foodweb of a function in another package</span>
 <span class='fu'>foodweb</span><span class='op'>(</span><span class='fu'>glue</span><span class='fu'>::</span><span class='va'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 19 nodes and 22 edges
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 19 nodes and 23 edges
 #&gt; </span>digraph 'foodweb of glue::glue()' {
 #&gt;   glue() -&gt; { glue_data(), identity_transformer() }
 #&gt;   +.glue() -&gt; { glue() }
-#&gt;   color_transformer() -&gt; { glue() }
+#&gt;   color_transformer() -&gt; { glue(), color_transformer() }
 #&gt;   eng_glue() -&gt; { glue() }
 #&gt;   glue_col() -&gt; { glue(), color_transformer() }
 #&gt;   glue_safe() -&gt; { glue() }
