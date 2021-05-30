@@ -199,6 +199,15 @@ filter_matrix <- function(fn_name, fn_mat) {
 }
 
 # ---- S3 methods ----
+
+#' Print a `foodweb_matrix`
+#'
+#' @param x A `foodweb_matrix`
+#' @param ... Unused
+#'
+#' @return `x`, invisibly
+#'
+#' @export
 print.foodweb_matrix <- function(x, ...) {
   cat(crayon::silver("# A foodweb matrix:", nrow(x), "functions and", sum(x), "links\n"))
   print(unclass(x))

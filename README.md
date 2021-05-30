@@ -49,7 +49,7 @@ Printing the object will show the graphviz representation:
 ``` r
 fw
 #> # A `foodweb`: 5 nodes and 6 edges
-#> digraph 'foodweb of <env: 0x3d9cbe0>' {
+#> digraph 'foodweb of <env: 0x3a4cbc0>' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -90,7 +90,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x3d9cbe0>' {
+#> digraph 'foodweb of <env: 0x3a4cbc0>' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
@@ -118,6 +118,7 @@ another environment using the `env` argument.
 funmat <- foodweb_matrix()
 
 funmat
+#> # A foodweb matrix: 5 functions and 6 links
 #>       CALLEE
 #> CALLER f g h i j
 #>      f 0 0 0 0 0
@@ -125,8 +126,6 @@ funmat
 #>      h 1 1 0 0 0
 #>      i 1 1 1 0 0
 #>      j 0 0 0 0 0
-#> attr(,"class")
-#> [1] "foodweb_matrix" "matrix"
 ```
 
 Note that self-calls are ignored (`funmat["j", "j"]` is zero even though
