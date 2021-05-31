@@ -48,7 +48,7 @@ representation:
 
 ``` r
 fw
-#> # A `foodweb`: 5 nodes and 7 edges
+#> # A `foodweb`: 5 vertices and 7 edges 
 #> digraph 'foodweb' {
 #>   f()
 #>   g() -> { f() }
@@ -81,7 +81,7 @@ function.
 ``` r
 # `j()` will not be included
 foodweb(FUN = g)
-#> # A `foodweb`: 4 nodes and 6 edges
+#> # A `foodweb`: 4 vertices and 6 edges 
 #> digraph 'foodweb' {
 #>   g() -> { f() }
 #>   h() -> { g(), f() }
@@ -91,7 +91,7 @@ foodweb(FUN = g)
 
 # Force inclusion of unconnected functions by using `filter = FALSE`
 foodweb(FUN = g, filter = FALSE)
-#> # A `foodweb`: 5 nodes and 7 edges
+#> # A `foodweb`: 5 vertices and 7 edges 
 #> digraph 'foodweb' {
 #>   f()
 #>   g() -> { f() }
@@ -183,3 +183,55 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> 3     3     2
 #> # … with 4 more rows
 ```
+
+## How does it work?
+
+Understanding the algorithm is important as there are some key
+limitations to be aware of. To identify the relationships between
+functions, `foodwebr`:
+
+  - Lists all the functions in an environment.
+  - Tokenises the `body()` of each function.
+  - Compares each token against the list of function names.
+  - If a token matches a function name, (i.e. the name of function B
+    appears in the body of function A), records a link from A to B.
+
+This last point leads to the possibility of name masking, where a
+function contains an internal variable that matches the name of another
+function in the environment. This will lead to a false link.
+
+For example:
+
+``` r
+f1 <- function() {
+  1
+}
+
+f2 <- function() {
+  f1 <- 10 # This variable `f1` will be confused with the function `f1()`
+  2
+}
+
+# The foodweb mistakenly believes that function `f2()` calls function `f1()`
+foodweb()
+#> # A `foodweb`: 2 vertices and 1 edge 
+#> digraph 'foodweb' {
+#>   f1()
+#>   f2() -> { f1() }
+#> }
+```
+
+If you know how to fix this please leave a comment in
+[\#2](https://github.com/lewinfox/foodwebr/issues/2).
+
+## See also
+
+`foodwebr` is similar to these functions/packages:
+
+  - [`mvbutils::foodweb()`](): The OG of function dependency graphs in
+    R, and the inspiration for foodwebr. Less user-friendly output, in
+    my
+    opinion.
+  - [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
+    Provides much nicer visualisations but does not appear to be
+    actively maintained.

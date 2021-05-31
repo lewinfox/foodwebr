@@ -127,3 +127,51 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
   tg
 }
 ```
+
+
+## How does it work?
+
+Understanding the algorithm is important as there are some key limitations to be aware of. To
+identify the relationships between functions, `foodwebr`:
+
+* Lists all the functions in an environment.
+* Tokenises the `body()` of each function.
+* Compares each token against the list of function names.
+* If a token matches a function name, (i.e. the name of function B appears in the body of function
+  A), records a link from A to B.
+  
+This last point leads to the possibility of name masking, where a function contains an internal
+variable that matches the name of another function in the environment. This will lead to a false
+link.
+
+For example:
+
+```{r clear-env, include=FALSE}
+rm(list = ls())
+```
+
+```{r foodweb-false-link}
+f1 <- function() {
+  1
+}
+
+f2 <- function() {
+  f1 <- 10 # This variable `f1` will be confused with the function `f1()`
+  2
+}
+
+# The foodweb mistakenly believes that function `f2()` calls function `f1()`
+foodweb()
+```
+
+If you know how to fix this please leave a comment in
+[#2](https://github.com/lewinfox/foodwebr/issues/2).
+
+## See also
+
+`foodwebr` is similar to these functions/packages:
+
+* [`mvbutils::foodweb()`](): The OG of function dependency graphs in R, and the inspiration for
+  foodwebr. Less user-friendly output, in my opinion.
+* [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs): Provides much nicer
+  visualisations but does not appear to be actively maintained.
