@@ -6,9 +6,7 @@
 #' that if the function on the x-axis calls the function on the y-axis, the element is 1, otherwise
 #' 0.
 #'
-#' @param env Environment in which to search for functions. Can either be an environment
-#'   or a character string denoting an environment (e.g. `"package:emissions"`). Environment must
-#'   be on the search path.
+#' @param env Environment in which to search for functions.
 #'
 #' @return An n x n matrix where _n_ is the number of functions in `env`.
 #'

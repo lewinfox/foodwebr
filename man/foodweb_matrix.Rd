@@ -7,9 +7,7 @@
 foodweb_matrix(env = parent.frame())
 }
 \arguments{
-\item{env}{Environment in which to search for functions. Can either be an environment
-or a character string denoting an environment (e.g. \code{"package:emissions"}). Environment must
-be on the search path.}
+\item{env}{Environment in which to search for functions.}
 }
 \value{
 An n x n matrix where \emph{n} is the number of functions in \code{env}.
