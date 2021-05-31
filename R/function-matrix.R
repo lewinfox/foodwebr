@@ -74,15 +74,15 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
   }
 
   # Which of our environments does `fn_name` exist in?
-  which <- unlist(lapply(where, exists, x = fn_name), use.names = FALSE)
+  found_in_envs <- unlist(lapply(where, exists, x = fn_name), use.names = FALSE)
 
   # Grab the function definition so we can analyse it
-  if (!any(which)) {
+  if (!any(found_in_envs)) {
     # The function can't be found in the specified environments, so check for it elsewhere.
     f <- if (exists(fn_name)) get(fn_name) else list()
   } else {
 
-    idx <- seq_along(which)[which]  # No idea why this is necessary!
+    idx <- seq_along(found_in_envs)[found_in_envs]  # No idea why this is necessary!
 
     # Get it from the environment in which we found it
     f <- get(fn_name, pos = where[[idx[1]]])
