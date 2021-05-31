@@ -174,7 +174,7 @@ the environment of <code>FUN</code> will be used.</p>
 
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>foodweb</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>x</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 nodes and 7 edges
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 vertices and 7 edges 
 #&gt; </span>digraph 'foodweb' {
 #&gt;   f()
 #&gt;   g() -&gt; { f() }
@@ -201,7 +201,7 @@ the environment of <code>FUN</code> will be used.</p>
 #&gt; }</div><div class='input'>
 <span class='co'># Calculate the foodweb of a function in another package</span>
 <span class='fu'>foodweb</span><span class='op'>(</span><span class='fu'>glue</span><span class='fu'>::</span><span class='va'><a href='https://glue.tidyverse.org/reference/glue.html'>glue</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 19 nodes and 23 edges
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 19 vertices and 23 edges 
 #&gt; </span>digraph 'foodweb' {
 #&gt;   glue() -&gt; { glue_data(), identity_transformer() }
 #&gt;   +.glue() -&gt; { glue() }

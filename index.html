@@ -100,7 +100,7 @@
 <p>Printing the object will show the <a href="https://graphviz.org/">graphviz</a> representation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span>
-<span class="co">#&gt; # A `foodweb`: 5 nodes and 7 edges</span>
+<span class="co">#&gt; # A `foodweb`: 5 vertices and 7 edges </span>
 <span class="co">#&gt; digraph 'foodweb' {</span>
 <span class="co">#&gt;   f()</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
@@ -120,7 +120,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># `j()` will not be included</span>
 <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">g</span><span class="op">)</span>
-<span class="co">#&gt; # A `foodweb`: 4 nodes and 6 edges</span>
+<span class="co">#&gt; # A `foodweb`: 4 vertices and 6 edges </span>
 <span class="co">#&gt; digraph 'foodweb' {</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
 <span class="co">#&gt;   h() -&gt; { g(), f() }</span>
@@ -130,7 +130,7 @@
 
 <span class="co"># Force inclusion of unconnected functions by using `filter = FALSE`</span>
 <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">g</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; # A `foodweb`: 5 nodes and 7 edges</span>
+<span class="co">#&gt; # A `foodweb`: 5 vertices and 7 edges </span>
 <span class="co">#&gt; digraph 'foodweb' {</span>
 <span class="co">#&gt;   f()</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
@@ -198,6 +198,48 @@
 <span class="co">#&gt; 2     3     1</span>
 <span class="co">#&gt; 3     3     2</span>
 <span class="co">#&gt; # … with 4 more rows</span></code></pre></div>
+</div>
+<div id="how-does-it-work" class="section level2">
+<h2 class="hasAnchor">
+<a href="#how-does-it-work" class="anchor"></a>How does it work?</h2>
+<p>Understanding the algorithm is important as there are some key limitations to be aware of. To identify the relationships between functions, <code>foodwebr</code>:</p>
+<ul>
+<li>Lists all the functions in an environment.</li>
+<li>Tokenises the <code><a href="https://rdrr.io/r/base/body.html">body()</a></code> of each function.</li>
+<li>Compares each token against the list of function names.</li>
+<li>If a token matches a function name, (i.e. the name of function B appears in the body of function A), records a link from A to B.</li>
+</ul>
+<p>This last point leads to the possibility of name masking, where a function contains an internal variable that matches the name of another function in the environment. This will lead to a false link.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fl">1</span>
+<span class="op">}</span>
+
+<span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">f1</span> <span class="op">&lt;-</span> <span class="fl">10</span> <span class="co"># This variable `f1` will be confused with the function `f1()`</span>
+  <span class="fl">2</span>
+<span class="op">}</span>
+
+<span class="co"># The foodweb mistakenly believes that function `f2()` calls function `f1()`</span>
+<span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; # A `foodweb`: 2 vertices and 1 edge </span>
+<span class="co">#&gt; digraph 'foodweb' {</span>
+<span class="co">#&gt;   f1()</span>
+<span class="co">#&gt;   f2() -&gt; { f1() }</span>
+<span class="co">#&gt; }</span></code></pre></div>
+<p>If you know how to fix this please leave a comment in <a href="https://github.com/lewinfox/foodwebr/issues/2">#2</a>.</p>
+</div>
+<div id="see-also" class="section level2">
+<h2 class="hasAnchor">
+<a href="#see-also" class="anchor"></a>See also</h2>
+<p><code>foodwebr</code> is similar to these functions/packages:</p>
+<ul>
+<li>
+<a href=""><code>mvbutils::foodweb()</code></a>: The OG of function dependency graphs in R, and the inspiration for foodwebr. Less user-friendly output, in my opinion.</li>
+<li>
+<a href="https://github.com/datastorm-open/DependenciesGraphs"><code>DependenciesGraphs</code></a>: Provides much nicer visualisations but does not appear to be actively maintained.</li>
+</ul>
 </div>
 </div>
   </div>
