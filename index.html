@@ -48,7 +48,14 @@
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/lewinfox/foodwebr/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -78,7 +85,7 @@
 <a href="#basic-usage" class="anchor"></a>Basic usage</h2>
 <p>Say we have a bunch of functions in the global environment, some of which call each other:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">foodwebr</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lewinfox/foodwebr">foodwebr</a></span><span class="op">)</span>
 <span class="co">#&gt; Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'</span>
 <span class="co">#&gt; when loading 'dplyr'</span>
 
@@ -87,14 +94,14 @@
 <span class="va">h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>
 <span class="va">i</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span>; <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span>
 <span class="va">j</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">j</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>A call to <code><a href="reference/foodweb.html">foodweb()</a></code> will calculate a graph of the dependencies, i.e. who calls who.</p>
+<p>A call to <code><a href="reference/foodweb.html">foodweb()</a></code> will calculate a graph of the dependencies.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Printing the object will show the graphviz representation:</p>
+<p>Printing the object will show the <a href="https://graphviz.org/">graphviz</a> representation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span>
 <span class="co">#&gt; # A `foodweb`: 5 nodes and 7 edges</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x2da1be0&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x2eddbe0&gt;' {</span>
 <span class="co">#&gt;   f()</span>
 <span class="co">#&gt;   g() -&gt; { f() }</span>
 <span class="co">#&gt;   h() -&gt; { f(), g() }</span>
@@ -105,17 +112,39 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fw</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-1.png" width="100%"></p>
-<p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at the global environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
-<p>You can use this to map all the functions in a package. I’m using <code>cowsay</code> here as it’s small enough that the output is readable.</p>
+<p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at its calling environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
+<p>If a specific function is passed to <code>FUN</code>, the default behaviour is to remove functions that are not descendants or antecedents of that function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># `j()` will not be included</span>
+<span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">g</span><span class="op">)</span>
+<span class="co">#&gt; # A `foodweb`: 4 nodes and 6 edges</span>
+<span class="co">#&gt; digraph 'foodweb of g ()' {</span>
+<span class="co">#&gt;   g() -&gt; { f() }</span>
+<span class="co">#&gt;   h() -&gt; { g(), f() }</span>
+<span class="co">#&gt;   i() -&gt; { g(), h(), f() }</span>
+<span class="co">#&gt;   f()</span>
+<span class="co">#&gt; }</span>
+
+<span class="co"># Force inclusion of unconnected functions by using `filter = FALSE`</span>
+<span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">g</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="co">#&gt; # A `foodweb`: 5 nodes and 7 edges</span>
+<span class="co">#&gt; digraph 'foodweb of g ()' {</span>
+<span class="co">#&gt;   f()</span>
+<span class="co">#&gt;   g() -&gt; { f() }</span>
+<span class="co">#&gt;   h() -&gt; { f(), g() }</span>
+<span class="co">#&gt;   i() -&gt; { f(), g(), h() }</span>
+<span class="co">#&gt;   j() -&gt; { j() }</span>
+<span class="co">#&gt; }</span></code></pre></div>
+<p>You can use <code><a href="reference/foodweb.html">foodweb()</a></code> to map all the functions in a package. I’m using <code>cowsay</code> here as it’s small enough that the output is readable.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-package-1.png" width="100%"></p>
 <p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x2da1be0&gt;' {</span>
+<span class="co">#&gt; digraph 'foodweb of &lt;env: 0x2eddbe0&gt;' {</span>
 <span class="co">#&gt;   "f()"</span>
 <span class="co">#&gt;   "g()" -&gt; { "f()" }</span>
 <span class="co">#&gt;   "h()" -&gt; { "f()", "g()" }</span>
@@ -132,7 +161,7 @@
 <a href="#foodweb_matrix" class="anchor"></a><code>foodweb_matrix()</code>
 </h3>
 <p>The starting point is to compute the function matrix. This idea, and much of the implementation, was taken from <a href="https://rdrr.io/cran/mvbutils/man/foodweb.html"><code>mvbutils::foodweb()</code></a>. The function matrix is 1 if the function on the y-axis calls the function on the x-axis, and 0 otherwise. <code><a href="reference/foodweb_matrix.html">foodweb_matrix()</a></code> looks at functions in the global environment by default, but you can specify another environment using the <code>env</code> argument.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">funmat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/foodweb_matrix.html">foodweb_matrix</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">funmat</span>
@@ -150,7 +179,7 @@
 <a href="#graphviz_spec_from_matrix" class="anchor"></a><code>graphviz_spec_from_matrix()</code>
 </h3>
 <p><code><a href="reference/graphviz_spec_from_matrix.html">graphviz_spec_from_matrix()</a></code> translates the function matrix into a character string containing a <a href="https://graphviz.org/">graphviz</a> specification:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">graphviz_spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/graphviz_spec_from_matrix.html">graphviz_spec_from_matrix</a></span><span class="op">(</span><span class="va">funmat</span><span class="op">)</span>
 
 <span class="va">graphviz_spec</span>
@@ -166,7 +195,7 @@
 <h3 class="hasAnchor">
 <a href="#visualisation" class="anchor"></a>Visualisation</h3>
 <p>We can visualise the graph specification using <code>Diagrammer::grViz()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">DiagrammeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DiagrammeR/man/grViz.html">grViz</a></span><span class="op">(</span><span class="va">graphviz_spec</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-graph-spec-1.png" width="100%"></p>
 </div>
@@ -176,7 +205,7 @@
 <a href="#using-tidygraph" class="anchor"></a>Using <code>tidygraph</code>
 </h2>
 <p>The <a href="https://tidygraph.data-imaginist.com/"><code>tidygraph</code></a> package provides tools for graph analysis. A <code>foodweb</code> object can be converted into a tidy graph object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">tidygraph::as_tbl_graph()</a></code> to allow more sophisticated analysis and visualisation.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
   <span class="va">tg</span>
@@ -209,9 +238,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>View the source code at <br><a href="https://github.com/lewinfox/foodwebr">https://​github.com/​lewinfox/​foodwebr</a>
+<li>Browse source code at <br><a href="https://github.com/lewinfox/foodwebr/">https://​github.com/​lewinfox/​foodwebr/​</a>
 </li>
-<li>File a bug at <br><a href="https://github.com/lewinfox/foodwebr/issues">https://​github.com/​lewinfox/​foodwebr/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/lewinfox/foodwebr/issues">https://​github.com/​lewinfox/​foodwebr/​issues</a>
 </li>
 </ul>
 </div>

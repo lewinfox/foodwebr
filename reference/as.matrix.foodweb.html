@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the GraphViz specification from a foodweb object. — get_graphviz_spec • foodwebr</title>
+<title>Convert a foodweb to a matrix — as.matrix.foodweb • foodwebr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Extract the GraphViz specification from a foodweb object. — get_graphviz_spec" />
-<meta property="og:description" content="Extract the GraphViz specification from a foodweb object." />
+<meta property="og:title" content="Convert a foodweb to a matrix — as.matrix.foodweb" />
+<meta property="og:description" content="This is equivalent to calling get_funmat() on x." />
 
 
 
@@ -108,16 +108,17 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the GraphViz specification from a <code>foodweb</code> object.</h1>
+    <h1>Convert a <code>foodweb</code> to a matrix</h1>
     <small class="dont-index">Source: <a href='https://github.com/lewinfox/foodwebr/blob/master/R/foodweb.R'><code>R/foodweb.R</code></a></small>
-    <div class="hidden name"><code>get_graphviz_spec.Rd</code></div>
+    <div class="hidden name"><code>as.matrix.foodweb.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract the GraphViz specification from a <code>foodweb</code> object.</p>
+    <p>This is equivalent to calling <code><a href='get_funmat.html'>get_funmat()</a></code> on <code>x</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_graphviz_spec</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for foodweb</span>
+<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>x</span>, rownames.force <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,11 +127,12 @@
       <th>x</th>
       <td><p>A <code>foodweb</code></p></td>
     </tr>
+    <tr>
+      <th>rownames.force, ...</th>
+      <td><p>Ignored, only included for compatibility with S3 generic</p></td>
+    </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p><code>x$graphviz_spec</code> - a character scalar.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

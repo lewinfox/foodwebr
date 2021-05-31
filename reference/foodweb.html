@@ -92,7 +92,12 @@ for the default plotting behaviour." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/lewinfox/foodwebr/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -107,7 +112,7 @@ for the default plotting behaviour." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a foodweb</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lewinfox/foodwebr/blob/master/R/foodweb.R'><code>R/foodweb.R</code></a></small>
     <div class="hidden name"><code>foodweb.Rd</code></div>
     </div>
 
@@ -170,7 +175,7 @@ the environment of <code>FUN</code> will be used.</p>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>foodweb</span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>x</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A `foodweb`: 5 nodes and 7 edges
-#&gt; </span>digraph 'foodweb of &lt;env: 0x7f812a3aad28&gt;' {
+#&gt; </span>digraph 'foodweb of &lt;env: 0x7fee61f256e8&gt;' {
 #&gt;   f()
 #&gt;   g() -&gt; { f() }
 #&gt;   h() -&gt; { f(), g() }
@@ -187,7 +192,7 @@ the environment of <code>FUN</code> will be used.</p>
 #&gt;      h 1 1 0 0 0
 #&gt;      i 1 1 1 0 0
 #&gt;      j 0 0 0 0 1</div><div class='input'><span class='fu'><a href='get_graphviz_spec.html'>get_graphviz_spec</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7f812a3aad28&gt;' {
+</div><div class='output co'>#&gt; digraph 'foodweb of &lt;env: 0x7fee61f256e8&gt;' {
 #&gt;   "f()"
 #&gt;   "g()" -&gt; { "f()" }
 #&gt;   "h()" -&gt; { "f()", "g()" }
