@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2021-05-31T04:23Z
+last_built: 2021-05-31T21:21Z
 urls:
-  reference: https://www.lewinfox.github.io/foodwebr/reference
-  article: https://www.lewinfox.github.io/foodwebr/articles
+  reference: https://lewinfox.github.io/foodwebr/reference
+  article: https://lewinfox.github.io/foodwebr/articles
 

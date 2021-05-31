@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/index.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/index.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/as.matrix.foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/as.matrix.foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/as_tbl_graph.foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/as_tbl_graph.foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/filter_matrix.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/filter_matrix.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/foodweb_matrix.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/foodweb_matrix.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/functions_called_by.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/functions_called_by.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/get_funmat.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/get_funmat.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/get_graphviz_spec.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/get_graphviz_spec.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/graphviz_spec_from_matrix.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/graphviz_spec_from_matrix.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/is.foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/is.foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/new_foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/new_foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/plot.foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/plot.foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/print.foodweb.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/print.foodweb.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/print.foodweb_matrix.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/print.foodweb_matrix.html</loc>
   </url>
   <url>
-    <loc>https://www.lewinfox.github.io/foodwebr/reference/tokenise_function.html</loc>
+    <loc>https://lewinfox.github.io/foodwebr/reference/tokenise_function.html</loc>
   </url>
 </urlset>
