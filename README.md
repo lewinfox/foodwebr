@@ -72,6 +72,8 @@ argument of `foodweb()` or pass an environment to the `env` argument. If
 `FUN` is provided then the value of `env` is ignored, and the
 environment of `FUN` will be used.
 
+### Filtering
+
 If a specific function is passed to `FUN`, the default behaviour is to
 remove functions that are not descendants or antecedents of that
 function.
@@ -99,8 +101,14 @@ foodweb(FUN = g, filter = FALSE)
 #> }
 ```
 
-You can use `foodweb()` to map all the functions in a package. I’m using
-`cowsay` here as it’s small enough that the output is readable.
+You can use this feature when exploring code in other packages: calling
+`foodweb()` on a function in another package will show you how functions
+in that package relate to each other. I’m using `cowsay` here as it’s
+small enough that the output is readable.
+
+By default when calling `foodweb()` on a specific function we only see
+functions that are in the direct line of descendants or antecendents of
+the specified function.
 
 ``` r
 if (requireNamespace("cowsay", quietly = TRUE)) {
@@ -109,6 +117,19 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 ```
 
 <img src="man/figures/README-foodweb-plot-package-1.png" width="100%" />
+
+If we want to include *all* functions in the package, we can pass
+`filter = FALSE`:
+
+``` r
+if (requireNamespace("cowsay", quietly = TRUE)) {
+  plot(foodweb(cowsay::say, filter = FALSE))
+}
+```
+
+<img src="man/figures/README-foodweb-plot-package-no-filter-1.png" width="100%" />
+
+### `graphviz` as text
 
 In case you want to do something with the
 [graphviz](https://graphviz.org/) output (make it prettier, for
@@ -126,64 +147,8 @@ foodweb(as.text = TRUE)
 #> }
 ```
 
-## Digging deeper
-
-`foodwebr` also exposes the workhorse functions in case you want to play
-around with them.
-
-### `foodweb_matrix()`
-
-The starting point is to compute the function matrix. This idea, and
-much of the implementation, was taken from
-[`mvbutils::foodweb()`](https://rdrr.io/cran/mvbutils/man/foodweb.html).
-The function matrix is 1 if the function on the y-axis calls the
-function on the x-axis, and 0 otherwise. `foodweb_matrix()` looks at
-functions in the global environment by default, but you can specify
-another environment using the `env` argument.
-
-``` r
-funmat <- foodweb_matrix()
-
-funmat
-#> # A foodweb matrix: 5 functions and 7 links
-#>       CALLEE
-#> CALLER f g h i j
-#>      f 0 0 0 0 0
-#>      g 1 0 0 0 0
-#>      h 1 1 0 0 0
-#>      i 1 1 1 0 0
-#>      j 0 0 0 0 1
-```
-
-### `graphviz_spec_from_matrix()`
-
-`graphviz_spec_from_matrix()` translates the function matrix into a
-character string containing a [graphviz](https://graphviz.org/)
-specification:
-
-``` r
-graphviz_spec <- graphviz_spec_from_matrix(funmat)
-
-graphviz_spec
-#> digraph 'foodweb' {
-#>   "f()"
-#>   "g()" -> { "f()" }
-#>   "h()" -> { "f()", "g()" }
-#>   "i()" -> { "f()", "g()", "h()" }
-#>   "j()" -> { "j()" }
-#> }
-```
-
-### Visualisation
-
-We can visualise the graph specification using
-`Diagrammer::grViz()`.
-
-``` r
-DiagrammeR::grViz(graphviz_spec)
-```
-
-<img src="man/figures/README-foodweb-plot-graph-spec-1.png" width="100%" />
+Calling `as.character()` on a `foodweb` object will have the same
+effect.
 
 ## Using `tidygraph`
 
