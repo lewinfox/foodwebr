@@ -37,19 +37,19 @@ i <- function() { f(); g(); h() }
 j <- function() j()
 ```
 
-A call to `foodweb()` will calculate a graph of the dependencies,
-i.e. who calls who.
+A call to `foodweb()` will calculate a graph of the dependencies.
 
 ``` r
 fw <- foodweb()
 ```
 
-Printing the object will show the graphviz representation:
+Printing the object will show the [graphviz](https://graphviz.org/)
+representation:
 
 ``` r
 fw
 #> # A `foodweb`: 5 nodes and 7 edges
-#> digraph 'foodweb of <env: 0x3253be0>' {
+#> digraph 'foodweb of <env: 0x2eddbe0>' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -66,7 +66,7 @@ plot(fw)
 
 <img src="man/figures/README-foodweb-plot-1.png" width="100%" />
 
-`foodweb()` looks at the global environment by default. If you want to
+`foodweb()` looks at its calling environment by default. If you want to
 look at another environment you can either pass a function to the `FUN`
 argument of `foodweb()` or pass an environment to the `env` argument. If
 `FUN` is provided then the value of `env` is ignored, and the
@@ -117,7 +117,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x3253be0>' {
+#> digraph 'foodweb of <env: 0x2eddbe0>' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
