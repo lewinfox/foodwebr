@@ -1,7 +1,7 @@
 url: https://www.lewinfox.github.io/foodwebr
 
 home:
-  title: foodwebr: Visualise function dependencies
+  title: Visualise function dependencies
 
 authors:
   Lewin Appleton-Fox:
@@ -20,7 +20,7 @@ reference:
   - is.foodweb
   - get_funmat
   - get_graphviz_spec
-  - function_matrix
+  - foodweb_matrix
   - graphviz_spec_from_matrix
 - title: S3 methods
   desc: >
@@ -28,4 +28,5 @@ reference:
   contents:
   - plot.foodweb
   - print.foodweb
+  - print.foodweb_matrix
   - as_tbl_graph.foodweb
