@@ -88,6 +88,8 @@ new_foodweb <- function(funmat) {
   structure(list(funmat = funmat, graphviz_spec = gr_sp), class = "foodweb")
 }
 
+# ---- Utilities ----
+
 #' Is an object a `foodweb`?
 #'
 #' @param x The object to test
@@ -95,6 +97,22 @@ new_foodweb <- function(funmat) {
 #' @return Boolean
 is.foodweb <- function(x) {
   inherits(x, "foodweb")
+}
+
+#' Utility function to pluralise "edge" or "edges"
+#'
+#' Used when generating descriptions of a foodweb.
+#'
+#' @param x A `foodweb`
+#'
+#' @return A character string in the format "x nodes and y edge/s"
+#'
+#' @keywords internal
+foodweb_summarise <- function(x) {
+  fm <- get_funmat(x)
+  n_edges <- sum(fm)
+  plural <- ifelse(n_edges > 1, "edges", "edge")
+  paste(nrow(fm), "vertices and", n_edges, plural)
 }
 
 # ---- Getters ----
@@ -141,7 +159,9 @@ get_graphviz_spec <- function(x) {
 #'
 #' @keywords internal
 print.foodweb <- function(x, ...) {
-  cat(crayon::silver("# A `foodweb`:", nrow(x$funmat), "nodes and", sum(x$funmat), "edges\n"))
+  n_edges <- sum(x$funmat)
+  plural <- ifelse(n_edges > 1, "edges", "edge")
+  cat(crayon::silver("# A `foodweb`:", foodweb_summarise(x), "\n"))
   # TODO: This is a bit of a hack - we are relying on the fact that the graphviz string contains
   #       single quotes around the title (which we wish to retain) but double quotes around the
   #       vertex (function) names, which we wish to remove.
@@ -166,14 +186,14 @@ plot.foodweb <- function(x, ...) {
 #'
 #' @keywords internal
 str.foodweb <- function(object, ...) {
-  cat("A `foodweb`: ", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
+  cat("A `foodweb`: ", foodweb_summarise(object), "\n")
 }
 
 #' @export
 #'
 #' @keywords internal
 summary.foodweb <- function(object, ...) {
-  cat("A `foodweb`: ", nrow(object$funmat), "nodes and", sum(object$funmat), "edges")
+  cat("A `foodweb`: ", foodweb_summarise(object), "\n")
 }
 
 #' @export
