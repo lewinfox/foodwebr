@@ -49,7 +49,7 @@ representation:
 ``` r
 fw
 #> # A `foodweb`: 5 nodes and 7 edges
-#> digraph 'foodweb of <env: 0x2eddbe0>' {
+#> digraph 'foodweb' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -80,7 +80,7 @@ function.
 # `j()` will not be included
 foodweb(FUN = g)
 #> # A `foodweb`: 4 nodes and 6 edges
-#> digraph 'foodweb of g ()' {
+#> digraph 'foodweb' {
 #>   g() -> { f() }
 #>   h() -> { g(), f() }
 #>   i() -> { g(), h(), f() }
@@ -90,7 +90,7 @@ foodweb(FUN = g)
 # Force inclusion of unconnected functions by using `filter = FALSE`
 foodweb(FUN = g, filter = FALSE)
 #> # A `foodweb`: 5 nodes and 7 edges
-#> digraph 'foodweb of g ()' {
+#> digraph 'foodweb' {
 #>   f()
 #>   g() -> { f() }
 #>   h() -> { f(), g() }
@@ -117,7 +117,7 @@ as a character vector.
 
 ``` r
 foodweb(as.text = TRUE)
-#> digraph 'foodweb of <env: 0x2eddbe0>' {
+#> digraph 'foodweb' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }
@@ -165,7 +165,7 @@ specification:
 graphviz_spec <- graphviz_spec_from_matrix(funmat)
 
 graphviz_spec
-#> digraph 'foodweb of foodweb' {
+#> digraph 'foodweb' {
 #>   "f()"
 #>   "g()" -> { "f()" }
 #>   "h()" -> { "f()", "g()" }

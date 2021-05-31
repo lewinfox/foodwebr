@@ -46,27 +46,20 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     cli::cli_alert_warning("{.var FUN} is {.val NULL} so {.code filter = TRUE} has no effect")
     filter <- FALSE
   }
-  title <- paste0("<env: ", rlang::env_label(env), ">", collapse = "")
   if (!is.null(FUN)) {
     FUN <- match.fun(FUN)
     env <- environment(FUN)
-    if (length(fn_name) > 1) {
-      title <- paste0(paste(fn_name[c(2, 1, 3)], collapse = ""), "()", collapse = "")
-    } else {
-      title <- paste(fn_name, "()", collapse = "")
-    }
-
   }
   fm <- foodweb_matrix(env)
   if (filter) {
     fn_name <- fn_name[length(fn_name)]
     fm <- filter_matrix(fn_name, fm)
     if (!is.matrix(fm)) {
-      cli::cli_alert_info("{.fn {fn_name}} does not call, and is not called by, any other functions")
+      cli::cli_alert_info("{.fn {fn_name}} does not call, and isn't called by, any other functions")
       return(invisible(NULL))
     }
   }
-  fw <- new_foodweb(funmat = fm, title = title)
+  fw <- new_foodweb(funmat = fm)
   if (as.text) (
     return(as.character(fw))
   )
@@ -83,16 +76,15 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
 #' This function should not be called directly, use [foodweb()] instead.
 #'
 #' @param funmat A function matrix created by [foodweb_matrix()]
-#' @param title Title to appear on the default graph visualisation
 #'
 #' @seealso foodweb
 #'
 #' @return A `foodweb`.
 #'
 #' @keywords internal
-new_foodweb <- function(funmat, title) {
+new_foodweb <- function(funmat) {
   # TODO: Input validation?
-  gr_sp <- graphviz_spec_from_matrix(funmat, title)
+  gr_sp <- graphviz_spec_from_matrix(funmat)
   structure(list(funmat = funmat, graphviz_spec = gr_sp), class = "foodweb")
 }
 

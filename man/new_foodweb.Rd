@@ -4,12 +4,10 @@
 \alias{new_foodweb}
 \title{Create a new \code{foodweb} object}
 \usage{
-new_foodweb(funmat, title)
+new_foodweb(funmat)
 }
 \arguments{
 \item{funmat}{A function matrix created by \code{\link[=foodweb_matrix]{foodweb_matrix()}}}
-
-\item{title}{Title to appear on the default graph visualisation}
 }
 \value{
 A \code{foodweb}.
