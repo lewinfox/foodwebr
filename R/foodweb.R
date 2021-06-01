@@ -55,8 +55,8 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     fn_name <- fn_name[length(fn_name)]
     fm <- filter_matrix(fn_name, fm)
     if (!is.matrix(fm)) {
-      cli::cli_alert_info("{.fn {fn_name}} does not call, and isn't called by, any other functions")
-      return(invisible(NULL))
+      cli::cli_alert_danger("{.fn {fn_name}} does not call, and isn't called by, any other functions")
+      rlang::abort("Can't create a foodweb for an isolated function", "foodwebr_isolated_function")
     }
   }
   fw <- new_foodweb(funmat = fm)
