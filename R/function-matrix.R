@@ -17,6 +17,7 @@ foodweb_matrix <- function(env = parent.frame()) {
     rlang::abort("Unable to create foodweb matrix", "foodwebr_bad_environment")
   }
   funs <- as.character(utils::lsf.str(envir = env))
+  funs_list <- lapply(funs, get, envir = env)
   n <- length(funs)
   if (n == 0) {
     env_label <- glue::glue("<env: {rlang::env_label(env)}>")
@@ -24,10 +25,20 @@ foodweb_matrix <- function(env = parent.frame()) {
     cli::cli_alert_danger(msg)
     rlang::abort("No functions found", "foodwebr_no_functions")
   }
-  funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
-  # CALLER.of is a list of indices into `funs`, such that if CALLER.of[1] = [2 3 4] it means that
-  # funs[1] calls funs[2], funs[3] and funs[4].
-  CALLER.of <- lapply(funs, functions_called_by, funs_to_match = funs, where = env)
+
+  CALLER.of <- lapply(funs_list, get_called_functions)
+  pkg_fn_names <- paste(ns_to_pkgname(env), funs, sep = "::")
+  names(CALLER.of) <- pkg_fn_names
+
+  all_funs <- sort(unique(c(pkg_fn_names, unlist(CALLER.of))))
+
+  # TODO: Filter functions
+
+  funmat <- matrix(
+    rep(0, length(all_funs)^2),
+    nrow = length(all_funs),
+    dimnames = list(CALLER = all_funs, CALLEE = all_funs)
+  )
 
   # For each function, how many functions does it call?
   n.CALLER <- unlist(lapply(CALLER.of, length))
@@ -37,14 +48,12 @@ foodweb_matrix <- function(env = parent.frame()) {
     rlang::abort("Function does not call any matched functions", "foodwebr_no_web")
   }
 
-  # Construct the function caller/callee matrix
-  setup <- c(rep(1:length(funs), n.CALLER), unlist(CALLER.of))
-  dim(setup) <- c(sum(n.CALLER), 2)
-  funmat[setup] <- 1
-
-  # Convert dimnames to string
-  rownames(funmat) <- as.character(rownames(funmat))
-  colnames(funmat) <- as.character(colnames(funmat))
+  # Set the matrix to 1 where CALLER calls CALLEE
+  for (fn in names(CALLER.of)) {
+    if (length(CALLER.of[[fn]])) {
+      funmat[fn, CALLER.of[[fn]]] <- 1
+    }
+  }
 
   class(funmat) <- c("foodweb_matrix", class(funmat))
 

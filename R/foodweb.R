@@ -52,7 +52,9 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
   }
   fm <- foodweb_matrix(env)
   if (filter) {
-    fn_name <- fn_name[length(fn_name)]
+    if (length(fn_name) > 1) {
+      fn_name <- paste(fn_name[c(2, 1, 3)], collapse = "")
+    }
     fm <- filter_matrix(fn_name, fm)
     if (!is.matrix(fm)) {
       cli::cli_alert_danger("{.fn {fn_name}} does not call, and isn't called by, any other functions")

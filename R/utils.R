@@ -9,12 +9,17 @@
 #'
 #' @keywords internal
 get_calls <- function(expr) {
+  # For any function calls we want the first element, which is the function being called
   if (is.call(expr)) {
-    # We want to extract these namespace calls as a single object
-    if (identical(expr[[1L]], rlang::sym("::"))) {
+    # We want to extract these namespace calls as a single object rather than separating them into
+    # `::`, pkg and fn.
+    if (identical(expr[[1L]], quote(`::`))) {
       return(expr)
     }
-    if (identical(expr[[1L]], rlang::sym("<-"))) {
+    # Assignment is a special case - we want to avoid mis-identifying the LHS as a function (for
+    # example, `c <- some_func()` might look like a call to the function `c()`). However, sometimes
+    # assignment to a function is OK, e.g, `colnames(foo) <- bar`.
+    if (identical(expr[[1L]], quote(`<-`)) || identical(expr[[1L]], quote(`=`))) {
       if (is.call(expr[[2L]])) {
         return(lapply(expr[[2L:3L]], get_calls))
       } else {
@@ -39,9 +44,12 @@ get_calls <- function(expr) {
 #' @return A character vector containing names of all (non-primitive) functions called by `FUN`
 #'
 #' @keywords internal
-get_called_functions <- function(FUN) {
+get_called_functions <- function(FUN, env = environment(FUN)) {
   # Determine the namespace of FUN
-  ns <- rlang::ns_env(FUN)
+  if (!is.function(FUN)) {
+    FUN <- match.fun(FUN)
+  }
+  env_name <- rlang::env_label(env)
   b <- body(FUN)
   l <- get_calls(b)
   ul <- unlist(l)
@@ -50,13 +58,15 @@ get_called_functions <- function(FUN) {
   ul <- ul[!sapply(ul, is.null)]
   fns <- unique(ul)
   # Differentiate between functions and other symbols (e.g. variables)
-  fns <- fns[sapply(fns, expr_is_bare_function, env = ns)]
+  fns <- fns[sapply(fns, expr_is_bare_function, env = env)]
   # Remove primitives
-  funcs <- lapply(fns, eval, envir = ns)
+  funcs <- lapply(fns, eval, envir = env)
   is_primitive <- sapply(funcs, is.primitive)
+  # Remove base functions
   namespaces <- sapply(funcs, rlang::ns_env_name)
-  fns <- fns[!is_primitive]
-  build_namespaced_function_name(as.character(fns), namespaces[!is_primitive])
+  base_fns <- namespaces == "base"
+  keep <- !base_fns & !is_primitive
+  build_namespaced_function_name(as.character(fns[keep]), namespaces[keep])
 }
 
 #' Is an expression a function?
@@ -86,4 +96,21 @@ expr_is_bare_function <- function(expr, env = parent.frame()) {
 #' @keywords internal
 build_namespaced_function_name <- function(fn, ns) {
   ifelse(grepl("::", fn), fn, paste(ns, fn, sep = "::"))
+}
+
+function_to_name <- function(FUN) {
+  fn_name <- deparse(substitute(FUN))
+  x <- rlang::enexpr(FUN)
+  y <- rlang::enquo(FUN)
+  if (is.primitive(FUN)) {
+    env_name <- "base"
+  } else {
+    env_name <- sub("^namespace:", "", rlang::env_label(environment(FUN)))
+  }
+  res <- paste(env_name, fn_name, sep = "::")
+  sub(paste0("(", env_name, "::){2}"), paste0(env_name, "::"), res)
+}
+
+ns_to_pkgname <- function(ns_env) {
+  gsub("^namespace:", "", rlang::env_label(ns_env))
 }
