@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,25 +34,19 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">foodwebr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/lewinfox/foodwebr/">
+  <a href="https://github.com/lewinfox/foodwebr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -67,25 +63,25 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="foodwebr" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#foodwebr" class="anchor"></a>foodwebr</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="foodwebr">foodwebr<a class="anchor" aria-label="anchor" href="#foodwebr"></a>
+</h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
 <p><code>foodwebr</code> makes it easy to visualise the dependency graph of a set of functions (i.e. who calls who). This can be useful for exploring an unfamiliar codebase, or reminding yourself what you wrote ten minutes ago</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>You can install foodwebr from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"lewinfox/foodwebr"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="basic-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#basic-usage" class="anchor"></a>Basic usage</h2>
+<div class="section level2">
+<h2 id="basic-usage">Basic usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
+</h2>
 <p>Say we have a bunch of functions in the global environment, some of which call each other:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lewinfox/foodwebr">foodwebr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lewinfox/foodwebr" class="external-link">foodwebr</a></span><span class="op">)</span>
 <span class="co">#&gt; Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'</span>
 <span class="co">#&gt; when loading 'dplyr'</span>
 
@@ -97,7 +93,7 @@
 <p>A call to <code><a href="reference/foodweb.html">foodweb()</a></code> will calculate a graph of the dependencies.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Printing the object will show the <a href="https://graphviz.org/">graphviz</a> representation:</p>
+<p>Printing the object will show the <a href="https://graphviz.org/" class="external-link">graphviz</a> representation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fw</span>
 <span class="co">#&gt; # A `foodweb`: 5 vertices and 7 edges </span>
@@ -110,12 +106,12 @@
 <span class="co">#&gt; }</span></code></pre></div>
 <p>Plotting will draw the graph.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fw</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fw</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-1.png" width="100%"></p>
 <p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at its calling environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
-<div id="filtering" class="section level3">
-<h3 class="hasAnchor">
-<a href="#filtering" class="anchor"></a>Filtering</h3>
+<div class="section level3">
+<h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
+</h3>
 <p>If a specific function is passed to <code>FUN</code>, the default behaviour is to remove functions that are not descendants or antecedents of that function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># `j()` will not be included</span>
@@ -141,21 +137,22 @@
 <p>You can use this feature when exploring code in other packages: calling <code><a href="reference/foodweb.html">foodweb()</a></code> on a function in another package will show you how functions in that package relate to each other. I’m using <code>cowsay</code> here as it’s small enough that the output is readable.</p>
 <p>By default when calling <code><a href="reference/foodweb.html">foodweb()</a></code> on a specific function we only see functions that are in the direct line of descendants or antecendents of the specified function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-package-1.png" width="100%"></p>
 <p>If we want to include <em>all</em> functions in the package, we can pass <code>filter = FALSE</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p><img src="reference/figures/README-foodweb-plot-package-no-filter-1.png" width="100%"></p>
 </div>
-<div id="graphviz-as-text" class="section level3">
-<h3 class="hasAnchor">
-<a href="#graphviz-as-text" class="anchor"></a><code>graphviz</code> as text</h3>
-<p>In case you want to do something with the <a href="https://graphviz.org/">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
+<div class="section level3">
+<h3 id="graphviz-as-text">
+<code>graphviz</code> as text<a class="anchor" aria-label="anchor" href="#graphviz-as-text"></a>
+</h3>
+<p>In case you want to do something with the <a href="https://graphviz.org/" class="external-link">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; digraph 'foodweb' {</span>
@@ -165,17 +162,17 @@
 <span class="co">#&gt;   "i()" -&gt; { "f()", "g()", "h()" }</span>
 <span class="co">#&gt;   "j()" -&gt; { "j()" }</span>
 <span class="co">#&gt; }</span></code></pre></div>
-<p>Calling <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code> on a <code>foodweb</code> object will have the same effect.</p>
+<p>Calling <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code> on a <code>foodweb</code> object will have the same effect.</p>
 </div>
 </div>
-<div id="using-tidygraph" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-tidygraph" class="anchor"></a>Using <code>tidygraph</code>
+<div class="section level2">
+<h2 id="using-tidygraph">Using <code>tidygraph</code>
+<a class="anchor" aria-label="anchor" href="#using-tidygraph"></a>
 </h2>
-<p>The <a href="https://tidygraph.data-imaginist.com/"><code>tidygraph</code></a> package provides tools for graph analysis. A <code>foodweb</code> object can be converted into a tidy graph object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">tidygraph::as_tbl_graph()</a></code> to allow more sophisticated analysis and visualisation.</p>
+<p>The <a href="https://tidygraph.data-imaginist.com/" class="external-link"><code>tidygraph</code></a> package provides tools for graph analysis. A <code>foodweb</code> object can be converted into a tidy graph object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">tidygraph::as_tbl_graph()</a></code> to allow more sophisticated analysis and visualisation.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
   <span class="va">tg</span>
 <span class="op">}</span>
 <span class="co">#&gt; # A tbl_graph: 5 nodes and 7 edges</span>
@@ -199,13 +196,13 @@
 <span class="co">#&gt; 3     3     2</span>
 <span class="co">#&gt; # … with 4 more rows</span></code></pre></div>
 </div>
-<div id="how-does-it-work" class="section level2">
-<h2 class="hasAnchor">
-<a href="#how-does-it-work" class="anchor"></a>How does it work?</h2>
+<div class="section level2">
+<h2 id="how-does-it-work">How does it work?<a class="anchor" aria-label="anchor" href="#how-does-it-work"></a>
+</h2>
 <p>Understanding the algorithm is important as there are some key limitations to be aware of. To identify the relationships between functions, <code>foodwebr</code>:</p>
 <ul>
 <li>Lists all the functions in an environment.</li>
-<li>Tokenises the <code><a href="https://rdrr.io/r/base/body.html">body()</a></code> of each function.</li>
+<li>Tokenises the <code><a href="https://rdrr.io/r/base/body.html" class="external-link">body()</a></code> of each function.</li>
 <li>Compares each token against the list of function names.</li>
 <li>If a token matches a function name, (i.e. the name of function B appears in the body of function A), records a link from A to B.</li>
 </ul>
@@ -228,17 +225,17 @@
 <span class="co">#&gt;   f1()</span>
 <span class="co">#&gt;   f2() -&gt; { f1() }</span>
 <span class="co">#&gt; }</span></code></pre></div>
-<p>If you know how to fix this please leave a comment in <a href="https://github.com/lewinfox/foodwebr/issues/2">#2</a>.</p>
+<p>If you know how to fix this please leave a comment in <a href="https://github.com/lewinfox/foodwebr/issues/2" class="external-link">#2</a>.</p>
 </div>
-<div id="see-also" class="section level2">
-<h2 class="hasAnchor">
-<a href="#see-also" class="anchor"></a>See also</h2>
+<div class="section level2">
+<h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a>
+</h2>
 <p><code>foodwebr</code> is similar to these functions/packages:</p>
 <ul>
 <li>
 <a href=""><code>mvbutils::foodweb()</code></a>: The OG of function dependency graphs in R, and the inspiration for foodwebr. Less user-friendly output, in my opinion.</li>
 <li>
-<a href="https://github.com/datastorm-open/DependenciesGraphs"><code>DependenciesGraphs</code></a>: Provides much nicer visualisations but does not appear to be actively maintained.</li>
+<a href="https://github.com/datastorm-open/DependenciesGraphs" class="external-link"><code>DependenciesGraphs</code></a>: Provides much nicer visualisations but does not appear to be actively maintained.</li>
 </ul>
 </div>
 </div>
@@ -246,39 +243,51 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/lewinfox/foodwebr/">https://​github.com/​lewinfox/​foodwebr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/lewinfox/foodwebr/issues">https://​github.com/​lewinfox/​foodwebr/​issues</a>
-</li>
+<li><a href="https://github.com/lewinfox/foodwebr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/lewinfox/foodwebr/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing foodwebr</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://github.com/lewinfox">Lewin Appleton-Fox</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="https://github.com/lewinfox" class="external-link">Lewin Appleton-Fox</a> <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/lewinfox">Lewin Appleton-Fox</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://github.com/lewinfox" class="external-link">Lewin Appleton-Fox</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -286,6 +295,8 @@
 
   
 
+
+  
 
   </body>
 </html>
