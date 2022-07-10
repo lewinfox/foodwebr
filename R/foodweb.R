@@ -173,13 +173,13 @@ print.foodweb <- function(x, ...) {
 #' Calls [DiagrammeR::grViz()] on the `graphvis_spec` element of the `foodweb`.
 #'
 #' @param x A `foodweb` object.
-#' @param ... Unused, only included for consistency with S3 generic.
+#' @param ... Further arguments to be passed to [`DiagrammeR::grViz`]
 #'
 #' @export
 #'
 #' @keywords internal
 plot.foodweb <- function(x, ...) {
-  DiagrammeR::grViz(x$graphviz_spec)
+  DiagrammeR::grViz(x$graphviz_spec, ...)
 }
 
 #' @export
