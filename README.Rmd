@@ -102,11 +102,18 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-### `graphviz` as text
+### Extra `graphviz` options
 
 In case you want to do something with the [graphviz](https://graphviz.org/) output (make it
-prettier, for example), use `as.text = TRUE`. This returns the graphviz specification as a character
-vector.
+prettier, for example), you can pass additional arguments to `plot()`. These will be passed directly
+to `DiagrammeR::grViz()`.
+
+```{r foodweb-grviz-options}
+fw <- foodweb(cowsay::say)
+plot(fw, engine="circo")
+```
+
+### Foodweb as text
 
 ```{r foodweb-as-text}
 foodweb(as.text = TRUE)
