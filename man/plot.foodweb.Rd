@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A \code{foodweb} object.}
 
-\item{...}{Unused, only included for consistency with S3 generic.}
+\item{...}{Further arguments to be passed to \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz}}}
 }
 \description{
 Calls \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz()}} on the \code{graphvis_spec} element of the \code{foodweb}.
