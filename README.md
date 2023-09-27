@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `foodwebr` makes it easy to visualise the dependency graph of a set of
@@ -27,8 +28,6 @@ which call each other:
 
 ``` r
 library(foodwebr)
-#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-#> when loading 'dplyr'
 
 f <- function() 1
 g <- function() f()
@@ -64,7 +63,8 @@ Plotting will draw the graph.
 plot(fw)
 ```
 
-<img src="man/figures/README-foodweb-plot-1.png" width="100%" />
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-bebf81d879e077792911" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-bebf81d879e077792911">{"x":{"diagram":"digraph \"foodweb\" {\n  \"f()\"\n  \"g()\" -> { \"f()\" }\n  \"h()\" -> { \"f()\", \"g()\" }\n  \"i()\" -> { \"f()\", \"g()\", \"h()\" }\n  \"j()\" -> { \"j()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 `foodweb()` looks at its calling environment by default. If you want to
 look at another environment you can either pass a function to the `FUN`
@@ -116,7 +116,8 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<img src="man/figures/README-foodweb-plot-package-1.png" width="100%" />
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-404eca409fce9f872862" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-404eca409fce9f872862">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"check_color()\", \"check4pkg()\", \"get_who()\" }\n  \"check_color()\" -> { \"check4pkg()\" }\n  \"check4pkg()\"\n  \"get_who()\" -> { \"make_longcat()\" }\n  \"make_longcat()\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 If we want to include *all* functions in the package, we can pass
 `filter = FALSE`:
@@ -127,7 +128,8 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<img src="man/figures/README-foodweb-plot-package-no-filter-1.png" width="100%" />
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2f7491812a89da2d9ba6" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-2f7491812a89da2d9ba6">{"x":{"diagram":"digraph \"foodweb\" {\n  \"check_color()\" -> { \"check4pkg()\" }\n  \"check4pkg()\"\n  \"endless_horse()\" -> { \"get_who()\" }\n  \"get_who()\" -> { \"make_longcat()\" }\n  \"make_longcat()\"\n  \"say()\" -> { \"check_color()\", \"check4pkg()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ### `graphviz` as text
 
@@ -166,7 +168,7 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> #
 #> # A directed multigraph with 2 components
 #> #
-#> # Node Data: 5 x 1 (active)
+#> # A tibble: 5 × 1
 #>   name 
 #>   <chr>
 #> 1 f    
@@ -175,13 +177,13 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> 4 i    
 #> 5 j    
 #> #
-#> # Edge Data: 7 x 2
+#> # A tibble: 7 × 2
 #>    from    to
 #>   <int> <int>
 #> 1     2     1
 #> 2     3     1
 #> 3     3     2
-#> # … with 4 more rows
+#> # ℹ 4 more rows
 ```
 
 ## How does it work?
@@ -190,11 +192,11 @@ Understanding the algorithm is important as there are some key
 limitations to be aware of. To identify the relationships between
 functions, `foodwebr`:
 
-  - Lists all the functions in an environment.
-  - Tokenises the `body()` of each function.
-  - Compares each token against the list of function names.
-  - If a token matches a function name, (i.e. the name of function B
-    appears in the body of function A), records a link from A to B.
+- Lists all the functions in an environment.
+- Tokenises the `body()` of each function.
+- Compares each token against the list of function names.
+- If a token matches a function name, (i.e. the name of function B
+  appears in the body of function A), records a link from A to B.
 
 This last point leads to the possibility of name masking, where a
 function contains an internal variable that matches the name of another
@@ -228,10 +230,9 @@ If you know how to fix this please leave a comment in
 
 `foodwebr` is similar to these functions/packages:
 
-  - [`mvbutils::foodweb()`](): The OG of function dependency graphs in
-    R, and the inspiration for foodwebr. Less user-friendly output, in
-    my
-    opinion.
-  - [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
-    Provides much nicer visualisations but does not appear to be
-    actively maintained.
+- [`mvbutils::foodweb()`](): The OG of function dependency graphs in R,
+  and the inspiration for foodwebr. Less user-friendly output, in my
+  opinion.
+- [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
+  Provides much nicer visualisations but does not appear to be actively
+  maintained.
