@@ -79,8 +79,7 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
     # The function can't be found in the specified environments, so check for it elsewhere.
     f <- if (exists(fn_name)) get(fn_name) else list()
   } else {
-
-    idx <- seq_along(found_in_envs)[found_in_envs]  # No idea why this is necessary!
+    idx <- seq_along(found_in_envs)[found_in_envs] # No idea why this is necessary!
 
     # Get it from the environment in which we found it
     f <- get(fn_name, pos = where[[idx[1]]])
@@ -130,7 +129,7 @@ tokenise_function <- function(x) {
   listable <- is.list(x)
   if (!listable) {
     # Is an S4 object, extract the `.Data` component (if there is one)
-    if (isS4(x) && ('.Data' %in% names(methods::getSlots(class(x))))) {
+    if (isS4(x) && (".Data" %in% names(methods::getSlots(class(x))))) {
       x <- x@.Data
     }
 
@@ -171,7 +170,7 @@ filter_matrix <- function(fn_name, fn_mat) {
   # Look up the tree
   while (i <= length(queue)) {
     seen[[i]] <- queue[[i]]
-    new_funs <-  rownames(fn_mat)[fn_mat[, queue[[i]]] > 0]
+    new_funs <- rownames(fn_mat)[fn_mat[, queue[[i]]] > 0]
     fns_to_keep <- union(fns_to_keep, new_funs)
     new_funs <- setdiff(new_funs, seen)
     queue <- c(queue, setdiff(new_funs, queue))

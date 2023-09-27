@@ -27,8 +27,15 @@
 #' # Create some functions to look at
 #' f <- function() 1
 #' g <- function() f()
-#' h <- function() { f(); g() }
-#' i <- function() { f(); g(); h() }
+#' h <- function() {
+#'   f()
+#'   g()
+#' }
+#' i <- function() {
+#'   f()
+#'   g()
+#'   h()
+#' }
 #' j <- function() j()
 #'
 #' x <- foodweb()
@@ -60,9 +67,11 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
     }
   }
   fw <- new_foodweb(funmat = fm)
-  if (as.text) (
-    return(as.character(fw))
-  )
+  if (as.text) {
+    (
+      return(as.character(fw))
+    )
+  }
   fw
 }
 
