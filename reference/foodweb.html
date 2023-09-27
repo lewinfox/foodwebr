@@ -56,30 +56,39 @@ for the default plotting behaviour.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">foodweb</span><span class="op">(</span>
-  FUN <span class="op">=</span> <span class="cn">NULL</span>,
-  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  filter <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">FUN</span><span class="op">)</span>,
-  as.text <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">foodweb</span><span class="op">(</span></span>
+<span>  FUN <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  filter <span class="op">=</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">FUN</span><span class="op">)</span>,</span>
+<span>  as.text <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>FUN</dt>
 <dd><p>A function.</p></dd>
+
+
 <dt>env</dt>
 <dd><p>An environment, <code><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame()</a></code> by default. Ignored if <code>FUN</code> is not <code>NULL</code>.</p></dd>
+
+
 <dt>filter</dt>
 <dd><p>Boolean. If <code>TRUE</code>, only functions that are direct descendants or antecedents of
 <code>FUN</code> will be shown.</p></dd>
+
+
 <dt>as.text</dt>
 <dd><p>Boolean. If <code>TRUE</code>, rather than rendering the graph the intermediate graphviz
 specification is returned.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If <code>as.text</code> is <code>TRUE</code>, a character vector. Otherwise, a <code>foodweb</code> object as described
+    
+
+<p>If <code>as.text</code> is <code>TRUE</code>, a character vector. Otherwise, a <code>foodweb</code> object as described
 above.</p>
     </div>
     <div id="details">
@@ -92,15 +101,15 @@ the environment of <code>FUN</code> will be used.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Create some functions to look at</span></span>
-<span class="r-in"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span></span>
-<span class="r-in"><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span>
-<span class="r-in"><span class="va">i</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span>; <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span>
-<span class="r-in"><span class="va">j</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">j</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">foodweb</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Create some functions to look at</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span>; <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">j</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">j</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">foodweb</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 5 vertices and 7 edges </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> digraph 'foodweb' {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   f()</span>
@@ -109,9 +118,9 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   i() -&gt; { f(), g(), h() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   j() -&gt; { j() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># You can access the components directly or via getter functions</span></span>
-<span class="r-in"><span class="va">x</span><span class="op">$</span><span class="va">funmat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># You can access the components directly or via getter functions</span></span></span>
+<span class="r-in"><span><span class="va">x</span><span class="op">$</span><span class="va">funmat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A foodweb matrix: 5 functions and 7 links</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       CALLEE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CALLER f g h i j</span>
@@ -120,7 +129,7 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      h 1 1 0 0 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      i 1 1 1 0 0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      j 0 0 0 0 1</span>
-<span class="r-in"><span class="fu"><a href="get_graphviz_spec.html">get_graphviz_spec</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="get_graphviz_spec.html">get_graphviz_spec</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> digraph 'foodweb' {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   "f()"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   "g()" -&gt; { "f()" }</span>
@@ -128,9 +137,9 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   "i()" -&gt; { "f()", "g()", "h()" }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   "j()" -&gt; { "j()" }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Calculate the foodweb of a function in another package</span></span>
-<span class="r-in"><span class="fu">foodweb</span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Calculate the foodweb of a function in another package</span></span></span>
+<span class="r-in"><span><span class="fu">foodweb</span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 21 vertices and 27 edges </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> digraph 'foodweb' {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue() -&gt; { glue_data(), identity_transformer() }</span>
@@ -169,7 +178,7 @@ the environment of <code>FUN</code> will be used.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
