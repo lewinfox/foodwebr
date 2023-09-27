@@ -1,20 +1,16 @@
-url: https://lewinfox.github.io/foodwebr
-
+url: https://www.lewinfox.com/foodwebr/
 home:
   title: Visualise function dependencies
-
 authors:
   Lewin Appleton-Fox:
     href: https://github.com/lewinfox
-
 reference:
 - title: Make a foodweb
-  desc: >
+  desc: |
     If you only want to learn about one function, this is the one.
-  contents:
-  - foodweb
+  contents: foodweb
 - title: Utilities
-  desc: >
+  desc: |
     `foodwebr` exposes its guts in case you want to tinker.
   contents:
   - is.foodweb
@@ -23,10 +19,11 @@ reference:
   - foodweb_matrix
   - graphviz_spec_from_matrix
 - title: S3 methods
-  desc: >
+  desc: |
     Methods are provided for a few S3 generics.
   contents:
   - plot.foodweb
   - print.foodweb
   - print.foodweb_matrix
   - as_tbl_graph.foodweb
+
