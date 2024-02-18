@@ -143,7 +143,6 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 21 vertices and 27 edges </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> digraph 'foodweb' {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue() -&gt; { glue_data(), identity_transformer() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   +.glue() -&gt; { glue() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color_transformer() -&gt; { glue(), color_transformer() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   eng_glue() -&gt; { glue(), %||%() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_col() -&gt; { glue(), color_transformer() }</span>
@@ -152,7 +151,7 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_data_col() -&gt; { color_transformer(), glue_data() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   eng_glue_sql() -&gt; { glue_sql(), %||%() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_data() -&gt; { identity_transformer(), %||%(), as_glue(), bind_args(), drop_null(), has_names(), lengths(), na_rows(), recycle_columns(), trim() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   identity_transformer()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   identity_transformer() -&gt; { with_glue_error() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   %||%()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   as_glue()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bind_args() -&gt; { delayed_assign() }</span>
@@ -162,6 +161,7 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   na_rows()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   recycle_columns() -&gt; { lengths() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   trim()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   with_glue_error()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   delayed_assign()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 </code></pre></div>
