@@ -1,72 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/404.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/as.matrix.foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/as_tbl_graph.foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/filter_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/foodweb_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/foodweb_summarise.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/functions_called_by.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/get_funmat.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/get_graphviz_spec.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/graphviz_spec_from_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/is.foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/new_foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/plot.foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/print.foodweb.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/print.foodweb_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://www.lewinfox.com/foodwebr/reference/tokenise_function.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://www.lewinfox.com/foodwebr/404.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/LICENSE-text.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/LICENSE.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/authors.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/index.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/news/index.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/as.matrix.foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/as_tbl_graph.foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/filter_matrix.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/foodweb_matrix.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/foodweb_summarise.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/functions_called_by.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/get_funmat.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/get_graphviz_spec.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/graphviz_spec_from_matrix.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/index.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/is.foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/new_foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/plot.foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/print.foodweb.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/print.foodweb_matrix.html</loc></url>
+<url><loc>https://www.lewinfox.com/foodwebr/reference/tokenise_function.html</loc></url>
 </urlset>
+
