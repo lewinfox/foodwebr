@@ -16,14 +16,16 @@ BugReports: https://github.com/lewinfox/foodwebr/issues
 Imports: 
     cli,
     crayon,
+    codetools,
     DiagrammeR,
     glue,
-    methods,
     rlang,
     stringr,
     tidygraph
+Suggests:
+    testthat
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
