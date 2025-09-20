@@ -20,7 +20,7 @@ for the default plotting behaviour."><!-- mathjax --><script src="https://cdnjs.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">foodwebr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -150,28 +150,21 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate the foodweb of a function in another package</span></span></span>
 <span class="r-in"><span><span class="fu">foodweb</span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 21 vertices and 27 edges </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 14 vertices and 13 edges </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> digraph 'foodweb' {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   glue() -&gt; { glue_data(), identity_transformer() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   color_transformer() -&gt; { glue(), color_transformer() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   eng_glue() -&gt; { glue(), %||%() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   glue_col() -&gt; { glue(), color_transformer() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   glue() -&gt; { glue_data() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   color_transformer() -&gt; { glue() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   glue_col() -&gt; { glue() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_safe() -&gt; { glue() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_sql() -&gt; { glue() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   glue_data_col() -&gt; { color_transformer(), glue_data() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   eng_glue_sql() -&gt; { glue_sql(), %||%() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   glue_data() -&gt; { identity_transformer(), %||%(), as_glue(), bind_args(), drop_null(), has_names(), lengths(), na_rows(), recycle_columns(), trim() }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   identity_transformer() -&gt; { with_glue_error() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   glue_data() -&gt; { %||%(), as_glue(), bind_args(), drop_null(), has_names(), recycle_columns(), trim() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   %||%()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   as_glue()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bind_args() -&gt; { delayed_assign() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   drop_null()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   has_names()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   lengths()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   na_rows()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   recycle_columns() -&gt; { lengths() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   recycle_columns()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   trim()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   with_glue_error()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   delayed_assign()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
 </code></pre></div>

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">foodwebr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -84,8 +84,6 @@
 <p>Say we have a bunch of functions in the global environment, some of which call each other:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lewinfox/foodwebr" class="external-link">foodwebr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'</span></span>
-<span><span class="co">#&gt; when loading 'dplyr'</span></span>
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span></span>
@@ -109,8 +107,10 @@
 <p>Plotting will draw the graph.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fw</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-foodweb-plot-1.png" width="100%"></p>
-<p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at its calling environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
+<div id="htmlwidget-543d1cf7e5ef24b11dd5" class="grViz html-widget html-fill-item" style="width:100%;height:192px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-543d1cf7e5ef24b11dd5">{"x":{"diagram":"digraph \"foodweb\" {\n  \"f()\"\n  \"g()\" -> { \"f()\" }\n  \"h()\" -> { \"f()\", \"g()\" }\n  \"i()\" -> { \"f()\", \"g()\", \"h()\" }\n  \"j()\" -> { \"j()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at its calling environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
 <div class="section level3">
 <h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
 </h3>
@@ -142,20 +142,35 @@
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="reference/figures/README-foodweb-plot-package-1.png" width="100%"></p>
-<p>If we want to include <em>all</em> functions in the package, we can pass <code>filter = FALSE</code>:</p>
+<div id="htmlwidget-acf4a0948da481e7501b" class="grViz html-widget html-fill-item" style="width:100%;height:192px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-acf4a0948da481e7501b">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"cowsay_insert_rainbow()\"\n  \"animal_fetch()\"\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><p>If we want to include <em>all</em> functions in the package, we can pass <code>filter = FALSE</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="reference/figures/README-foodweb-plot-package-no-filter-1.png" width="100%"></p>
+<div id="htmlwidget-ad1bf9a0ed16296f12bc" class="grViz html-widget html-fill-item" style="width:100%;height:192px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-ad1bf9a0ed16296f12bc">{"x":{"diagram":"digraph \"foodweb\" {\n  \"animal_fetch()\"\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_tail2()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"cowsay_insert_rainbow()\"\n  \"endless_horse()\" -> { \"bubble_say()\", \"bubble_tail()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n  \"param_by()\"\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"say_think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
-<h3 id="graphviz-as-text">
-<code>graphviz</code> as text<a class="anchor" aria-label="anchor" href="#graphviz-as-text"></a>
+<h3 id="extra-graphviz-options">Extra <code>graphviz</code> options<a class="anchor" aria-label="anchor" href="#extra-graphviz-options"></a>
 </h3>
-<p>In case you want to do something with the <a href="https://graphviz.org/" class="external-link">graphviz</a> output (make it prettier, for example), use <code>as.text = TRUE</code>. This returns the graphviz specification as a character vector.</p>
+<p>In case you want to do something with the <a href="https://graphviz.org/" class="external-link">graphviz</a> output (make it prettier, for example), you can pass additional arguments to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>. These will be passed directly to <code><a href="https://rich-iannone.github.io/DiagrammeR/reference/grViz.html" class="external-link">DiagrammeR::grViz()</a></code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fw</span>, engine<span class="op">=</span><span class="st">"circo"</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-a2494cee52f7f4ad57dd" class="grViz html-widget html-fill-item" style="width:100%;height:192px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-a2494cee52f7f4ad57dd">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"cowsay_insert_rainbow()\"\n  \"animal_fetch()\"\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n}","config":{"engine":"circo","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="section level3">
+<h3 id="foodweb-as-text">Foodweb as text<a class="anchor" aria-label="anchor" href="#foodweb-as-text"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; digraph 'foodweb' {</span></span>
 <span><span class="co">#&gt;   "f()"</span></span>
@@ -172,7 +187,7 @@
 <a class="anchor" aria-label="anchor" href="#using-tidygraph"></a>
 </h2>
 <p>The <a href="https://tidygraph.data-imaginist.com/" class="external-link"><code>tidygraph</code></a> package provides tools for graph analysis. A <code>foodweb</code> object can be converted into a tidy graph object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">tidygraph::as_tbl_graph()</a></code> to allow more sophisticated analysis and visualisation.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">tg</span></span>
@@ -181,7 +196,7 @@
 <span><span class="co">#&gt; #</span></span>
 <span><span class="co">#&gt; # A directed multigraph with 2 components</span></span>
 <span><span class="co">#&gt; #</span></span>
-<span><span class="co">#&gt; # Node Data: 5 x 1 (active)</span></span>
+<span><span class="co">#&gt; # Node Data: 5 × 1 (active)</span></span>
 <span><span class="co">#&gt;   name </span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;</span></span>
 <span><span class="co">#&gt; 1 f    </span></span>
@@ -190,44 +205,13 @@
 <span><span class="co">#&gt; 4 i    </span></span>
 <span><span class="co">#&gt; 5 j    </span></span>
 <span><span class="co">#&gt; #</span></span>
-<span><span class="co">#&gt; # Edge Data: 7 x 2</span></span>
+<span><span class="co">#&gt; # Edge Data: 7 × 2</span></span>
 <span><span class="co">#&gt;    from    to</span></span>
 <span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt;</span></span>
 <span><span class="co">#&gt; 1     2     1</span></span>
 <span><span class="co">#&gt; 2     3     1</span></span>
 <span><span class="co">#&gt; 3     3     2</span></span>
-<span><span class="co">#&gt; # … with 4 more rows</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="how-does-it-work">How does it work?<a class="anchor" aria-label="anchor" href="#how-does-it-work"></a>
-</h2>
-<p>Understanding the algorithm is important as there are some key limitations to be aware of. To identify the relationships between functions, <code>foodwebr</code>:</p>
-<ul>
-<li>Lists all the functions in an environment.</li>
-<li>Tokenises the <code><a href="https://rdrr.io/r/base/body.html" class="external-link">body()</a></code> of each function.</li>
-<li>Compares each token against the list of function names.</li>
-<li>If a token matches a function name, (i.e. the name of function B appears in the body of function A), records a link from A to B.</li>
-</ul>
-<p>This last point leads to the possibility of name masking, where a function contains an internal variable that matches the name of another function in the environment. This will lead to a false link.</p>
-<p>For example:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fl">1</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">f1</span> <span class="op">&lt;-</span> <span class="fl">10</span> <span class="co"># This variable `f1` will be confused with the function `f1()`</span></span>
-<span>  <span class="fl">2</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># The foodweb mistakenly believes that function `f2()` calls function `f1()`</span></span>
-<span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A `foodweb`: 2 vertices and 1 edge </span></span>
-<span><span class="co">#&gt; digraph 'foodweb' {</span></span>
-<span><span class="co">#&gt;   f1()</span></span>
-<span><span class="co">#&gt;   f2() -&gt; { f1() }</span></span>
-<span><span class="co">#&gt; }</span></span></code></pre></div>
-<p>If you know how to fix this please leave a comment in <a href="https://github.com/lewinfox/foodwebr/issues/2" class="external-link">#2</a>.</p>
+<span><span class="co">#&gt; # ℹ 4 more rows</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a>
