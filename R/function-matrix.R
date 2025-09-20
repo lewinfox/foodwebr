@@ -25,8 +25,8 @@ foodweb_matrix <- function(env = parent.frame()) {
     env <- parent_env
   }
 
-  # Find functions using ls() instead of lsf.str() (which seems unreliable)
-  funs <- lsf.str(envir = env)
+  # Find all the functions in the environment
+  funs <- utils::lsf.str(envir = env)
 
   n <- length(funs)
 
@@ -37,7 +37,7 @@ foodweb_matrix <- function(env = parent.frame()) {
     rlang::abort("No functions found", "foodwebr_no_functions")
   }
 
-  # Rest of the function remains the same
+  # Create the caller-callee matrix
   funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
   CALLER.of <- lapply(funs, functions_called_by, funs_to_match = funs, where = env)
   n.CALLER <- unlist(lapply(CALLER.of, length))
