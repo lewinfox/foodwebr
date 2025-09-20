@@ -16,33 +16,44 @@ foodweb_matrix <- function(env = parent.frame()) {
     cli::cli_alert_danger("{.var {env}} must be an environment, not {typeof(env)}")
     rlang::abort("Unable to create foodweb matrix", "foodwebr_bad_environment")
   }
-  funs <- as.character(utils::lsf.str(envir = env))
+
+  # Check if we're in a function's local environment but the parent is a namespace
+  # This happens with package functions that have local environments
+  parent_env <- parent.env(env)
+  if (!identical(parent_env, emptyenv()) && isNamespace(parent_env)) {
+    # Use the namespace instead of the local function environment
+    env <- parent_env
+  }
+
+  # Find functions using ls() instead of lsf.str() (which seems unreliable)
+  all_objects <- ls(envir = env, all.names = TRUE)
+
+  funs <- all_objects[sapply(all_objects, function(x) {
+    tryCatch(is.function(get(x, envir = env)), error = function(e) FALSE)
+  })]
+
   n <- length(funs)
+
   if (n == 0) {
     env_label <- glue::glue("<env: {rlang::env_label(env)}>")
     msg <- glue::glue("No functions found in {{.var {env_label}}}")
     cli::cli_alert_danger(msg)
     rlang::abort("No functions found", "foodwebr_no_functions")
   }
-  funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
-  # CALLER.of is a list of indices into `funs`, such that if CALLER.of[1] = [2 3 4] it means that
-  # funs[1] calls funs[2], funs[3] and funs[4].
-  CALLER.of <- lapply(funs, functions_called_by, funs_to_match = funs, where = env)
 
-  # For each function, how many functions does it call?
+  # Rest of the function remains the same
+  funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
+  CALLER.of <- lapply(funs, functions_called_by, funs_to_match = funs, where = env)
   n.CALLER <- unlist(lapply(CALLER.of, length))
 
   if (sum(n.CALLER) == 0) {
-    # TODO: Can we capture base or other package fns?
-    rlang::abort("Function does not call any matched functions", "foodwebr_no_web")
+    rlang::abort("No inter-function calls detected", "foodwebr_no_web")
   }
 
-  # Construct the function caller/callee matrix
   setup <- c(rep(1:length(funs), n.CALLER), unlist(CALLER.of))
   dim(setup) <- c(sum(n.CALLER), 2)
   funmat[setup] <- 1
 
-  # Convert dimnames to string
   rownames(funmat) <- as.character(rownames(funmat))
   colnames(funmat) <- as.character(colnames(funmat))
 
@@ -88,12 +99,12 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
   if (!is.function(f)) {
     return(numeric(0))
   }
-  
+
   tryCatch({
     # findGlobals returns a list with $functions and $variables
     globals <- codetools::findGlobals(f, merge = FALSE)
     function_calls <- globals$functions
-    
+
     # Find which of the called functions are in our funs_to_match list
     matched_indices <- match(function_calls, funs_to_match, nomatch = 0)
     matched_indices[matched_indices > 0]
