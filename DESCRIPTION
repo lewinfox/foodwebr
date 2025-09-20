@@ -22,8 +22,6 @@ Imports:
     rlang,
     stringr,
     tidygraph
-Suggests: 
-    testthat,
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
