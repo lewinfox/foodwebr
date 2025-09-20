@@ -42,8 +42,15 @@ the environment of \code{FUN} will be used.
 # Create some functions to look at
 f <- function() 1
 g <- function() f()
-h <- function() { f(); g() }
-i <- function() { f(); g(); h() }
+h <- function() {
+  f()
+  g()
+}
+i <- function() {
+  f()
+  g()
+  h()
+}
 j <- function() j()
 
 x <- foodweb()

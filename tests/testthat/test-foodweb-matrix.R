@@ -1,10 +1,16 @@
 e <- new.env()
 e$foo <- function() bar()
 e$bar <- function() {}
-e$foobar <- function() {foo(); bar()}
+e$foobar <- function() {
+  foo()
+  bar()
+}
 e$recurse <- function() recurse()
 e$func_arg <- function(x = foo()) bar()
-e$fn_with_shadowed_names <- function() {foo <- 1; bar()}
+e$fn_with_shadowed_names <- function() {
+  foo <- 1
+  bar()
+}
 funmat <- foodweb_matrix(e)
 
 test_that("`foodweb_matrix()` finds basic relationships", {

@@ -4,6 +4,7 @@
 # foodwebr
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `foodwebr` makes it easy to visualise the dependency graph of a set of

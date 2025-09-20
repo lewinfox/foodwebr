@@ -10,7 +10,8 @@ Authors@R:
 Description: Easily create graphs of the inter-relationships between
     functions in an environment.
 License: MIT + file LICENSE
-URL: https://github.com/lewinfox/foodwebr, https://lewinfox.github.io/foodwebr
+URL: https://github.com/lewinfox/foodwebr,
+    http://www.lewinfox.com/foodwebr/
 BugReports: https://github.com/lewinfox/foodwebr/issues
 Imports: 
     cli,
@@ -21,11 +22,8 @@ Imports:
     rlang,
     stringr,
     tidygraph
-Suggests: 
-    testthat,
-    webshot
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.2
