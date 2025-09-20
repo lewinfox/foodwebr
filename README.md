@@ -27,8 +27,6 @@ which call each other:
 
 ``` r
 library(foodwebr)
-#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-#> when loading 'dplyr'
 
 f <- function() 1
 g <- function() f()
@@ -129,12 +127,21 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 
 <img src="man/figures/README-foodweb-plot-package-no-filter-1.png" width="100%" />
 
-### `graphviz` as text
+### Extra `graphviz` options
 
 In case you want to do something with the
 [graphviz](https://graphviz.org/) output (make it prettier, for
-example), use `as.text = TRUE`. This returns the graphviz specification
-as a character vector.
+example), you can pass additional arguments to `plot()`. These will be
+passed directly to `DiagrammeR::grViz()`.
+
+``` r
+fw <- foodweb(cowsay::say)
+plot(fw, engine="circo")
+```
+
+<img src="man/figures/README-foodweb-grviz-options-1.png" width="100%" />
+
+### Foodweb as text
 
 ``` r
 foodweb(as.text = TRUE)
@@ -166,7 +173,7 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> #
 #> # A directed multigraph with 2 components
 #> #
-#> # Node Data: 5 x 1 (active)
+#> # Node Data: 5 × 1 (active)
 #>   name 
 #>   <chr>
 #> 1 f    
@@ -175,7 +182,7 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> 4 i    
 #> 5 j    
 #> #
-#> # Edge Data: 7 x 2
+#> # Edge Data: 7 × 2
 #>    from    to
 #>   <int> <int>
 #> 1     2     1
@@ -190,10 +197,10 @@ Understanding the algorithm is important as there are some key
 limitations to be aware of. To identify the relationships between
 functions, `foodwebr`:
 
-  - Lists all the functions in an environment.
-  - Tokenises the `body()` of each function.
-  - Compares each token against the list of function names.
-  - If a token matches a function name, (i.e. the name of function B
+-   Lists all the functions in an environment.
+-   Tokenises the `body()` of each function.
+-   Compares each token against the list of function names.
+-   If a token matches a function name, (i.e. the name of function B
     appears in the body of function A), records a link from A to B.
 
 This last point leads to the possibility of name masking, where a
@@ -228,10 +235,9 @@ If you know how to fix this please leave a comment in
 
 `foodwebr` is similar to these functions/packages:
 
-  - [`mvbutils::foodweb()`](): The OG of function dependency graphs in
+-   [`mvbutils::foodweb()`](): The OG of function dependency graphs in
     R, and the inspiration for foodwebr. Less user-friendly output, in
-    my
-    opinion.
-  - [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
+    my opinion.
+-   [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
     Provides much nicer visualisations but does not appear to be
     actively maintained.
