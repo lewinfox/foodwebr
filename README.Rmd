@@ -67,9 +67,7 @@ fw
 
 Plotting will draw the graph.
 
-```{r foodweb-plot, message=FALSE}
-plot(fw)
-```
+![Foodweb-plot-1](man/figures/README-foodweb-plot-1.png)
 
 `foodweb()` looks at its calling environment by default. If you want to look at another environment
 you can either pass a function to the `FUN` argument of `foodweb()` or pass an environment to the
@@ -96,11 +94,13 @@ here as it's small enough that the output is readable.
 By default when calling `foodweb()` on a specific function we only see functions that are in the
 direct line of descendants or antecendents of the specified function.
 
-```{r foodweb-plot-package}
+``` r
 if (requireNamespace("cowsay", quietly = TRUE)) {
   plot(foodweb(cowsay::say))
 }
 ```
+
+![Plot of the cowsay::say function](man/figures/README-foodweb-plot-package.png)
 
 If we want to include _all_ functions in the package, we can pass `filter = FALSE`:
 
@@ -115,11 +115,6 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 In case you want to do something with the [graphviz](https://graphviz.org/) output (make it
 prettier, for example), you can pass additional arguments to `plot()`. These will be passed directly
 to `DiagrammeR::grViz()`.
-
-```{r foodweb-grviz-options}
-fw <- foodweb(cowsay::say)
-plot(fw, engine="circo")
-```
 
 ### Foodweb as text
 

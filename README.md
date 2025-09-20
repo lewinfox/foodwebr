@@ -59,12 +59,10 @@ fw
 
 Plotting will draw the graph.
 
-``` r
-plot(fw)
-```
-
-<div class="grViz html-widget html-fill-item" id="htmlwidget-543d1cf7e5ef24b11dd5" style="width:100%;height:192px;"></div>
-<script type="application/json" data-for="htmlwidget-543d1cf7e5ef24b11dd5">{"x":{"diagram":"digraph \"foodweb\" {\n  \"f()\"\n  \"g()\" -> { \"f()\" }\n  \"h()\" -> { \"f()\", \"g()\" }\n  \"i()\" -> { \"f()\", \"g()\", \"h()\" }\n  \"j()\" -> { \"j()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<figure>
+<img src="man/figures/README-foodweb-plot-1.png" alt="Foodweb-plot-1" />
+<figcaption aria-hidden="true">Foodweb-plot-1</figcaption>
+</figure>
 
 `foodweb()` looks at its calling environment by default. If you want to
 look at another environment you can either pass a function to the `FUN`
@@ -116,8 +114,12 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<div class="grViz html-widget html-fill-item" id="htmlwidget-acf4a0948da481e7501b" style="width:100%;height:192px;"></div>
-<script type="application/json" data-for="htmlwidget-acf4a0948da481e7501b">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"cowsay_insert_rainbow()\"\n  \"animal_fetch()\"\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<figure>
+<img src="man/figures/README-foodweb-plot-package.png"
+alt="Plot of the cowsay::say function" />
+<figcaption aria-hidden="true">Plot of the cowsay::say
+function</figcaption>
+</figure>
 
 If we want to include *all* functions in the package, we can pass
 `filter = FALSE`:
@@ -128,8 +130,8 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<div class="grViz html-widget html-fill-item" id="htmlwidget-ad1bf9a0ed16296f12bc" style="width:100%;height:192px;"></div>
-<script type="application/json" data-for="htmlwidget-ad1bf9a0ed16296f12bc">{"x":{"diagram":"digraph \"foodweb\" {\n  \"animal_fetch()\"\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_tail2()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"cowsay_insert_rainbow()\"\n  \"endless_horse()\" -> { \"bubble_say()\", \"bubble_tail()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n  \"param_by()\"\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"say_think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-ce88bd0a151eac4cabe7" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-ce88bd0a151eac4cabe7">{"x":{"diagram":"digraph \"foodweb\" {\n  \"animal_fetch()\"\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_tail2()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"cowsay_insert_rainbow()\"\n  \"endless_horse()\" -> { \"bubble_say()\", \"bubble_tail()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n  \"param_by()\"\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"say_think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ### Extra `graphviz` options
 
@@ -137,14 +139,6 @@ In case you want to do something with the
 [graphviz](https://graphviz.org/) output (make it prettier, for
 example), you can pass additional arguments to `plot()`. These will be
 passed directly to `DiagrammeR::grViz()`.
-
-``` r
-fw <- foodweb(cowsay::say)
-plot(fw, engine="circo")
-```
-
-<div class="grViz html-widget html-fill-item" id="htmlwidget-a2494cee52f7f4ad57dd" style="width:100%;height:192px;"></div>
-<script type="application/json" data-for="htmlwidget-a2494cee52f7f4ad57dd">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"cowsay_insert_rainbow()\"\n  \"animal_fetch()\"\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n}","config":{"engine":"circo","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ### Foodweb as text
 
