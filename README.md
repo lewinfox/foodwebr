@@ -4,6 +4,7 @@
 # foodwebr
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -27,8 +28,6 @@ which call each other:
 
 ``` r
 library(foodwebr)
-#> Warning: replacing previous import 'vctrs::data_frame' by 'tibble::data_frame'
-#> when loading 'dplyr'
 
 f <- function() 1
 g <- function() f()
@@ -64,7 +63,8 @@ Plotting will draw the graph.
 plot(fw)
 ```
 
-<img src="man/figures/README-foodweb-plot-1.png" width="100%" />
+<div class="grViz html-widget html-fill-item" id="htmlwidget-543d1cf7e5ef24b11dd5" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-543d1cf7e5ef24b11dd5">{"x":{"diagram":"digraph \"foodweb\" {\n  \"f()\"\n  \"g()\" -> { \"f()\" }\n  \"h()\" -> { \"f()\", \"g()\" }\n  \"i()\" -> { \"f()\", \"g()\", \"h()\" }\n  \"j()\" -> { \"j()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 `foodweb()` looks at its calling environment by default. If you want to
 look at another environment you can either pass a function to the `FUN`
@@ -116,7 +116,8 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<img src="man/figures/README-foodweb-plot-package-1.png" width="100%" />
+<div class="grViz html-widget html-fill-item" id="htmlwidget-acf4a0948da481e7501b" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-acf4a0948da481e7501b">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"cowsay_insert_rainbow()\"\n  \"animal_fetch()\"\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 If we want to include *all* functions in the package, we can pass
 `filter = FALSE`:
@@ -127,14 +128,25 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<img src="man/figures/README-foodweb-plot-package-no-filter-1.png" width="100%" />
+<div class="grViz html-widget html-fill-item" id="htmlwidget-ad1bf9a0ed16296f12bc" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-ad1bf9a0ed16296f12bc">{"x":{"diagram":"digraph \"foodweb\" {\n  \"animal_fetch()\"\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_tail2()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"cowsay_insert_rainbow()\"\n  \"endless_horse()\" -> { \"bubble_say()\", \"bubble_tail()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n  \"param_by()\"\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"say_think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
-### `graphviz` as text
+### Extra `graphviz` options
 
 In case you want to do something with the
 [graphviz](https://graphviz.org/) output (make it prettier, for
-example), use `as.text = TRUE`. This returns the graphviz specification
-as a character vector.
+example), you can pass additional arguments to `plot()`. These will be
+passed directly to `DiagrammeR::grViz()`.
+
+``` r
+fw <- foodweb(cowsay::say)
+plot(fw, engine="circo")
+```
+
+<div class="grViz html-widget html-fill-item" id="htmlwidget-a2494cee52f7f4ad57dd" style="width:100%;height:192px;"></div>
+<script type="application/json" data-for="htmlwidget-a2494cee52f7f4ad57dd">{"x":{"diagram":"digraph \"foodweb\" {\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"cowsay_insert_rainbow()\"\n  \"animal_fetch()\"\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n}","config":{"engine":"circo","options":null}},"evals":[],"jsHooks":[]}</script>
+
+### Foodweb as text
 
 ``` r
 foodweb(as.text = TRUE)
@@ -166,7 +178,7 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> #
 #> # A directed multigraph with 2 components
 #> #
-#> # Node Data: 5 x 1 (active)
+#> # Node Data: 5 × 1 (active)
 #>   name 
 #>   <chr>
 #> 1 f    
@@ -175,63 +187,22 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 #> 4 i    
 #> 5 j    
 #> #
-#> # Edge Data: 7 x 2
+#> # Edge Data: 7 × 2
 #>    from    to
 #>   <int> <int>
 #> 1     2     1
 #> 2     3     1
 #> 3     3     2
-#> # … with 4 more rows
+#> # ℹ 4 more rows
 ```
-
-## How does it work?
-
-Understanding the algorithm is important as there are some key
-limitations to be aware of. To identify the relationships between
-functions, `foodwebr`:
-
-  - Lists all the functions in an environment.
-  - Tokenises the `body()` of each function.
-  - Compares each token against the list of function names.
-  - If a token matches a function name, (i.e. the name of function B
-    appears in the body of function A), records a link from A to B.
-
-This last point leads to the possibility of name masking, where a
-function contains an internal variable that matches the name of another
-function in the environment. This will lead to a false link.
-
-For example:
-
-``` r
-f1 <- function() {
-  1
-}
-
-f2 <- function() {
-  f1 <- 10 # This variable `f1` will be confused with the function `f1()`
-  2
-}
-
-# The foodweb mistakenly believes that function `f2()` calls function `f1()`
-foodweb()
-#> # A `foodweb`: 2 vertices and 1 edge 
-#> digraph 'foodweb' {
-#>   f1()
-#>   f2() -> { f1() }
-#> }
-```
-
-If you know how to fix this please leave a comment in
-[\#2](https://github.com/lewinfox/foodwebr/issues/2).
 
 ## See also
 
 `foodwebr` is similar to these functions/packages:
 
-  - [`mvbutils::foodweb()`](): The OG of function dependency graphs in
-    R, and the inspiration for foodwebr. Less user-friendly output, in
-    my
-    opinion.
-  - [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
-    Provides much nicer visualisations but does not appear to be
-    actively maintained.
+- [`mvbutils::foodweb()`](): The OG of function dependency graphs in R,
+  and the inspiration for foodwebr. Less user-friendly output, in my
+  opinion.
+- [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
+  Provides much nicer visualisations but does not appear to be actively
+  maintained.
