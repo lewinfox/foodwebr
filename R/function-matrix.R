@@ -26,11 +26,7 @@ foodweb_matrix <- function(env = parent.frame()) {
   }
 
   # Find functions using ls() instead of lsf.str() (which seems unreliable)
-  all_objects <- ls(envir = env, all.names = TRUE)
-
-  funs <- all_objects[sapply(all_objects, function(x) {
-    tryCatch(is.function(get(x, envir = env)), error = function(e) FALSE)
-  })]
+  funs <- lsf.str(envir = env)
 
   n <- length(funs)
 
