@@ -105,14 +105,15 @@
 <span><span class="co">#&gt;   j() -&gt; { j() }</span></span>
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 <p>Plotting will draw the graph.</p>
-<figure><img src="reference/figures/README-foodweb-plot-1.png" alt="Foodweb-plot-1"><figcaption aria-hidden="true">
-Foodweb-plot-1
-</figcaption></figure><p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at its calling environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fw</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-foodweb-plot-1.png"></p>
+<p><code><a href="reference/foodweb.html">foodweb()</a></code> looks at its calling environment by default. If you want to look at another environment you can either pass a function to the <code>FUN</code> argument of <code><a href="reference/foodweb.html">foodweb()</a></code> or pass an environment to the <code>env</code> argument. If <code>FUN</code> is provided then the value of <code>env</code> is ignored, and the environment of <code>FUN</code> will be used.</p>
 <div class="section level3">
 <h3 id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
 </h3>
 <p>If a specific function is passed to <code>FUN</code>, the default behaviour is to remove functions that are not descendants or antecedents of that function.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># `j()` will not be included</span></span>
 <span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">g</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A `foodweb`: 4 vertices and 6 edges </span></span>
@@ -135,21 +136,17 @@ Foodweb-plot-1
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 <p>You can use this feature when exploring code in other packages: calling <code><a href="reference/foodweb.html">foodweb()</a></code> on a function in another package will show you how functions in that package relate to each other. I’m using <code>cowsay</code> here as it’s small enough that the output is readable.</p>
 <p>By default when calling <code><a href="reference/foodweb.html">foodweb()</a></code> on a specific function we only see functions that are in the direct line of descendants or antecendents of the specified function.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<figure><img src="reference/figures/README-foodweb-plot-package.png" alt="Plot of the cowsay::say function"><figcaption aria-hidden="true">
-Plot of the cowsay::say function
-</figcaption></figure><p>If we want to include <em>all</em> functions in the package, we can pass <code>filter = FALSE</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><img src="reference/figures/README-foodweb-plot-package.png"></p>
+<p>If we want to include <em>all</em> functions in the package, we can pass <code>filter = FALSE</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"cowsay"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="fu">cowsay</span><span class="fu">::</span><span class="va">say</span>, filter <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div id="htmlwidget-ce88bd0a151eac4cabe7" class="grViz html-widget html-fill-item" style="width:100%;height:192px;">
-
-</div>
-<script type="application/json" data-for="htmlwidget-ce88bd0a151eac4cabe7">{"x":{"diagram":"digraph \"foodweb\" {\n  \"animal_fetch()\"\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_tail2()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"cowsay_insert_rainbow()\"\n  \"endless_horse()\" -> { \"bubble_say()\", \"bubble_tail()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n  \"param_by()\"\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"say_think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p><img src="reference/figures/README-foodweb-plot-package-no-filter.png"></p>
 </div>
 <div class="section level3">
 <h3 id="extra-graphviz-options">Extra <code>graphviz</code> options<a class="anchor" aria-label="anchor" href="#extra-graphviz-options"></a>
@@ -159,7 +156,7 @@ Plot of the cowsay::say function
 <div class="section level3">
 <h3 id="foodweb-as-text">Foodweb as text<a class="anchor" aria-label="anchor" href="#foodweb-as-text"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span>as.text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; digraph 'foodweb' {</span></span>
 <span><span class="co">#&gt;   "f()"</span></span>
@@ -176,7 +173,7 @@ Plot of the cowsay::say function
 <a class="anchor" aria-label="anchor" href="#using-tidygraph"></a>
 </h2>
 <p>The <a href="https://tidygraph.data-imaginist.com/" class="external-link"><code>tidygraph</code></a> package provides tools for graph analysis. A <code>foodweb</code> object can be converted into a tidy graph object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">tidygraph::as_tbl_graph()</a></code> to allow more sophisticated analysis and visualisation.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">tg</span></span>
