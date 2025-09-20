@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -12,6 +13,12 @@ knitr::opts_chunk$set(
   out.width = "100%",
   fig.height = 2
 )
+```
+
+```{r, include = FALSE}
+if (!requireNamespace("cowsay", quietly = TRUE)) {
+  install.packages("cowsay")
+}
 ```
 
 # foodwebr
@@ -103,11 +110,18 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-### `graphviz` as text
+### Extra `graphviz` options
 
 In case you want to do something with the [graphviz](https://graphviz.org/) output (make it
-prettier, for example), use `as.text = TRUE`. This returns the graphviz specification as a character
-vector.
+prettier, for example), you can pass additional arguments to `plot()`. These will be passed directly
+to `DiagrammeR::grViz()`.
+
+```{r foodweb-grviz-options}
+fw <- foodweb(cowsay::say)
+plot(fw, engine="circo")
+```
+
+### Foodweb as text
 
 ```{r foodweb-as-text}
 foodweb(as.text = TRUE)
@@ -129,44 +143,6 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 }
 ```
 
-
-## How does it work?
-
-Understanding the algorithm is important as there are some key limitations to be aware of. To
-identify the relationships between functions, `foodwebr`:
-
-* Lists all the functions in an environment.
-* Tokenises the `body()` of each function.
-* Compares each token against the list of function names.
-* If a token matches a function name, (i.e. the name of function B appears in the body of function
-  A), records a link from A to B.
-  
-This last point leads to the possibility of name masking, where a function contains an internal
-variable that matches the name of another function in the environment. This will lead to a false
-link.
-
-For example:
-
-```{r clear-env, include=FALSE}
-rm(list = ls())
-```
-
-```{r foodweb-false-link}
-f1 <- function() {
-  1
-}
-
-f2 <- function() {
-  f1 <- 10 # This variable `f1` will be confused with the function `f1()`
-  2
-}
-
-# The foodweb mistakenly believes that function `f2()` calls function `f1()`
-foodweb()
-```
-
-If you know how to fix this please leave a comment in
-[#2](https://github.com/lewinfox/foodwebr/issues/2).
 
 ## See also
 

@@ -30,7 +30,6 @@ test_that("`foodweb_matrix()` identifies recursive calls", {
 })
 
 test_that("`foodweb_matrix()` ignores variables with the same name as functions", {
-  skip("For now this is acceptable behaviour. https://github.com/lewinfox/foodwebr/issues/2")
   expect_equal(funmat["fn_with_shadowed_names", "foo"], 0)
   expect_equal(funmat["fn_with_shadowed_names", "bar"], 1)
 })

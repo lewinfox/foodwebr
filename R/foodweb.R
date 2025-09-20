@@ -48,16 +48,21 @@
 #' # Calculate the foodweb of a function in another package
 #' foodweb(glue::glue)
 foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as.text = FALSE) {
+
   fn_name <- as.character(substitute(FUN))
+
   if (is.null(FUN) && filter) {
     cli::cli_alert_warning("{.var FUN} is {.val NULL} so {.code filter = TRUE} has no effect")
     filter <- FALSE
   }
+
   if (!is.null(FUN)) {
     FUN <- match.fun(FUN)
     env <- environment(FUN)
   }
+
   fm <- foodweb_matrix(env)
+
   if (filter) {
     fn_name <- fn_name[length(fn_name)]
     fm <- filter_matrix(fn_name, fm)
@@ -66,12 +71,15 @@ foodweb <- function(FUN = NULL, env = parent.frame(), filter = !is.null(FUN), as
       rlang::abort("Can't create a foodweb for an isolated function", "foodwebr_isolated_function")
     }
   }
+
   fw <- new_foodweb(funmat = fm)
+
   if (as.text) {
     (
       return(as.character(fw))
     )
   }
+
   fw
 }
 
@@ -182,13 +190,13 @@ print.foodweb <- function(x, ...) {
 #' Calls [DiagrammeR::grViz()] on the `graphvis_spec` element of the `foodweb`.
 #'
 #' @param x A `foodweb` object.
-#' @param ... Unused, only included for consistency with S3 generic.
+#' @param ... Further arguments to be passed to [`DiagrammeR::grViz`]
 #'
 #' @export
 #'
 #' @keywords internal
 plot.foodweb <- function(x, ...) {
-  DiagrammeR::grViz(x$graphviz_spec)
+  DiagrammeR::grViz(x$graphviz_spec, ...)
 }
 
 #' @export
