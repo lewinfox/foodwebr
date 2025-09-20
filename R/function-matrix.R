@@ -103,41 +103,6 @@ functions_called_by <- function(fn_name, funs_to_match, where) {
   })
 }
 
-#' Convert a function body to text
-#'
-#' @param x A function
-#'
-#' @return A character string containing the tokenised function body
-#'
-#' @keywords internal
-tokenise_function <- function(x) {
-  # Given a function as input, break it down into tokens and return them as text for analysis
-
-  # We need to break the input down into atomic language units
-  listable <- is.list(x)
-  if (!listable) {
-    # Is an S4 object, extract the `.Data` component (if there is one)
-    if (isS4(x) && (".Data" %in% names(methods::getSlots(class(x))))) {
-      x <- x@.Data
-    }
-
-    # Can we break it down further?
-    listable <- !is.atomic(x) && !is.symbol(x)
-    if (listable) {
-      x <- as.list(x)
-    }
-  }
-
-  if (listable) {
-    # Recurse into the language object
-    return(unlist(lapply(x, tokenise_function), use.names = FALSE))
-  }
-
-  # If we get this far we know we've reached the bottom of the AST and we can convert the language
-  # objects to text and send them back up
-  paste(deparse(x), collapse = "\n")
-}
-
 #' Filter a function matrix
 #'
 #' @param fn_name String giving the name of the function we're interested in
