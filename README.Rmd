@@ -67,7 +67,11 @@ fw
 
 Plotting will draw the graph.
 
-![Foodweb-plot-1](man/figures/README-foodweb-plot-1.png)
+```r
+plot(fw)
+```
+
+![](man/figures/README-foodweb-plot-1.png)
 
 `foodweb()` looks at its calling environment by default. If you want to look at another environment
 you can either pass a function to the `FUN` argument of `foodweb()` or pass an environment to the
@@ -100,15 +104,17 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-![Plot of the cowsay::say function](man/figures/README-foodweb-plot-package.png)
+![](man/figures/README-foodweb-plot-package.png)
 
 If we want to include _all_ functions in the package, we can pass `filter = FALSE`:
 
-```{r foodweb-plot-package-no-filter}
+```r
 if (requireNamespace("cowsay", quietly = TRUE)) {
   plot(foodweb(cowsay::say, filter = FALSE))
 }
 ```
+
+![](man/figures/README-foodweb-plot-package-no-filter.png)
 
 ### Extra `graphviz` options
 

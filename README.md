@@ -59,10 +59,11 @@ fw
 
 Plotting will draw the graph.
 
-<figure>
-<img src="man/figures/README-foodweb-plot-1.png" alt="Foodweb-plot-1" />
-<figcaption aria-hidden="true">Foodweb-plot-1</figcaption>
-</figure>
+``` r
+plot(fw)
+```
+
+![](man/figures/README-foodweb-plot-1.png)
 
 `foodweb()` looks at its calling environment by default. If you want to
 look at another environment you can either pass a function to the `FUN`
@@ -114,12 +115,7 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<figure>
-<img src="man/figures/README-foodweb-plot-package.png"
-alt="Plot of the cowsay::say function" />
-<figcaption aria-hidden="true">Plot of the cowsay::say
-function</figcaption>
-</figure>
+![](man/figures/README-foodweb-plot-package.png)
 
 If we want to include *all* functions in the package, we can pass
 `filter = FALSE`:
@@ -130,8 +126,7 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 }
 ```
 
-<div class="grViz html-widget html-fill-item" id="htmlwidget-ce88bd0a151eac4cabe7" style="width:100%;height:192px;"></div>
-<script type="application/json" data-for="htmlwidget-ce88bd0a151eac4cabe7">{"x":{"diagram":"digraph \"foodweb\" {\n  \"animal_fetch()\"\n  \"bubble_say()\" -> { \"string_pad()\" }\n  \"bubble_tail()\" -> { \"string_pad()\" }\n  \"bubble_tail2()\" -> { \"string_pad()\" }\n  \"bubble_think()\" -> { \"string_pad()\" }\n  \"check_color()\" -> { \"cowsay_insert_rainbow()\" }\n  \"color_text()\"\n  \"cowsay_insert_rainbow()\"\n  \"endless_horse()\" -> { \"bubble_say()\", \"bubble_tail()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"get_who()\" -> { \"animal_fetch()\", \"make_longcat()\" }\n  \"make_longcat()\" -> { \"animal_fetch()\" }\n  \"param_by()\"\n  \"say()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"say_think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n  \"string_pad()\" -> { \"string_pad()\" }\n  \"think()\" -> { \"bubble_say()\", \"bubble_tail()\", \"bubble_think()\", \"check_color()\", \"color_text()\", \"get_who()\" }\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+![](man/figures/README-foodweb-plot-package-no-filter.png)
 
 ### Extra `graphviz` options
 
