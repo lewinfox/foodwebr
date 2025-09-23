@@ -11,6 +11,10 @@
 
 \item{...}{Further arguments to be passed to \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz}}}
 }
+\value{
+An object of class \code{htmlwidget}; the output is just that of the
+underlying call to \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz}}.
+}
 \description{
 Calls \code{\link[DiagrammeR:grViz]{DiagrammeR::grViz()}} on the \code{graphvis_spec} element of the \code{foodweb}.
 }

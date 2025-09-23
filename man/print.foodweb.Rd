@@ -11,6 +11,9 @@
 
 \item{...}{Unused, only included for consistency with S3 generic.}
 }
+\value{
+\code{NULL}, only called for the side effect of printing to the console.
+}
 \description{
 Prints the \code{graphvis_spec} member of a \code{foodweb} object.
 }

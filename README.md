@@ -189,9 +189,9 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 
 `foodwebr` is similar to these functions/packages:
 
-- [`mvbutils::foodweb()`](): The OG of function dependency graphs in R,
-  and the inspiration for foodwebr. Less user-friendly output, in my
-  opinion.
+- [`mvbutils::foodweb()`](https://cran.r-project.org/package=mvbutils):
+  The OG of function dependency graphs in R, and the inspiration for
+  foodwebr. Less user-friendly output, in my opinion.
 - [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
   Provides much nicer visualisations but does not appear to be actively
   maintained.

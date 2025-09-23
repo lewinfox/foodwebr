@@ -11,6 +11,11 @@
 
 \item{rownames.force, ...}{Ignored, only included for compatibility with S3 generic}
 }
+\value{
+An n*n numeric matrix where n is the number of functions in the
+foodweb. Each element \verb{[i][j]} will be 1 if function \code{i} calls function
+\code{j}, and 0 otherwise.
+}
 \description{
 This is equivalent to calling \code{\link[=get_funmat]{get_funmat()}} on \code{x}.
 }

@@ -172,6 +172,8 @@ get_graphviz_spec <- function(x) {
 #' @param x A `foodweb` object.
 #' @param ... Unused, only included for consistency with S3 generic.
 #'
+#' @return `NULL`, only called for the side effect of printing to the console.
+#'
 #' @export
 #'
 #' @keywords internal
@@ -191,6 +193,9 @@ print.foodweb <- function(x, ...) {
 #'
 #' @param x A `foodweb` object.
 #' @param ... Further arguments to be passed to [`DiagrammeR::grViz`]
+#'
+#' @return An object of class `htmlwidget`; the output is just that of the
+#'   underlying call to [`DiagrammeR::grViz`].
 #'
 #' @export
 #'
@@ -226,6 +231,10 @@ as.character.foodweb <- function(x, ...) {
 #'
 #' @param x A `foodweb`
 #' @param rownames.force,... Ignored, only included for compatibility with S3 generic
+#'
+#' @return An n*n numeric matrix where n is the number of functions in the
+#'   foodweb. Each element `[i][j]` will be 1 if function `i` calls function
+#'   `j`, and 0 otherwise.
 #'
 #' @export
 #'
