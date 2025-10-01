@@ -15,7 +15,13 @@ ago
 
 ## Installation
 
-You can install foodwebr from GitHub:
+You can install foodwebr from CRAN:
+
+``` r
+install.packages("foodwebr")
+```
+
+or from GitHub:
 
 ``` r
 devtools::install_github("lewinfox/foodwebr")
