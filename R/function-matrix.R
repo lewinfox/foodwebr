@@ -25,9 +25,7 @@ foodweb_matrix <- function(env = parent.frame()) {
     env <- parent_env
   }
 
-  # Find all the functions in the environment
-  funs <- utils::lsf.str(envir = env)
-
+  funs <- as.character(utils::lsf.str(envir = env))
   n <- length(funs)
 
   if (n == 0) {
@@ -37,77 +35,35 @@ foodweb_matrix <- function(env = parent.frame()) {
     rlang::abort("No functions found", "foodwebr_no_functions")
   }
 
-  # Create the caller-callee matrix
   funmat <- matrix(0, n, n, dimnames = list(CALLER = funs, CALLEE = funs))
-  CALLER.of <- lapply(funs, functions_called_by, funs_to_match = funs, where = env)
-  n.CALLER <- unlist(lapply(CALLER.of, length))
+  for (i in seq_along(funs)) {
+    funmat[i, functions_called_by(funs[[i]], funs, env)] <- 1
+  }
 
-  if (sum(n.CALLER) == 0) {
+  if (sum(funmat) == 0) {
     rlang::abort("No inter-function calls detected", "foodwebr_no_web")
   }
 
-  setup <- c(rep(1:length(funs), n.CALLER), unlist(CALLER.of))
-  dim(setup) <- c(sum(n.CALLER), 2)
-  funmat[setup] <- 1
-
-  rownames(funmat) <- as.character(rownames(funmat))
-  colnames(funmat) <- as.character(colnames(funmat))
-
   class(funmat) <- c("foodweb_matrix", class(funmat))
-
-  return(funmat)
+  funmat
 }
 
 #' Which functions does a function call?
 #'
-#' Given an input function `fn_name` and a list of candidate functions `funs_to_match`, return a
-#' list of all the functions in `funs_to_match` that appear in the definition of `fn_name`.
+#' Given an input function `fn_name` and a list of candidate functions `funs_to_match`, return the
+#' indices in `funs_to_match` of functions that `fn_name` calls.
 #'
-#' @param fn_name `<chr>`\cr The name of the function of interest
-#' @param funs_to_match `<chr>`\cr Only these functions will be considered as parents
-#' @param where `<env>`\cr An environment, or text specifying an environment
+#' @param fn_name `<chr>` The name of the function of interest.
+#' @param funs_to_match `<chr>` Only these functions will be considered as callees.
+#' @param env `<env>` The environment in which `fn_name` lives.
 #'
-#' @return A character vector listing the functions in `funs_to_match` that call `fn_name`.
+#' @return An integer vector of positions in `funs_to_match`.
 #'
 #' @keywords internal
-functions_called_by <- function(fn_name, funs_to_match, where) {
-  # List of environments where we want to look for functions
-  if (is.environment(where)) {
-    where <- list(where)
-  } else {
-    where <- as.list(where)
-  }
-
-  # Which of our environments does `fn_name` exist in?
-  found_in_envs <- unlist(lapply(where, exists, x = fn_name), use.names = FALSE)
-
-  # Grab the function definition so we can analyse it
-  if (!any(found_in_envs)) {
-    # The function can't be found in the specified environments, so check for it elsewhere.
-    f <- if (exists(fn_name)) get(fn_name) else list()
-  } else {
-    idx <- seq_along(found_in_envs)[found_in_envs]
-    # Get it from the environment in which we found it
-    f <- get(fn_name, pos = where[[idx[1]]])
-  }
-
-  # Use codetools to find function calls (not variable assignments)
-  if (!is.function(f)) {
-    return(numeric(0))
-  }
-
-  tryCatch({
-    # findGlobals returns a list with $functions and $variables
-    globals <- codetools::findGlobals(f, merge = FALSE)
-    function_calls <- globals$functions
-
-    # Find which of the called functions are in our funs_to_match list
-    matched_indices <- match(function_calls, funs_to_match, nomatch = 0)
-    matched_indices[matched_indices > 0]
-  }, error = function(e) {
-    # Fallback to empty result if findGlobals fails
-    numeric(0)
-  })
+functions_called_by <- function(fn_name, funs_to_match, env) {
+  f <- get(fn_name, envir = env)
+  calls <- codetools::findGlobals(f, merge = FALSE)$functions
+  which(funs_to_match %in% calls)
 }
 
 #' Filter a function matrix
