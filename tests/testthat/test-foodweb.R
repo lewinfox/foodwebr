@@ -42,6 +42,12 @@ local({
     expect_s3_class(foodweb(g), "foodweb")
   })
 
+  test_that("`foodweb(FUN)` uses `environment(FUN)`", {
+    via_fun <- get_funmat(foodweb(g, filter = FALSE))
+    via_env <- get_funmat(foodweb(env = environment(g)))
+    expect_equal(via_fun, via_env)
+  })
+
   test_that("errors are raised appropriately", {
     # Calling on something that isn't an environments
     expect_error(foodweb(env = character()), class = "foodwebr_bad_environment")
@@ -62,4 +68,13 @@ local({
   test_that("`as_tbl_graph()` works", {
     expect_s3_class(tidygraph::as_tbl_graph(fw), "tbl_graph")
   })
+})
+
+test_that("`foodweb_summarise()` uses singular 'edge' for a single-edge web", {
+  e <- new.env()
+  e$alpha <- function() beta()
+  e$beta <- function() {}
+  fw <- foodweb(env = e)
+  expect_output(print(fw), "2 vertices")
+  expect_output(print(fw), "1 edge\\b") # not "edges"
 })
