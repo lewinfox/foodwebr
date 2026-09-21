@@ -4,20 +4,20 @@
 \alias{functions_called_by}
 \title{Which functions does a function call?}
 \usage{
-functions_called_by(fn_name, funs_to_match, where)
+functions_called_by(fn_name, funs_to_match, env)
 }
 \arguments{
-\item{fn_name}{\verb{<chr>}\cr The name of the function of interest}
+\item{fn_name}{\verb{<chr>} The name of the function of interest.}
 
-\item{funs_to_match}{\verb{<chr>}\cr Only these functions will be considered as parents}
+\item{funs_to_match}{\verb{<chr>} Only these functions will be considered as callees.}
 
-\item{where}{\verb{<env>}\cr An environment, or text specifying an environment}
+\item{env}{\verb{<env>} The environment in which \code{fn_name} lives.}
 }
 \value{
-A character vector listing the functions in \code{funs_to_match} that call \code{fn_name}.
+An integer vector of positions in \code{funs_to_match}.
 }
 \description{
-Given an input function \code{fn_name} and a list of candidate functions \code{funs_to_match}, return a
-list of all the functions in \code{funs_to_match} that appear in the definition of \code{fn_name}.
+Given an input function \code{fn_name} and a list of candidate functions \code{funs_to_match}, return the
+indices in \code{funs_to_match} of functions that \code{fn_name} calls.
 }
 \keyword{internal}
