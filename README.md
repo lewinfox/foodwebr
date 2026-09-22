@@ -37,8 +37,15 @@ library(foodwebr)
 
 f <- function() 1
 g <- function() f()
-h <- function() { f(); g() }
-i <- function() { f(); g(); h() }
+h <- function() {
+  f()
+  g()
+}
+i <- function() {
+  f()
+  g()
+  h()
+}
 j <- function() j()
 ```
 
@@ -156,6 +163,50 @@ foodweb(as.text = TRUE)
 
 Calling `as.character()` on a `foodweb` object will have the same
 effect.
+
+### Functions passed as arguments
+
+Functions don’t always call each other directly. They may be passed as
+arguments to other functions, like `do.call()` or `lapply()`.
+`foodweb()` recognises this for:
+
+- `do.call()` and `match.fun()`
+- The `lapply()` family: `sapply()`, `vapply()`, `mapply()`, `Map()`,
+  `Reduce()`, `Filter()`, `Find()`, `Position()`, `apply()`, `tapply()`,
+  `outer()`, `rapply()` and `eapply()`
+- [`purrr`](https://purrr.tidyverse.org/): `map()` and its variants,
+  `reduce()`, `keep()`, `discard()`, `detect()`, `safely()`, `partial()`
+  and friends, and `exec()` (also from `rlang`)
+
+``` r
+local({
+  k <- function(x) x
+  l <- function(x) lapply(x, k)
+  m <- function() do.call("k", list(1))
+  n <- function(x) purrr::map(x, ~ k(.x))
+  foodweb()
+})
+#> # A `foodweb`: 4 vertices and 3 edges 
+#> digraph 'foodweb' {
+#>   k()
+#>   l() -> { k() }
+#>   m() -> { k() }
+#>   n() -> { k() }
+#> }
+```
+
+The function can be passed as a bare name (`lapply(x, k)`), a string
+(`do.call("k", ...)`), or, for `purrr`, a formula (`map(x, ~ k(.x))`).
+Piping with `%>%` or `|>` works too. In `purrr` a string means “extract
+this element”, not “call this function”, so `map(x, "k")` is not
+counted.
+
+Some things can’t be detected, such as a function name stored in a
+variable (`fn <- "k"; do.call(fn, ...)`), because the name is only known
+at runtime.
+
+If you’d like `foodweb()` to recognise functions from another package,
+please [open an issue](https://github.com/lewinfox/foodwebr/issues).
 
 ## Using `tidygraph`
 
