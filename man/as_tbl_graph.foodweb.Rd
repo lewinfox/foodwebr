@@ -13,6 +13,6 @@
 A new \link[tidygraph:tbl_graph]{tidygraph::tbl_graph} object.
 }
 \description{
-This is an S3 method for the generic \code{\link[tidygraph:as_tbl_graph]{tidygraph::as_tbl_graph()}}.
+This is an S3 method for the generic \code{\link[tidygraph:tbl_graph]{tidygraph::as_tbl_graph()}}.
 }
 \keyword{internal}
