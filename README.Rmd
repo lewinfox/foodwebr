@@ -27,8 +27,8 @@ if (!requireNamespace("cowsay", quietly = TRUE)) {
 [![R-CMD-check](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lewinfox/foodwebr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`foodwebr` makes it easy to visualise the dependency graph of a set of functions 
-(i.e. who calls who). This can be useful for exploring an unfamiliar codebase, 
+`foodwebr` makes it easy to visualise the dependency graph of a set of functions
+(i.e. who calls who). This can be useful for exploring an unfamiliar codebase,
 or reminding yourself what you wrote ten minutes ago
 
 ## Installation
@@ -47,7 +47,7 @@ devtools::install_github("lewinfox/foodwebr")
 
 ## Basic usage
 
-Say we have a bunch of functions in the global environment, some of which call 
+Say we have a bunch of functions in the global environment, some of which call
 each other:
 
 ```{r setup}
@@ -55,8 +55,15 @@ library(foodwebr)
 
 f <- function() 1
 g <- function() f()
-h <- function() { f(); g() }
-i <- function() { f(); g(); h() }
+h <- function() {
+  f()
+  g()
+}
+i <- function() {
+  f()
+  g()
+  h()
+}
 j <- function() j()
 ```
 
@@ -66,7 +73,7 @@ A call to `foodweb()` will calculate a graph of the dependencies.
 fw <- foodweb()
 ```
 
-Printing the object will show the [graphviz](https://graphviz.org/) 
+Printing the object will show the [graphviz](https://graphviz.org/)
 representation:
 
 ```{r foodweb-print}
@@ -81,14 +88,14 @@ plot(fw)
 
 ![](man/figures/README-foodweb-plot-1.png)
 
-`foodweb()` looks at its calling environment by default. If you want to look at 
-another environment you can either pass a function to the `FUN` argument of 
-`foodweb()` or pass an environment to the `env` argument. If `FUN` is provided 
+`foodweb()` looks at its calling environment by default. If you want to look at
+another environment you can either pass a function to the `FUN` argument of
+`foodweb()` or pass an environment to the `env` argument. If `FUN` is provided
 then the value of `env` is ignored, and the environment of `FUN` will be used.
 
 ### Filtering
 
-If a specific function is passed to `FUN`, the default behaviour is to remove 
+If a specific function is passed to `FUN`, the default behaviour is to remove
 functions that are not descendants or antecedents of that function.
 
 ```{r foodweb-filter}
@@ -99,13 +106,13 @@ foodweb(FUN = g)
 foodweb(FUN = g, filter = FALSE)
 ```
 
-You can use this feature when exploring code in other packages: calling 
-`foodweb()` on a function in another package will show you how functions in that 
-package relate to each other. I'm using `cowsay` here as it's small enough that 
+You can use this feature when exploring code in other packages: calling
+`foodweb()` on a function in another package will show you how functions in that
+package relate to each other. I'm using `cowsay` here as it's small enough that
 the output is readable.
 
-By default when calling `foodweb()` on a specific function we only see functions 
-that are in the direct line of descendants or antecendents of the specified 
+By default when calling `foodweb()` on a specific function we only see functions
+that are in the direct line of descendants or antecendents of the specified
 function.
 
 ``` r
@@ -116,7 +123,7 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 
 ![](man/figures/README-foodweb-plot-package.png)
 
-If we want to include _all_ functions in the package, we can pass 
+If we want to include _all_ functions in the package, we can pass
 `filter = FALSE`:
 
 ```r
@@ -129,8 +136,8 @@ if (requireNamespace("cowsay", quietly = TRUE)) {
 
 ### Extra `graphviz` options
 
-In case you want to do something with the [graphviz](https://graphviz.org/) 
-output (make it prettier, for example), you can pass additional arguments to 
+In case you want to do something with the [graphviz](https://graphviz.org/)
+output (make it prettier, for example), you can pass additional arguments to
 `plot()`. These will be passed directly to `DiagrammeR::grViz()`.
 
 ### Foodweb as text
@@ -141,12 +148,47 @@ foodweb(as.text = TRUE)
 
 Calling `as.character()` on a `foodweb` object will have the same effect.
 
+### Functions passed as arguments
+
+Functions don't always call each other directly. They may be passed as
+arguments to other functions, like `do.call()` or `lapply()`. `foodweb()`
+recognises this for:
+
+* `do.call()` and `match.fun()`
+* The `lapply()` family: `sapply()`, `vapply()`, `mapply()`, `Map()`,
+  `Reduce()`, `Filter()`, `Find()`, `Position()`, `apply()`, `tapply()`,
+  `outer()`, `rapply()` and `eapply()`
+* [`purrr`](https://purrr.tidyverse.org/): `map()` and its variants,
+  `reduce()`, `keep()`, `discard()`, `detect()`, `safely()`, `partial()` and
+  friends, and `exec()` (also from `rlang`)
+
+```{r foodweb-hof}
+local({
+  k <- function(x) x
+  l <- function(x) lapply(x, k)
+  m <- function() do.call("k", list(1))
+  n <- function(x) purrr::map(x, ~ k(.x))
+  foodweb()
+})
+```
+
+The function can be passed as a bare name (`lapply(x, k)`), a string
+(`do.call("k", ...)`), or, for `purrr`, a formula (`map(x, ~ k(.x))`). Piping
+with `%>%` or `|>` works too. In `purrr` a string means "extract this element",
+not "call this function", so `map(x, "k")` is not counted.
+
+Some things can't be detected, such as a function name stored in a variable
+(`fn <- "k"; do.call(fn, ...)`), because the name is only known at runtime.
+
+If you'd like `foodweb()` to recognise functions from another package, please
+[open an issue](https://github.com/lewinfox/foodwebr/issues).
+
 
 ## Using `tidygraph`
 
-The [`tidygraph`](https://tidygraph.data-imaginist.com/) package provides tools 
-for graph analysis. A `foodweb` object can be converted into a tidy graph object 
-using `tidygraph::as_tbl_graph()` to allow more sophisticated analysis and 
+The [`tidygraph`](https://tidygraph.data-imaginist.com/) package provides tools
+for graph analysis. A `foodweb` object can be converted into a tidy graph object
+using `tidygraph::as_tbl_graph()` to allow more sophisticated analysis and
 visualisation.
 
 ```{r foodweb-tidygraph}
@@ -161,9 +203,9 @@ if (requireNamespace("tidygraph", quietly = TRUE)) {
 
 `foodwebr` is similar to these functions/packages:
 
-* [`mvbutils::foodweb()`](https://cran.r-project.org/package=mvbutils): The OG 
+* [`mvbutils::foodweb()`](https://cran.r-project.org/package=mvbutils): The OG
   of function dependency graphs in R, and the inspiration for
   foodwebr. Less user-friendly output, in my opinion.
-* [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs): 
-  Provides much nicer visualisations but does not appear to be actively 
+* [`DependenciesGraphs`](https://github.com/datastorm-open/DependenciesGraphs):
+  Provides much nicer visualisations but does not appear to be actively
   maintained.

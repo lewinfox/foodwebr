@@ -20,4 +20,9 @@ An integer vector of positions in \code{funs_to_match}.
 Given an input function \code{fn_name} and a list of candidate functions \code{funs_to_match}, return the
 indices in \code{funs_to_match} of functions that \code{fn_name} calls.
 }
+\details{
+As well as direct calls like \code{foo()}, this detects functions passed to \code{\link[=do.call]{do.call()}}, the
+\code{lapply()} family and purrr, e.g. \code{do.call("foo", args)}, \code{lapply(x, foo)} or
+\code{purrr::map(x, ~ foo(.x))}. See \code{\link[=functions_passed_by]{functions_passed_by()}}.
+}
 \keyword{internal}
