@@ -1,8 +1,8 @@
 Type: Package
 Package: foodwebr
 Title: Visualise Function Dependencies
-Version: 1.0.0
-Authors@R: 
+Version: 1.1.0
+Authors@R:
     person(given = "Lewin",
            family = "Appleton-Fox",
            role = c("aut", "cre"),
@@ -12,7 +12,7 @@ Description: Easily create graphs of the inter-relationships between
 License: MIT + file LICENSE
 URL: https://lewinfox.com/foodwebr/
 BugReports: https://github.com/lewinfox/foodwebr/issues
-Imports: 
+Imports:
     cli,
     crayon,
     codetools,
