@@ -150,13 +150,15 @@ the environment of <code>FUN</code> will be used.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate the foodweb of a function in another package</span></span></span>
 <span class="r-in"><span><span class="fu">foodweb</span><span class="op">(</span><span class="fu">glue</span><span class="fu">::</span><span class="va"><a href="https://glue.tidyverse.org/reference/glue.html" class="external-link">glue</a></span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 14 vertices and 13 edges </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #555555;"># A `foodweb`: 16 vertices and 17 edges </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> digraph 'foodweb' {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue() -&gt; { glue_data() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   color_transformer() -&gt; { glue() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   eng_glue() -&gt; { glue(), %||%() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_col() -&gt; { glue() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_safe() -&gt; { glue() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_sql() -&gt; { glue() }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   eng_glue_sql() -&gt; { glue_sql(), %||%() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   glue_data() -&gt; { %||%(), as_glue(), bind_args(), drop_null(), has_names(), recycle_columns(), trim() }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   %||%()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   as_glue()</span>

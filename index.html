@@ -90,8 +90,15 @@
 <span></span>
 <span><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fl">1</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span>
-<span><span class="va">i</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span>; <span class="fu">g</span><span class="op">(</span><span class="op">)</span>; <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">}</span></span>
+<span><span class="va">h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">f</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">g</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">i</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">f</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">g</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">h</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
 <span><span class="va">j</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu">j</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>A call to <code><a href="reference/foodweb.html">foodweb()</a></code> will calculate a graph of the dependencies.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -170,13 +177,45 @@
 <span><span class="co">#&gt; }</span></span></code></pre></div>
 <p>Calling <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code> on a <code>foodweb</code> object will have the same effect.</p>
 </div>
+<div class="section level3">
+<h3 id="functions-passed-as-arguments">Functions passed as arguments<a class="anchor" aria-label="anchor" href="#functions-passed-as-arguments"></a>
+</h3>
+<p>Functions don’t always call each other directly. They may be passed as arguments to other functions, like <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> or <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>. <code><a href="reference/foodweb.html">foodweb()</a></code> recognises this for:</p>
+<ul>
+<li>
+<code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code> and <code><a href="https://rdrr.io/r/base/match.fun.html" class="external-link">match.fun()</a></code>
+</li>
+<li>The <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> family: <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply()</a></code>, <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply()</a></code>, <code><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Find()</a></code>, <code><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Position()</a></code>, <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code>, <code><a href="https://rdrr.io/r/base/tapply.html" class="external-link">tapply()</a></code>, <code><a href="https://rdrr.io/r/base/outer.html" class="external-link">outer()</a></code>, <code><a href="https://rdrr.io/r/base/rapply.html" class="external-link">rapply()</a></code> and <code><a href="https://rdrr.io/r/base/eapply.html" class="external-link">eapply()</a></code>
+</li>
+<li>
+<a href="https://purrr.tidyverse.org/" class="external-link"><code>purrr</code></a>: <code>map()</code> and its variants, <code>reduce()</code>, <code>keep()</code>, <code>discard()</code>, <code>detect()</code>, <code>safely()</code>, <code>partial()</code> and friends, and <code>exec()</code> (also from <code>rlang</code>)</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">local</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">k</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span></span>
+<span>  <span class="va">l</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">k</span><span class="op">)</span></span>
+<span>  <span class="va">m</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"k"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">x</span>, <span class="op">~</span> <span class="fu">k</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A `foodweb`: 4 vertices and 3 edges </span></span>
+<span><span class="co">#&gt; digraph 'foodweb' {</span></span>
+<span><span class="co">#&gt;   k()</span></span>
+<span><span class="co">#&gt;   l() -&gt; { k() }</span></span>
+<span><span class="co">#&gt;   m() -&gt; { k() }</span></span>
+<span><span class="co">#&gt;   n() -&gt; { k() }</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre></div>
+<p>The function can be passed as a bare name (<code>lapply(x, k)</code>), a string (<code>do.call("k", ...)</code>), or, for <code>purrr</code>, a formula (<code>map(x, ~ k(.x))</code>). Piping with <code>%&gt;%</code> or <code>|&gt;</code> works too. In <code>purrr</code> a string means “extract this element”, not “call this function”, so <code>map(x, "k")</code> is not counted.</p>
+<p>Some things can’t be detected, such as a function name stored in a variable (<code>fn &lt;- "k"; do.call(fn, ...)</code>), because the name is only known at runtime.</p>
+<p>If you’d like <code><a href="reference/foodweb.html">foodweb()</a></code> to recognise functions from another package, please <a href="https://github.com/lewinfox/foodwebr/issues" class="external-link">open an issue</a>.</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="using-tidygraph">Using <code>tidygraph</code>
 <a class="anchor" aria-label="anchor" href="#using-tidygraph"></a>
 </h2>
 <p>The <a href="https://tidygraph.data-imaginist.com/" class="external-link"><code>tidygraph</code></a> package provides tools for graph analysis. A <code>foodweb</code> object can be converted into a tidy graph object using <code><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">tidygraph::as_tbl_graph()</a></code> to allow more sophisticated analysis and visualisation.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"tidygraph"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">tg</span> <span class="op">&lt;-</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html" class="external-link">as_tbl_graph</a></span><span class="op">(</span><span class="fu"><a href="reference/foodweb.html">foodweb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">tg</span></span>

@@ -78,6 +78,12 @@ indices in <code>funs_to_match</code> of functions that <code>fn_name</code> cal
     <h2>Value</h2>
     <p>An integer vector of positions in <code>funs_to_match</code>.</p>
     </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>As well as direct calls like <code>foo()</code>, this detects functions passed to <code><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call()</a></code>, the
+<code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code> family and purrr, e.g. <code>do.call("foo", args)</code>, <code>lapply(x, foo)</code> or
+<code>purrr::map(x, ~ foo(.x))</code>. See <code><a href="functions_passed_by.html">functions_passed_by()</a></code>.</p>
+    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
